@@ -1,0 +1,9 @@
+server.port=8084
+# PostgreSQL konfiguracija
+spring.datasource.url=jdbc:postgresql://localhost:5432/volunteer_management
+spring.datasource.username=postgres
+spring.datasource.password=anesa2
+
+# Hibernate podešavanja
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
