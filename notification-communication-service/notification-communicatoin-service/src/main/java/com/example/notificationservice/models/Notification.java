@@ -1,5 +1,95 @@
-package main.java.com.example.notificationservice.models;
+package com.example.notificationservice.models;
 
+import jakarta.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table(name = "notification")
 public class Notification {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long notificationId;
+
+    @ManyToOne
+    @JoinColumn(name = "volunteer_id", nullable = false)
+    private Volunteer volunteer;
+
+    @ManyToOne
+    @JoinColumn(name = "activity_id", nullable = false)
+    private Activity activity;
+
+    @ManyToOne
+    @JoinColumn(name = "organizer_id", nullable = false)
+    private Organizer organizer;
+
+    private String message;
+    private String type;
+    private Date timestamp;
+    private boolean isRead;
+
+    // Getters and Setters
+    public Long getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public Volunteer getVolunteer() {
+        return volunteer;
+    }
+
+    public void setVolunteer(Volunteer volunteer) {
+        this.volunteer = volunteer;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean isRead) {
+        this.isRead = isRead;
+    }
 }

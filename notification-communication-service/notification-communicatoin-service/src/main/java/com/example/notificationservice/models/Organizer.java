@@ -1,0 +1,94 @@
+package com.example.notificationservice.models;
+
+import jakarta.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "organizer")
+public class Organizer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long organizerId;
+
+    private String name;
+    private String email;
+    private String phoneNumber;
+
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Activity> activities;
+
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ForumPost> forumPosts;
+
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notification> notifications;
+
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Message> messages;
+
+    // Getters and Setters
+    public Long getOrganizerId() {
+        return organizerId;
+    }
+
+    public void setOrganizerId(Long organizerId) {
+        this.organizerId = organizerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public List<ForumPost> getForumPosts() {
+        return forumPosts;
+    }
+
+    public void setForumPosts(List<ForumPost> forumPosts) {
+        this.forumPosts = forumPosts;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+}

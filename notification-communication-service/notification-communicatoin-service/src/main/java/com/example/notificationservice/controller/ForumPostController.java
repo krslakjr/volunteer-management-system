@@ -1,0 +1,53 @@
+package com.example.notificationservice.controller;
+
+import com.example.notificationservice.models.ForumPost;
+import com.example.notificationservice.service.ForumPostService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/forum-posts")
+public class ForumPostController {
+
+    private final ForumPostService forumPostService;
+
+    public ForumPostController(ForumPostService forumPostService) {
+        this.forumPostService = forumPostService;
+    }
+
+    @GetMapping
+    public List<ForumPost> getAllForumPosts() {
+        return forumPostService.getAllForumPosts();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ForumPost> getForumPostById(@PathVariable Long id) {
+        Optional<ForumPost> forumPost = forumPostService.getForumPostById(id);
+        return forumPost.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ForumPost createForumPost(@RequestBody ForumPost forumPost) {
+        return forumPostService.createForumPost(forumPost);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id, @RequestBody ForumPost updatedForumPost) {
+        try {
+            ForumPost forumPost = forumPostService.updateForumPost(id, updatedForumPost);
+            return ResponseEntity.ok(forumPost);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteForumPost(@PathVariable Long id) {
+        forumPostService.deleteForumPost(id);
+        return ResponseEntity.noContent().build();
+    }
+}

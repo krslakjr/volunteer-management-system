@@ -1,0 +1,47 @@
+package com.example.notificationservice.service;
+
+import com.example.notificationservice.models.Message;
+import com.example.notificationservice.repository.MessageRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MessageService {
+
+    private final MessageRepository messageRepository;
+
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
+    public List<Message> getAllMessages() {
+        return messageRepository.findAll();
+    }
+
+    public Optional<Message> getMessageById(Long id) {
+        return messageRepository.findById(id);
+    }
+
+    public Message createMessage(Message message) {
+        return messageRepository.save(message);
+    }
+
+    public Message updateMessage(Long id, Message updatedMessage) {
+        return messageRepository.findById(id)
+                .map(message -> {
+                    message.setContent(updatedMessage.getContent());
+                    message.setTimestamp(updatedMessage.getTimestamp());
+                    message.setSender(updatedMessage.getSender());
+                    message.setReceiver(updatedMessage.getReceiver());
+                    message.setOrganizer(updatedMessage.getOrganizer());
+                    return messageRepository.save(message);
+                })
+                .orElseThrow(() -> new RuntimeException("Message not found"));
+    }
+
+    public void deleteMessage(Long id) {
+        messageRepository.deleteById(id);
+    }
+}
