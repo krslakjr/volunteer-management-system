@@ -8,6 +8,7 @@ com\example\userservice\models\Activity.class
 com\example\userservice\models\User.class
 com\example\userservice\controller\UserController.class
 com\example\userservice\service\UserService.class
+com\example\userservice\DataInitializer.class
 com\example\App.class
 com\example\userservice\service\SocialShareService.class
 com\example\userservice\controller\RoleController.class

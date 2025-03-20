@@ -1,11 +1,14 @@
 package com.example.userservice.models;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -18,17 +21,25 @@ public class User {
     private String passwordHash;
     private String profilePicture;
 
+    // Role veza sa @JsonManagedReference, omogućava serijalizaciju role u User modelu
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonManagedReference
     private Role role;
 
+    // UserPermissions veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<UserPermission> userPermissions;
 
+    // SocialShares veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<SocialShare> socialShares;
 
+    // VolunteerCertificates veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<VolunteerCertificate> volunteerCertificates;
 
     @ManyToMany
@@ -37,9 +48,13 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
+    @JsonIgnore // Ignoriše učestvovanje u aktivnosti prilikom serijalizacije
     private List<Activity> activities;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     // Getter and Setter for userId
@@ -157,5 +172,18 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    // Automatically set timestamps before persisting
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+        updatedAt = new Date();
+    }
+
+    // Automatically update timestamp before updating
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = new Date();
     }
 }

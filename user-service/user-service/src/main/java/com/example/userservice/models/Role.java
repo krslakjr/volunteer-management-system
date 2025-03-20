@@ -1,7 +1,7 @@
 package com.example.userservice.models;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonBackReference; // Dodajemo ovu anotaciju
 import java.util.List;
 
 @Entity
@@ -15,6 +15,7 @@ public class Role {
     private String roleName;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference  // Ova anotacija omogućava serijalizaciju liste korisnika
     private List<User> users;
 
     public Long getRoleId() {
