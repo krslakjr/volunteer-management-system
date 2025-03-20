@@ -1,5 +1,6 @@
 package com.example.participationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -13,10 +14,12 @@ public class Participation {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
+    @JsonIgnore
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
+    @JsonIgnore
     private Activity activity;
 
     private Date registrationDate;

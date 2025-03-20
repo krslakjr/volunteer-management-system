@@ -1,5 +1,6 @@
 package com.example.participationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,9 +19,11 @@ public class Activity {
     private int volunteersNeeded;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Participation> participations;
 
     @OneToMany(mappedBy = "recommendationActivity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Recommendation> recommendations;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
