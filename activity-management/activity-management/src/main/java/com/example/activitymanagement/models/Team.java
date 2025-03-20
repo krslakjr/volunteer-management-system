@@ -1,5 +1,6 @@
 package com.example.activitymanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Team {
 
     // Veza sa TeamActivity (M:N sa Activity)
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference  // Sprečava ciklično ugnježđivanje
     private List<TeamActivity> teamActivities;
 
     // Getteri i Setteri

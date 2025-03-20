@@ -1,7 +1,7 @@
 package com.example.activitymanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,20 +13,15 @@ public class Activity {
     private Long activityId;
 
     private String description;
-    
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
+    private String date;
     private String location;
-    
     private int volunteersNeeded;
 
-    // Veza sa ActivityVolunteer (M:N sa Volunteer)
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ActivityVolunteer> activityVolunteers;
 
-    // Veza sa TeamActivity (M:N sa Team)
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore  // Sprečava ciklično ugnježđivanje
     private List<TeamActivity> teamActivities;
 
     // Getteri i Setteri
@@ -46,11 +41,11 @@ public class Activity {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

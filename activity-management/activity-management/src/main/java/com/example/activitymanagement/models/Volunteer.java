@@ -1,5 +1,6 @@
 package com.example.activitymanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Volunteer {
 
     // Veza sa ActivityVolunteer (M:N sa Activity)
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore // Dodajemo ovu anotaciju da bismo sprečili beskonačno ugnježđivanje
     private List<ActivityVolunteer> activityVolunteers;
 
     // Getteri i Setteri
