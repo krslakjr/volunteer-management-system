@@ -1,0 +1,63 @@
+package com.example.userservice.controller;
+
+import com.example.userservice.models.SocialShare;
+import com.example.userservice.service.SocialShareService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/social-shares")
+public class SocialShareController {
+
+    @Autowired
+    private SocialShareService socialShareService;
+
+    // Get all SocialShares
+    @GetMapping
+    public List<SocialShare> getAllSocialShares() {
+        return socialShareService.getAllSocialShares();
+    }
+
+    // Get SocialShare by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<SocialShare> getSocialShareById(@PathVariable Long id) {
+        Optional<SocialShare> socialShare = socialShareService.getSocialShareById(id);
+        return socialShare.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // Create a new SocialShare
+    @PostMapping
+    public ResponseEntity<SocialShare> createSocialShare(@RequestBody SocialShare socialShare) {
+        try {
+            SocialShare createdSocialShare = socialShareService.createSocialShare(socialShare);
+            return new ResponseEntity<>(createdSocialShare, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Update an existing SocialShare
+    @PutMapping("/{id}")
+    public ResponseEntity<SocialShare> updateSocialShare(@PathVariable Long id, @RequestBody SocialShare socialShare) {
+        Optional<SocialShare> updatedSocialShare = socialShareService.updateSocialShare(id, socialShare);
+        return updatedSocialShare.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // Delete a SocialShare
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteSocialShare(@PathVariable Long id) {
+        try {
+            socialShareService.deleteSocialShare(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}
