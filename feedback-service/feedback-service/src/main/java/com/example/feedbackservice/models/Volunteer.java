@@ -1,5 +1,6 @@
 package com.example.feedbackservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,9 +16,11 @@ public class Volunteer {
     private String contactInfo;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference // Rješava beskonačnu rekurziju s Feedback klasom
     private List<Feedback> feedbacks;
 
-    // Getter and Setter for volunteerId
+    // Getter i Setter metode
+
     public Long getVolunteerId() {
         return volunteerId;
     }
@@ -26,7 +29,6 @@ public class Volunteer {
         this.volunteerId = volunteerId;
     }
 
-    // Getter and Setter for name
     public String getName() {
         return name;
     }
@@ -35,7 +37,6 @@ public class Volunteer {
         this.name = name;
     }
 
-    // Getter and Setter for contactInfo
     public String getContactInfo() {
         return contactInfo;
     }
@@ -44,7 +45,6 @@ public class Volunteer {
         this.contactInfo = contactInfo;
     }
 
-    // Getter and Setter for feedbacks
     public List<Feedback> getFeedbacks() {
         return feedbacks;
     }

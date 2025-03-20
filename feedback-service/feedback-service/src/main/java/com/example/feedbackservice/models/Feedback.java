@@ -1,5 +1,6 @@
 package com.example.feedbackservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -13,17 +14,20 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
+    @JsonBackReference // Sprječava beskonačnu rekurziju kod Volunteer-a
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
+    @JsonBackReference // Sprječava beskonačnu rekurziju kod Activity-a
     private Activity activity;
 
     private int rating;
     private String comment;
     private Date timestamp;
 
-    // Getter and Setter for feedbackId
+    // Getter i Setter metode
+
     public Long getFeedbackId() {
         return feedbackId;
     }
@@ -32,7 +36,6 @@ public class Feedback {
         this.feedbackId = feedbackId;
     }
 
-    // Getter and Setter for volunteer
     public Volunteer getVolunteer() {
         return volunteer;
     }
@@ -41,7 +44,6 @@ public class Feedback {
         this.volunteer = volunteer;
     }
 
-    // Getter and Setter for activity
     public Activity getActivity() {
         return activity;
     }
@@ -50,7 +52,6 @@ public class Feedback {
         this.activity = activity;
     }
 
-    // Getter and Setter for rating
     public int getRating() {
         return rating;
     }
@@ -59,7 +60,6 @@ public class Feedback {
         this.rating = rating;
     }
 
-    // Getter and Setter for comment
     public String getComment() {
         return comment;
     }
@@ -68,7 +68,6 @@ public class Feedback {
         this.comment = comment;
     }
 
-    // Getter and Setter for timestamp
     public Date getTimestamp() {
         return timestamp;
     }

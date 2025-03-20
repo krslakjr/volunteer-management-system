@@ -1,5 +1,6 @@
 package com.example.feedbackservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,12 +19,15 @@ public class Activity {
     private int volunteersNeeded;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference // Sprječava beskonačnu rekurziju s Feedback klasom
     private List<Feedback> feedbacks;
 
     @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference // Sprječava beskonačnu rekurziju s ActivityStatistics klasom
     private ActivityStatistics activityStatistics;
 
-    // Getter and Setter for activityId
+    // Getter i Setter metode
+
     public Long getActivityId() {
         return activityId;
     }
@@ -32,7 +36,6 @@ public class Activity {
         this.activityId = activityId;
     }
 
-    // Getter and Setter for description
     public String getDescription() {
         return description;
     }
@@ -41,7 +44,6 @@ public class Activity {
         this.description = description;
     }
 
-    // Getter and Setter for date
     public Date getDate() {
         return date;
     }
@@ -50,7 +52,6 @@ public class Activity {
         this.date = date;
     }
 
-    // Getter and Setter for location
     public String getLocation() {
         return location;
     }
@@ -59,7 +60,6 @@ public class Activity {
         this.location = location;
     }
 
-    // Getter and Setter for volunteersNeeded
     public int getVolunteersNeeded() {
         return volunteersNeeded;
     }
@@ -68,7 +68,6 @@ public class Activity {
         this.volunteersNeeded = volunteersNeeded;
     }
 
-    // Getter and Setter for feedbacks
     public List<Feedback> getFeedbacks() {
         return feedbacks;
     }
@@ -77,7 +76,6 @@ public class Activity {
         this.feedbacks = feedbacks;
     }
 
-    // Getter and Setter for activityStatistics
     public ActivityStatistics getActivityStatistics() {
         return activityStatistics;
     }

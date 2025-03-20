@@ -1,5 +1,6 @@
 package com.example.feedbackservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,13 +13,15 @@ public class ActivityStatistics {
 
     @OneToOne
     @JoinColumn(name = "activity_id")
+    @JsonBackReference // Sprječava beskonačnu rekurziju s Activity klasom
     private Activity activity;
 
     private double averageRating;
     private int totalRatings;
     private int totalComments;
 
-    // Getter and Setter for id
+    // Getter i Setter metode
+
     public Long getId() {
         return id;
     }
@@ -27,7 +30,6 @@ public class ActivityStatistics {
         this.id = id;
     }
 
-    // Getter and Setter for activity
     public Activity getActivity() {
         return activity;
     }
@@ -36,7 +38,6 @@ public class ActivityStatistics {
         this.activity = activity;
     }
 
-    // Getter and Setter for averageRating
     public double getAverageRating() {
         return averageRating;
     }
@@ -45,7 +46,6 @@ public class ActivityStatistics {
         this.averageRating = averageRating;
     }
 
-    // Getter and Setter for totalRatings
     public int getTotalRatings() {
         return totalRatings;
     }
@@ -54,7 +54,6 @@ public class ActivityStatistics {
         this.totalRatings = totalRatings;
     }
 
-    // Getter and Setter for totalComments
     public int getTotalComments() {
         return totalComments;
     }
