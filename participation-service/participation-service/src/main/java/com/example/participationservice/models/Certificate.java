@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "participation")
-public class Participation {
+@Table(name = "certificate")
+public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long participationId;
+    private Long certificateId;
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
@@ -19,16 +19,16 @@ public class Participation {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    private Date registrationDate;
-    private String attendanceStatus;
+    private Date issueDate;
+    private String certificateStatus;
 
     // Getters and Setters
-    public Long getParticipationId() {
-        return participationId;
+    public Long getCertificateId() {
+        return certificateId;
     }
 
-    public void setParticipationId(Long participationId) {
-        this.participationId = participationId;
+    public void setCertificateId(Long certificateId) {
+        this.certificateId = certificateId;
     }
 
     public Volunteer getVolunteer() {
@@ -47,19 +47,19 @@ public class Participation {
         this.activity = activity;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
+    public Date getIssueDate() {
+        return issueDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
 
-    public String getAttendanceStatus() {
-        return attendanceStatus;
+    public String getCertificateStatus() {
+        return certificateStatus;
     }
 
-    public void setAttendanceStatus(String attendanceStatus) {
-        this.attendanceStatus = attendanceStatus;
+    public void setCertificateStatus(String certificateStatus) {
+        this.certificateStatus = certificateStatus;
     }
 }
