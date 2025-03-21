@@ -2,6 +2,7 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.models.Activity;
 import com.example.participationservice.repository.ActivityRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,10 @@ public class ActivityService {
 
     public List<Activity> getAllActivities() {
         return activityRepository.findAll();
+    }
+
+     public void saveActivity(Activity activity) {
+        activityRepository.save(activity);
     }
 
     public Optional<Activity> getActivityById(Long id) {

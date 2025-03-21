@@ -2,6 +2,7 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.models.Participation;
 import com.example.participationservice.repository.ParticipationRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class ParticipationService {
 
     public List<Participation> getAllParticipations() {
         return participationRepository.findAll();
+    }
+     public void saveParticipation(Participation participation) {
+        participationRepository.save(participation);
     }
 
     public Optional<Participation> getParticipationById(Long id) {

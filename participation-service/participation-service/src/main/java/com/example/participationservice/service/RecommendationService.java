@@ -2,6 +2,9 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.repository.RecommendationRepository;
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,9 @@ public class RecommendationService {
 
     public List<Recommendation> getAllRecommendations() {
         return recommendationRepository.findAll();
+    }
+     public void saveRecommendation(Recommendation recommendation) {
+        recommendationRepository.save(recommendation);
     }
 
     public Optional<Recommendation> getRecommendationById(Long id) {

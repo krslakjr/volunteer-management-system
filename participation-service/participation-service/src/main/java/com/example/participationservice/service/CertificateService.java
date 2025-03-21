@@ -2,6 +2,7 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.models.Certificate;
 import com.example.participationservice.repository.CertificateRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class CertificateService {
 
     public List<Certificate> getAllCertificates() {
         return certificateRepository.findAll();
+    }
+     public void saveCertificate(Certificate certificate) {
+        certificateRepository.save(certificate);
     }
 
     public Optional<Certificate> getCertificateById(Long id) {
