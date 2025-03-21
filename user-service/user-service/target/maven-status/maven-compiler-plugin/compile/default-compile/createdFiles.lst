@@ -18,13 +18,13 @@ com\example\userservice\controller\PermissionController.class
 com\example\userservice\repository\UserRepository.class
 com\example\userservice\repository\SocialShareRepository.class
 com\example\userservice\models\Permission.class
-com\example\userservice\repositories\UserPermissionRepository.class
 com\example\userservice\repository\RoleRepository.class
 com\example\userservice\models\UserPermission.class
 com\example\userservice\repository\VolunteerCertificateRepository.class
 com\example\userservice\service\VolunteerCertificateService.class
 com\example\userservice\controller\UserPermissionController.class
 com\example\userservice\models\SocialShare.class
+com\example\userservice\repository\UserPermissionRepository.class
 com\example\userservice\service\RoleService.class
 com\example\userservice\controller\VolunteerCertificateController.class
 com\example\userservice\models\Role.class

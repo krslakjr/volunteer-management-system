@@ -1,7 +1,7 @@
 package com.example.userservice.services;
 
 import com.example.userservice.models.UserPermission;
-import com.example.userservice.repositories.UserPermissionRepository;
+import com.example.userservice.repository.UserPermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

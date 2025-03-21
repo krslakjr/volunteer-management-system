@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList; // Importuj ArrayList
 
 @Entity
 @Table(name = "users")
@@ -35,13 +36,14 @@ public class User {
     // SocialShares veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<SocialShare> socialShares;
+    private List<SocialShare> socialShares = new ArrayList<>(); // Inicijalizacija liste
 
     // VolunteerCertificates veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<VolunteerCertificate> volunteerCertificates;
+    private List<VolunteerCertificate> volunteerCertificates = new ArrayList<>(); // Inicijalizacija liste
 
+    // Inicijalizuj listu aktivnosti
     @ManyToMany
     @JoinTable(
         name = "user_activity",
@@ -49,7 +51,7 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
     @JsonIgnore // Ignoriše učestvovanje u aktivnosti prilikom serijalizacije
-    private List<Activity> activities;
+    private List<Activity> activities = new ArrayList<>(); // Inicijalizacija liste
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
