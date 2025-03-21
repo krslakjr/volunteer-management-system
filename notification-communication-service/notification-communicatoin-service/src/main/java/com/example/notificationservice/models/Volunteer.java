@@ -1,5 +1,7 @@
 package com.example.notificationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -16,18 +18,23 @@ public class Volunteer {
     private String phoneNumber;
 
     @OneToOne(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference  
     private EngagementStatistics engagementStatistics;
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference  
     private List<Message> sentMessages;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference  
     private List<Message> receivedMessages;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference 
     private List<ForumPost> forumPosts;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference 
     private List<Notification> notifications;
 
     // Getters and Setters

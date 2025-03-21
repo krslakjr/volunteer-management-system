@@ -25,5 +25,6 @@ com\example\notificationservice\repository\ForumPostRepository.class
 com\example\notificationservice\controller\OrganizerController.class
 com\example\notificationservice\controller\MessageController.class
 com\example\notificationservice\controller\VolunteerController.class
+com\example\notificationservice\DataInitializer.class
 com\example\notificationservice\service\EngagementStatisticsService.class
 com\example\notificationservice\repository\NotificationRepository.class

@@ -1,5 +1,8 @@
 package com.example.notificationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -16,15 +19,19 @@ public class Organizer {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference  
     private List<Activity> activities;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference  
     private List<ForumPost> forumPosts;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference 
     private List<Notification> notifications;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference  
     private List<Message> messages;
 
     // Getters and Setters

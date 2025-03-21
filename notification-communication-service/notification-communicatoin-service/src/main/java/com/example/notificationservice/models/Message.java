@@ -1,5 +1,6 @@
 package com.example.notificationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -13,14 +14,17 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
+    @JsonBackReference  
     private Volunteer sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
+    @JsonBackReference  
     private Volunteer receiver;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)
+    @JsonBackReference 
     private Organizer organizer;
 
     private String content;

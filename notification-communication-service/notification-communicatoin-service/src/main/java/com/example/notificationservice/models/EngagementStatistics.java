@@ -1,5 +1,6 @@
 package com.example.notificationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class EngagementStatistics {
 
     @OneToOne
     @JoinColumn(name = "volunteer_id", nullable = false)
+    @JsonBackReference  
     private Volunteer volunteer;
 
     private int totalActivities;
