@@ -39,6 +39,10 @@ public class OrganizerService {
                 .orElseThrow(() -> new RuntimeException("Organizer not found"));
     }
 
+    public void saveOrganizer(Organizer organizer) {
+        organizerRepository.save(organizer);
+    }
+
     public void deleteOrganizer(Long id) {
         organizerRepository.deleteById(id);
     }

@@ -2,6 +2,9 @@ package com.example.notificationservice.service;
 
 import com.example.notificationservice.models.EngagementStatistics;
 import com.example.notificationservice.repository.EngagementStatisticsRepository;
+
+import com.example.notificationservice.models.Organizer;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,9 @@ public class EngagementStatisticsService {
         this.engagementStatisticsRepository = engagementStatisticsRepository;
     }
 
+    public void saveEngagementStatistics(EngagementStatistics engagementStatistics) {
+        engagementStatisticsRepository.save(engagementStatistics);
+    }
     public List<EngagementStatistics> getAllStatistics() {
         return engagementStatisticsRepository.findAll();
     }

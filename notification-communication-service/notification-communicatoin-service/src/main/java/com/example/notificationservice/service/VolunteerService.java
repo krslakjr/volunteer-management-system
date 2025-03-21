@@ -12,6 +12,10 @@ public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
 
+    public void saveVolunteer(Volunteer volunteer) {
+        volunteerRepository.save(volunteer);
+    }    
+
     public VolunteerService(VolunteerRepository volunteerRepository) {
         this.volunteerRepository = volunteerRepository;
     }

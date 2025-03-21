@@ -2,6 +2,9 @@ package com.example.notificationservice.service;
 
 import com.example.notificationservice.models.Activity;
 import com.example.notificationservice.repository.ActivityRepository;
+
+import com.example.notificationservice.models.Organizer;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +17,9 @@ public class ActivityService {
 
     public ActivityService(ActivityRepository activityRepository) {
         this.activityRepository = activityRepository;
+    }
+    public void saveActivity(Activity activity) {
+        activityRepository.save(activity);
     }
 
     public List<Activity> getAllActivities() {

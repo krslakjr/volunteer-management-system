@@ -15,6 +15,9 @@ public class ForumPostService {
     public ForumPostService(ForumPostRepository forumPostRepository) {
         this.forumPostRepository = forumPostRepository;
     }
+    public void saveForumPost(ForumPost forumpost) {
+        forumPostRepository.save(forumpost);
+    }    
 
     public List<ForumPost> getAllForumPosts() {
         return forumPostRepository.findAll();

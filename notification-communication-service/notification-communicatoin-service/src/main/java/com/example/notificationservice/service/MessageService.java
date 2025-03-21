@@ -19,6 +19,9 @@ public class MessageService {
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
+    public void saveMessage(Message message) {
+        messageRepository.save(message);
+    }    
 
     public Optional<Message> getMessageById(Long id) {
         return messageRepository.findById(id);
