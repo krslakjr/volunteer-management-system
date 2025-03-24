@@ -1,5 +1,7 @@
 package com.example.activitymanagement.controller;
 
+import com.example.activitymanagement.dto.ActivityDTO;
+import com.example.activitymanagement.mapper.ActivityMapper; 
 import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.service.ActivityService;
 import org.springframework.http.ResponseEntity;
@@ -12,27 +14,30 @@ import java.util.List;
 public class ActivityController {
 
     private final ActivityService activityService;
+    private final ActivityMapper activityMapper;
 
-    public ActivityController(ActivityService activityService) {
+    public ActivityController(ActivityService activityService, ActivityMapper activityMapper) {
         this.activityService = activityService;
+        this.activityMapper = activityMapper;
     }
 
     @GetMapping
-    public List<Activity> getAllActivities() {
+    public List<ActivityDTO> getAllActivities() {
         return activityService.getAllActivities();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
+    public ResponseEntity<ActivityDTO> getActivityById(@PathVariable Long id) {
         return activityService.getActivityById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+            .map(activity -> ResponseEntity.ok(activityMapper.toActivityDTO(activity)))  
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public Activity createActivity(@RequestBody Activity activity) {
         return activityService.createActivity(activity);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity updatedActivity) {

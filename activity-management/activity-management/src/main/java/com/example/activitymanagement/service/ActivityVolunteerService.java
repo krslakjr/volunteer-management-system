@@ -1,5 +1,7 @@
 package com.example.activitymanagement.service;
 
+import com.example.activitymanagement.dto.ActivityVolunteerDTO;
+import com.example.activitymanagement.mapper.ActivityVolunteerMapper;
 import com.example.activitymanagement.models.ActivityVolunteer;
 import com.example.activitymanagement.repository.ActivityVolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,43 +9,49 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ActivityVolunteerService {
 
     private final ActivityVolunteerRepository activityVolunteerRepository;
+    private final ActivityVolunteerMapper activityVolunteerMapper;
 
     @Autowired
-    public ActivityVolunteerService(ActivityVolunteerRepository activityVolunteerRepository) {
+    public ActivityVolunteerService(ActivityVolunteerRepository activityVolunteerRepository, ActivityVolunteerMapper activityVolunteerMapper) {
         this.activityVolunteerRepository = activityVolunteerRepository;
+        this.activityVolunteerMapper = activityVolunteerMapper;
     }
 
-    // Get all ActivityVolunteers
-    public List<ActivityVolunteer> getAllActivityVolunteers() {
-        return activityVolunteerRepository.findAll();
+    public List<ActivityVolunteerDTO> getAllActivityVolunteers() {
+        return activityVolunteerRepository.findAll().stream()
+                .map(activityVolunteerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    // Get ActivityVolunteer by ID
-    public Optional<ActivityVolunteer> getActivityVolunteerById(Long id) {
-        return activityVolunteerRepository.findById(id);
+    public Optional<ActivityVolunteerDTO> getActivityVolunteerById(Long id) {
+        return activityVolunteerRepository.findById(id)
+                .map(activityVolunteerMapper::toDTO);
     }
 
-    // Create a new ActivityVolunteer
-    public ActivityVolunteer createActivityVolunteer(ActivityVolunteer activityVolunteer) {
-        return activityVolunteerRepository.save(activityVolunteer);
+    // Create method should accept ActivityVolunteerDTO instead of entity
+    public ActivityVolunteerDTO createActivityVolunteer(ActivityVolunteerDTO activityVolunteerDTO) {
+        ActivityVolunteer activityVolunteer = activityVolunteerMapper.toEntity(activityVolunteerDTO); // Convert DTO to entity
+        ActivityVolunteer savedActivityVolunteer = activityVolunteerRepository.save(activityVolunteer);
+        return activityVolunteerMapper.toDTO(savedActivityVolunteer); // Convert back to DTO
     }
 
-    // Update an existing ActivityVolunteer
-    public Optional<ActivityVolunteer> updateActivityVolunteer(Long id, ActivityVolunteer activityVolunteer) {
+    // Update method should accept ActivityVolunteerDTO instead of entity
+    public Optional<ActivityVolunteerDTO> updateActivityVolunteer(Long id, ActivityVolunteerDTO activityVolunteerDTO) {
         return activityVolunteerRepository.findById(id)
                 .map(existingActivityVolunteer -> {
-                    existingActivityVolunteer.setActivity(activityVolunteer.getActivity());
-                    existingActivityVolunteer.setVolunteer(activityVolunteer.getVolunteer());
-                    return activityVolunteerRepository.save(existingActivityVolunteer);
+                    existingActivityVolunteer.setActivity(activityVolunteerMapper.toEntity(activityVolunteerDTO).getActivity());
+                    existingActivityVolunteer.setVolunteer(activityVolunteerMapper.toEntity(activityVolunteerDTO).getVolunteer());
+                    ActivityVolunteer updatedActivityVolunteer = activityVolunteerRepository.save(existingActivityVolunteer);
+                    return activityVolunteerMapper.toDTO(updatedActivityVolunteer);
                 });
     }
 
-    // Delete an ActivityVolunteer
     public boolean deleteActivityVolunteer(Long id) {
         return activityVolunteerRepository.findById(id)
                 .map(existingActivityVolunteer -> {

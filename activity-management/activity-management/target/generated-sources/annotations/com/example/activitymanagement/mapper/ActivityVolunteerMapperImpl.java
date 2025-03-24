@@ -1,0 +1,43 @@
+package com.example.activitymanagement.mapper;
+
+import com.example.activitymanagement.dto.ActivityVolunteerDTO;
+import com.example.activitymanagement.models.ActivityVolunteer;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2025-03-24T16:11:47+0100",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.14 (OpenLogic)"
+)
+@Component
+public class ActivityVolunteerMapperImpl implements ActivityVolunteerMapper {
+
+    @Override
+    public ActivityVolunteerDTO toDTO(ActivityVolunteer activityVolunteer) {
+        if ( activityVolunteer == null ) {
+            return null;
+        }
+
+        ActivityVolunteerDTO activityVolunteerDTO = new ActivityVolunteerDTO();
+
+        activityVolunteerDTO.setActivityId( ActivityVolunteerMapper.mapActivityToId( activityVolunteer.getActivity() ) );
+        activityVolunteerDTO.setVolunteerId( ActivityVolunteerMapper.mapVolunteerToId( activityVolunteer.getVolunteer() ) );
+        activityVolunteerDTO.setId( activityVolunteer.getId() );
+
+        return activityVolunteerDTO;
+    }
+
+    @Override
+    public ActivityVolunteer toEntity(ActivityVolunteerDTO activityVolunteerDTO) {
+        if ( activityVolunteerDTO == null ) {
+            return null;
+        }
+
+        ActivityVolunteer activityVolunteer = new ActivityVolunteer();
+
+        activityVolunteer.setId( activityVolunteerDTO.getId() );
+
+        return activityVolunteer;
+    }
+}

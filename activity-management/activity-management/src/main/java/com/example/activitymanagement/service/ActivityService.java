@@ -1,5 +1,7 @@
 package com.example.activitymanagement.service;
 
+import com.example.activitymanagement.dto.ActivityDTO;
+import com.example.activitymanagement.mapper.ActivityMapper;
 import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.repository.ActivityRepository;
 import org.springframework.stereotype.Service;
@@ -11,13 +13,20 @@ import java.util.Optional;
 public class ActivityService {
 
     private final ActivityRepository activityRepository;
+    private final ActivityMapper activityMapper;
 
-    public ActivityService(ActivityRepository activityRepository) {
+    public ActivityService(ActivityRepository activityRepository, ActivityMapper activityMapper) {
         this.activityRepository = activityRepository;
+        this.activityMapper = activityMapper;
     }
 
-    public List<Activity> getAllActivities() {
-        return activityRepository.findAll();
+    public List<ActivityDTO> getAllActivities() {
+
+        List<Activity> activities = activityRepository.findAll();
+
+        return activities.stream()
+                .map(activityMapper::toActivityDTO) 
+                .toList(); 
     }
 
     public Optional<Activity> getActivityById(Long id) {

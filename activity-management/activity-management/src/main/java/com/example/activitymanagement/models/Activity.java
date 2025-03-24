@@ -21,10 +21,9 @@ public class Activity {
     private List<ActivityVolunteer> activityVolunteers;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore  // Sprečava ciklično ugnježđivanje
+    @JsonIgnore  
     private List<TeamActivity> teamActivities;
 
-    // Getteri i Setteri
     public Long getActivityId() {
         return activityId;
     }

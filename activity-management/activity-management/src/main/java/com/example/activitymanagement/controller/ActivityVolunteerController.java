@@ -1,6 +1,6 @@
 package com.example.activitymanagement.controller;
 
-import com.example.activitymanagement.models.ActivityVolunteer;
+import com.example.activitymanagement.dto.ActivityVolunteerDTO;
 import com.example.activitymanagement.service.ActivityVolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,40 +21,35 @@ public class ActivityVolunteerController {
         this.activityVolunteerService = activityVolunteerService;
     }
 
-    // Get all ActivityVolunteers
     @GetMapping
-    public List<ActivityVolunteer> getAllActivityVolunteers() {
+    public List<ActivityVolunteerDTO> getAllActivityVolunteers() {
         return activityVolunteerService.getAllActivityVolunteers();
     }
 
-    // Get ActivityVolunteer by ID
     @GetMapping("/{id}")
-    public ResponseEntity<ActivityVolunteer> getActivityVolunteerById(@PathVariable Long id) {
-        Optional<ActivityVolunteer> activityVolunteer = activityVolunteerService.getActivityVolunteerById(id);
-        return activityVolunteer.map(volunteer -> new ResponseEntity<>(volunteer, HttpStatus.OK))
+    public ResponseEntity<ActivityVolunteerDTO> getActivityVolunteerById(@PathVariable Long id) {
+        Optional<ActivityVolunteerDTO> activityVolunteerDTO = activityVolunteerService.getActivityVolunteerById(id);
+        return activityVolunteerDTO.map(volunteerDTO -> new ResponseEntity<>(volunteerDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Create a new ActivityVolunteer
     @PostMapping
-    public ResponseEntity<ActivityVolunteer> createActivityVolunteer(@RequestBody ActivityVolunteer activityVolunteer) {
+    public ResponseEntity<ActivityVolunteerDTO> createActivityVolunteer(@RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
         try {
-            ActivityVolunteer savedActivityVolunteer = activityVolunteerService.createActivityVolunteer(activityVolunteer);
-            return new ResponseEntity<>(savedActivityVolunteer, HttpStatus.CREATED);
+            ActivityVolunteerDTO savedActivityVolunteerDTO = activityVolunteerService.createActivityVolunteer(activityVolunteerDTO);
+            return new ResponseEntity<>(savedActivityVolunteerDTO, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Update an existing ActivityVolunteer
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityVolunteer> updateActivityVolunteer(@PathVariable Long id, @RequestBody ActivityVolunteer activityVolunteer) {
-        Optional<ActivityVolunteer> updatedActivityVolunteer = activityVolunteerService.updateActivityVolunteer(id, activityVolunteer);
-        return updatedActivityVolunteer.map(volunteer -> new ResponseEntity<>(volunteer, HttpStatus.OK))
+    public ResponseEntity<ActivityVolunteerDTO> updateActivityVolunteer(@PathVariable Long id, @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
+        Optional<ActivityVolunteerDTO> updatedActivityVolunteerDTO = activityVolunteerService.updateActivityVolunteer(id, activityVolunteerDTO);
+        return updatedActivityVolunteerDTO.map(volunteerDTO -> new ResponseEntity<>(volunteerDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Delete an ActivityVolunteer
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteActivityVolunteer(@PathVariable Long id) {
         boolean isDeleted = activityVolunteerService.deleteActivityVolunteer(id);
