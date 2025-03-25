@@ -21,13 +21,11 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // Get all teams
     @GetMapping
     public List<Team> getAllTeams() {
         return teamService.getAllTeams();
     }
 
-    // Get Team by ID
     @GetMapping("/{id}")
     public ResponseEntity<Team> getTeamById(@PathVariable Long id) {
         Optional<Team> team = teamService.getTeamById(id);
@@ -35,7 +33,6 @@ public class TeamController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Create a new Team
     @PostMapping
     public ResponseEntity<Team> createTeam(@RequestBody Team team) {
         try {
@@ -46,7 +43,6 @@ public class TeamController {
         }
     }
 
-    // Update an existing Team
     @PutMapping("/{id}")
     public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team team) {
         Optional<Team> updatedTeam = teamService.updateTeam(id, team);
@@ -54,7 +50,6 @@ public class TeamController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Delete a Team
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTeam(@PathVariable Long id) {
         boolean isDeleted = teamService.deleteTeam(id);

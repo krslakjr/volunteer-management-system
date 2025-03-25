@@ -14,22 +14,18 @@ public class ActivityService {
     @Autowired
     private ActivityRepository activityRepository;
 
-    // Get all activities
     public List<Activity> getAllActivities() {
         return activityRepository.findAll();
     }
 
-    // Get activity by ID
     public Optional<Activity> getActivityById(Long id) {
         return activityRepository.findById(id);
     }
 
-    // Create or update activity
     public Activity saveOrUpdateActivity(Activity activity) {
         return activityRepository.save(activity);
     }
 
-    // Delete activity by ID
     public void deleteActivity(Long id) {
         if (activityRepository.existsById(id)) {
             activityRepository.deleteById(id);

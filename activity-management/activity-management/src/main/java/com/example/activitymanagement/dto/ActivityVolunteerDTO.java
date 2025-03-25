@@ -6,7 +6,6 @@ public class ActivityVolunteerDTO {
     private Long activityId;
     private Long volunteerId;
 
-    // Getteri i Setteri
     public Long getId() {
         return id;
     }

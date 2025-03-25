@@ -34,14 +34,12 @@ public class ActivityVolunteerService {
                 .map(activityVolunteerMapper::toDTO);
     }
 
-    // Create method should accept ActivityVolunteerDTO instead of entity
     public ActivityVolunteerDTO createActivityVolunteer(ActivityVolunteerDTO activityVolunteerDTO) {
-        ActivityVolunteer activityVolunteer = activityVolunteerMapper.toEntity(activityVolunteerDTO); // Convert DTO to entity
+        ActivityVolunteer activityVolunteer = activityVolunteerMapper.toEntity(activityVolunteerDTO); 
         ActivityVolunteer savedActivityVolunteer = activityVolunteerRepository.save(activityVolunteer);
-        return activityVolunteerMapper.toDTO(savedActivityVolunteer); // Convert back to DTO
+        return activityVolunteerMapper.toDTO(savedActivityVolunteer); 
     }
 
-    // Update method should accept ActivityVolunteerDTO instead of entity
     public Optional<ActivityVolunteerDTO> updateActivityVolunteer(Long id, ActivityVolunteerDTO activityVolunteerDTO) {
         return activityVolunteerRepository.findById(id)
                 .map(existingActivityVolunteer -> {

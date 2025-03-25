@@ -18,22 +18,18 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    // Get all teams
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
 
-    // Get Team by ID
     public Optional<Team> getTeamById(Long id) {
         return teamRepository.findById(id);
     }
 
-    // Create a new Team
     public Team createTeam(Team team) {
         return teamRepository.save(team);
     }
 
-    // Update an existing Team
     public Optional<Team> updateTeam(Long id, Team team) {
         return teamRepository.findById(id)
                 .map(existingTeam -> {
@@ -43,7 +39,6 @@ public class TeamService {
                 });
     }
 
-    // Delete a Team
     public boolean deleteTeam(Long id) {
         return teamRepository.findById(id)
                 .map(existingTeam -> {

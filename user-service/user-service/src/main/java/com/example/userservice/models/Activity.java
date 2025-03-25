@@ -1,7 +1,7 @@
 package com.example.userservice.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference; // Dodato
+import com.fasterxml.jackson.annotation.JsonBackReference; 
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Activity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organizer_id")
-    @JsonManagedReference // Serijalizuje organizatora
+    @JsonManagedReference 
     private User organizer;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -32,7 +32,7 @@ public class Activity {
     private List<VolunteerCertificate> volunteerCertificates;
 
     @ManyToMany(mappedBy = "activities")
-    @JsonBackReference // Ignoriše učesnike prilikom serijalizacije
+    @JsonBackReference 
     private List<User> participants;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,7 +41,6 @@ public class Activity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Getter i Setter metod za activityId
     public Long getActivityId() {
         return activityId;
     }
@@ -50,7 +49,6 @@ public class Activity {
         this.activityId = activityId;
     }
 
-    // Getter i Setter metod za activityName
     public String getActivityName() {
         return activityName;
     }
@@ -59,7 +57,6 @@ public class Activity {
         this.activityName = activityName;
     }
 
-    // Getter i Setter metod za activityDate
     public Date getActivityDate() {
         return activityDate;
     }
@@ -68,7 +65,6 @@ public class Activity {
         this.activityDate = activityDate;
     }
 
-    // Getter i Setter metod za description
     public String getDescription() {
         return description;
     }
@@ -77,7 +73,6 @@ public class Activity {
         this.description = description;
     }
 
-    // Getter i Setter metod za organizer
     public User getOrganizer() {
         return organizer;
     }
@@ -86,7 +81,6 @@ public class Activity {
         this.organizer = organizer;
     }
 
-    // Getter i Setter metod za socialShares
     public List<SocialShare> getSocialShares() {
         return socialShares;
     }
@@ -95,7 +89,6 @@ public class Activity {
         this.socialShares = socialShares;
     }
 
-    // Getter i Setter metod za volunteerCertificates
     public List<VolunteerCertificate> getVolunteerCertificates() {
         return volunteerCertificates;
     }
@@ -104,7 +97,6 @@ public class Activity {
         this.volunteerCertificates = volunteerCertificates;
     }
 
-    // Getter i Setter metod za participants
     public List<User> getParticipants() {
         return participants;
     }
@@ -113,7 +105,6 @@ public class Activity {
         this.participants = participants;
     }
 
-    // Getter i Setter metod za createdAt
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -122,7 +113,6 @@ public class Activity {
         this.createdAt = createdAt;
     }
 
-    // Getter i Setter metod za updatedAt
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -131,14 +121,12 @@ public class Activity {
         this.updatedAt = updatedAt;
     }
 
-    // Automatski setovanje timestamps pre nego što se entitet sačuva
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
         updatedAt = new Date();
     }
 
-    // Automatski ažuriranje timestamp pre nego što se entitet ažurira
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

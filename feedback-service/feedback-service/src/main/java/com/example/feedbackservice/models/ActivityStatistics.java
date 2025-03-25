@@ -13,14 +13,13 @@ public class ActivityStatistics {
 
     @OneToOne
     @JoinColumn(name = "activity_id")
-    @JsonBackReference // Sprječava beskonačnu rekurziju s Activity klasom
+    @JsonBackReference 
     private Activity activity;
 
     private double averageRating;
     private int totalRatings;
     private int totalComments;
 
-    // Getter i Setter metode
 
     public Long getId() {
         return id;

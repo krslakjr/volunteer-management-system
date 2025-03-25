@@ -33,7 +33,6 @@ public class Notification {
     private Date timestamp;
     private boolean isRead;
 
-    // Getters and Setters
     public Long getNotificationId() {
         return notificationId;
     }

@@ -34,7 +34,6 @@ public class Organizer {
     @JsonBackReference  
     private List<Message> messages;
 
-    // Getters and Setters
     public Long getOrganizerId() {
         return organizerId;
     }

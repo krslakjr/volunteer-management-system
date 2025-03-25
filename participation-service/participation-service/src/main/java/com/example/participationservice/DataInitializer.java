@@ -28,7 +28,6 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Inicijalizacija Activity entiteta
         Activity activity1 = new Activity();
         activity1.setDescription("Community Cleanup Event");
         activity1.setDate(new Date());
@@ -45,7 +44,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Activities saved.");
 
-        // Inicijalizacija Volunteer entiteta
         Volunteer volunteer1 = new Volunteer();
         volunteer1.setName("John Doe");
         volunteer1.setContactInfo("john.doe@example.com");
@@ -58,7 +56,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Volunteers saved.");
 
-        // Inicijalizacija Participation entiteta
         Participation participation1 = new Participation();
         participation1.setVolunteer(volunteer1);
         participation1.setActivity(activity1);
@@ -75,7 +72,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Participations saved.");
 
-        // Inicijalizacija Recommendation entiteta
         Recommendation recommendation1 = new Recommendation();
         recommendation1.setVolunteer(volunteer1);
         recommendation1.setRecommendationActivity(activity1);
@@ -90,7 +86,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Recommendations saved.");
 
-        // Inicijalizacija Certificate entiteta
         Certificate certificate1 = new Certificate();
         certificate1.setVolunteer(volunteer1);
         certificate1.setActivity(activity1);

@@ -33,7 +33,6 @@ public class Activity {
     @JsonManagedReference  
     private List<Notification> notifications;
 
-    // Getters and Setters
     public Long getActivityId() {
         return activityId;
     }

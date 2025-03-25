@@ -1,5 +1,7 @@
 package com.example.userservice.service;
 
+import com.example.userservice.dto.UserDTO;
+import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.models.User;
 import com.example.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -14,42 +17,32 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Get all users
-    public List<User> getAllUsers() {
-        return userRepository.findAll(); // Minimalno rešenje
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    // Get user by ID
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDTO> getUserById(Long id) {
+        return userRepository.findById(id).map(UserMapper::toDTO);
     }
 
-    // Create a new user
-    public User createUser(User user) {
-        try {
-            // Proveri da li je role null
-            if (user.getRole() == null || user.getRole().getRoleId() == null) {
-                throw new IllegalArgumentException("Role must be valid");
-            }
-            return userRepository.save(user);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid role: " + e.getMessage(), e);
-        } catch (Exception e) {
-            System.out.println("Error while saving user: " + e.getMessage());
-            throw new RuntimeException("Error saving user", e);
-        }
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = UserMapper.toEntity(userDTO);
+        user = userRepository.save(user);
+        return UserMapper.toDTO(user);
     }
-    
 
-    // Update an existing user
-    public Optional<User> updateUser(Long id, User user) {
+    public Optional<UserDTO> updateUser(Long id, UserDTO userDTO) {
         if (userRepository.existsById(id)) {
-            return Optional.of(userRepository.save(user));
+            User user = UserMapper.toEntity(userDTO);
+            user.setUserId(id);
+            user = userRepository.save(user);
+            return Optional.of(UserMapper.toDTO(user));
         }
         return Optional.empty();
     }
 
-    // Delete a user
     public void deleteUser(Long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);

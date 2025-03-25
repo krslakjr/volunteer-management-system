@@ -14,19 +14,18 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
-    @JsonBackReference // Sprječava beskonačnu rekurziju kod Volunteer-a
+    @JsonBackReference 
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    @JsonBackReference // Sprječava beskonačnu rekurziju kod Activity-a
+    @JsonBackReference 
     private Activity activity;
 
     private int rating;
     private String comment;
     private Date timestamp;
 
-    // Getter i Setter metode
 
     public Long getFeedbackId() {
         return feedbackId;

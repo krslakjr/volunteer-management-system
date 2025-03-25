@@ -14,13 +14,13 @@ public class UserPermission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Veza sa User modelom sa @JsonBackReference da se spreči beskonačna petlja prilikom serijalizacije
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
-    // Veza sa Permission modelom sa @JsonBackReference da se spreči beskonačna petlja prilikom serijalizacije
+    
     @ManyToOne
     @JoinColumn(name = "permission_id")
     @JsonBackReference
@@ -32,7 +32,6 @@ public class UserPermission {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Getter and Setter for id
     public Long getId() {
         return id;
     }
@@ -41,7 +40,6 @@ public class UserPermission {
         this.id = id;
     }
 
-    // Getter and Setter for user
     public User getUser() {
         return user;
     }
@@ -50,7 +48,6 @@ public class UserPermission {
         this.user = user;
     }
 
-    // Getter and Setter for permission
     public Permission getPermission() {
         return permission;
     }
@@ -59,7 +56,6 @@ public class UserPermission {
         this.permission = permission;
     }
 
-    // Getter and Setter for createdAt
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -68,7 +64,6 @@ public class UserPermission {
         this.createdAt = createdAt;
     }
 
-    // Getter and Setter for updatedAt
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -77,14 +72,12 @@ public class UserPermission {
         this.updatedAt = updatedAt;
     }
 
-    // Automatically set timestamps before persisting
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
         updatedAt = new Date();
     }
 
-    // Automatically update timestamp before updating
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

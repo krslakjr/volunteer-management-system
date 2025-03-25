@@ -17,14 +17,12 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-    // Get all activities
     @GetMapping
     public ResponseEntity<List<Activity>> getAllActivities() {
         List<Activity> activities = activityService.getAllActivities();
         return new ResponseEntity<>(activities, HttpStatus.OK);
     }
 
-    // Get activity by ID
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
@@ -32,7 +30,6 @@ public class ActivityController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Create or update activity
     @PostMapping
     public ResponseEntity<Activity> createOrUpdateActivity(@RequestBody Activity activity) {
         try {
@@ -43,7 +40,6 @@ public class ActivityController {
         }
     }
 
-    // Delete activity by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteActivity(@PathVariable Long id) {
         try {

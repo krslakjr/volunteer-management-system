@@ -13,23 +13,19 @@ public class ActivityStatisticsService {
 
     @Autowired
     private ActivityStatisticsRepository activityStatisticsRepository;
-
-    // Get all activity statistics
+    
     public List<ActivityStatistics> getAllActivityStatistics() {
         return activityStatisticsRepository.findAll();
     }
 
-    // Get activity statistics by ID
     public Optional<ActivityStatistics> getActivityStatisticsById(Long id) {
         return activityStatisticsRepository.findById(id);
     }
 
-    // Create or update activity statistics
     public ActivityStatistics saveOrUpdateActivityStatistics(ActivityStatistics activityStatistics) {
         return activityStatisticsRepository.save(activityStatistics);
     }
 
-    // Delete activity statistics by ID
     public void deleteActivityStatistics(Long id) {
         if (activityStatisticsRepository.existsById(id)) {
             activityStatisticsRepository.deleteById(id);

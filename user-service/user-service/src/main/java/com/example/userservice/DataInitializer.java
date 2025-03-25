@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -16,38 +17,38 @@ public class DataInitializer implements CommandLineRunner {
     private final UserPermissionRepository userPermissionRepository;
     private final SocialShareRepository socialShareRepository;
     private final VolunteerCertificateRepository volunteerCertificateRepository;
+    private final PermissionRepository permissionRepository;
 
     public DataInitializer(UserRepository userRepository, RoleRepository roleRepository,
                            ActivityRepository activityRepository, UserPermissionRepository userPermissionRepository,
-                           SocialShareRepository socialShareRepository, VolunteerCertificateRepository volunteerCertificateRepository) {
+                           SocialShareRepository socialShareRepository, VolunteerCertificateRepository volunteerCertificateRepository,
+                           PermissionRepository permissionRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.activityRepository = activityRepository;
         this.userPermissionRepository = userPermissionRepository;
         this.socialShareRepository = socialShareRepository;
         this.volunteerCertificateRepository = volunteerCertificateRepository;
+        this.permissionRepository = permissionRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        // Kreiranje Role
         Role role = new Role();
         role.setRoleName("Admin");
         roleRepository.save(role);
 
-        // Kreiranje User
         User user = new User();
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("john.doe@example.com");
         user.setPasswordHash("hashedpassword123");
         user.setProfilePicture("profilePicUrl");
-        user.setRole(role);  // Postavljanje role
+        user.setRole(role); 
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
         userRepository.save(user);
 
-        // Kreiranje Activity
         Activity activity = new Activity();
         activity.setActivityName("Charity Event");
         activity.setActivityDate(new Date());
@@ -57,18 +58,35 @@ public class DataInitializer implements CommandLineRunner {
         activity.setUpdatedAt(new Date());
         activityRepository.save(activity);
 
-        // Kreiranje UserPermissions
-        UserPermission userPermission = new UserPermission();
-        userPermission.setUser(user);
-        userPermission.setCreatedAt(new Date());
-        userPermission.setUpdatedAt(new Date());
-        userPermissionRepository.save(userPermission);
+        Permission perm1 = new Permission();
+        perm1.setPermissionName("READ_USERS");
+        perm1.setCreatedAt(new Date());
+        perm1.setUpdatedAt(new Date());
+        
+        Permission perm2 = new Permission();
+        perm2.setPermissionName("EDIT_EVENTS");
+        perm2.setCreatedAt(new Date());
+        perm2.setUpdatedAt(new Date());
+        
+        permissionRepository.saveAll(List.of(perm1, perm2));
 
-        // Dodavanje u aktivnosti korisnika
+        UserPermission userPermission1 = new UserPermission();
+        userPermission1.setUser(user);
+        userPermission1.setPermission(perm1);
+        userPermission1.setCreatedAt(new Date());
+        userPermission1.setUpdatedAt(new Date());
+        
+        UserPermission userPermission2 = new UserPermission();
+        userPermission2.setUser(user);
+        userPermission2.setPermission(perm2);
+        userPermission2.setCreatedAt(new Date());
+        userPermission2.setUpdatedAt(new Date());
+        
+        userPermissionRepository.saveAll(List.of(userPermission1, userPermission2));
+
         user.getActivities().add(activity);
         userRepository.save(user);
 
-        // Kreiranje SocialShare za korisnika i aktivnost
         SocialShare socialShare = new SocialShare();
         socialShare.setUser(user);
         socialShare.setActivity(activity);
@@ -78,7 +96,6 @@ public class DataInitializer implements CommandLineRunner {
         socialShare.setUpdatedAt(new Date());
         socialShareRepository.save(socialShare);
 
-        // Kreiranje VolunteerCertificate
         VolunteerCertificate volunteerCertificate = new VolunteerCertificate();
         volunteerCertificate.setUser(user);
         volunteerCertificate.setActivity(activity);
@@ -87,7 +104,6 @@ public class DataInitializer implements CommandLineRunner {
         volunteerCertificate.setUpdatedAt(new Date());
         volunteerCertificateRepository.save(volunteerCertificate);
 
-        // Dodavanje SocialShares i VolunteerCertificates u User
         user.getSocialShares().add(socialShare);
         user.getVolunteerCertificates().add(volunteerCertificate);
         userRepository.save(user);

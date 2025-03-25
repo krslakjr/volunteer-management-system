@@ -18,22 +18,18 @@ public class TeamActivityService {
         this.teamActivityRepository = teamActivityRepository;
     }
 
-    // Get all TeamActivities
     public List<TeamActivity> getAllTeamActivities() {
         return teamActivityRepository.findAll();
     }
 
-    // Get a specific TeamActivity by ID
     public Optional<TeamActivity> getTeamActivityById(Long id) {
         return teamActivityRepository.findById(id);
     }
 
-    // Create a new TeamActivity
     public TeamActivity createTeamActivity(TeamActivity teamActivity) {
         return teamActivityRepository.save(teamActivity);
     }
 
-    // Update an existing TeamActivity
     public Optional<TeamActivity> updateTeamActivity(Long id, TeamActivity teamActivity) {
         return teamActivityRepository.findById(id)
                 .map(existingTeamActivity -> {
@@ -43,7 +39,6 @@ public class TeamActivityService {
                 });
     }
 
-    // Delete a TeamActivity
     public boolean deleteTeamActivity(Long id) {
         return teamActivityRepository.findById(id)
                 .map(existingTeamActivity -> {

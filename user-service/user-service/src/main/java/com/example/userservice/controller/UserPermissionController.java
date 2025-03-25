@@ -22,13 +22,11 @@ public class UserPermissionController {
     @Autowired
     private UserPermissionService userPermissionService;
 
-    // Dohvati sve UserPermissions
     @GetMapping
     public List<UserPermission> getAllUserPermissions() {
         return userPermissionService.getAllUserPermissions();
     }
 
-    // Dohvati permisije za određenog korisnika
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserPermission>> getUserPermissions(@PathVariable Long userId) {
         List<UserPermission> permissions = userPermissionService.getUserPermissions(userId);
@@ -38,14 +36,12 @@ public class UserPermissionController {
         return new ResponseEntity<>(permissions, HttpStatus.OK);
     }
 
-    // Dodaj permisiju korisniku
     @PostMapping
     public ResponseEntity<UserPermission> addUserPermission(@RequestBody UserPermission userPermission) {
         UserPermission createdPermission = userPermissionService.addUserPermission(userPermission);
         return new ResponseEntity<>(createdPermission, HttpStatus.CREATED);
     }
 
-    // Obriši permisiju
     @DeleteMapping("/{permissionId}")
     public ResponseEntity<Void> deleteUserPermission(@PathVariable Long permissionId) {
         userPermissionService.deleteUserPermission(permissionId);

@@ -16,13 +16,11 @@ public class VolunteerCertificateController {
     @Autowired
     private VolunteerCertificateService volunteerCertificateService;
 
-    // Dohvati sve VolunteerCertificates
     @GetMapping
     public List<VolunteerCertificate> getAllVolunteerCertificates() {
         return volunteerCertificateService.getAllVolunteerCertificates();
     }
 
-    // Dohvati VolunteerCertificates za određenog korisnika
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<VolunteerCertificate>> getCertificatesByUserId(@PathVariable Long userId) {
         List<VolunteerCertificate> certificates = volunteerCertificateService.getCertificatesByUserId(userId);
@@ -32,14 +30,12 @@ public class VolunteerCertificateController {
         return new ResponseEntity<>(certificates, HttpStatus.OK);
     }
 
-    // Dodaj novi VolunteerCertificate
     @PostMapping
     public ResponseEntity<VolunteerCertificate> addVolunteerCertificate(@RequestBody VolunteerCertificate volunteerCertificate) {
         VolunteerCertificate createdCertificate = volunteerCertificateService.addVolunteerCertificate(volunteerCertificate);
         return new ResponseEntity<>(createdCertificate, HttpStatus.CREATED);
     }
 
-    // Obriši VolunteerCertificate
     @DeleteMapping("/{certificateId}")
     public ResponseEntity<Void> deleteVolunteerCertificate(@PathVariable Long certificateId) {
         volunteerCertificateService.deleteVolunteerCertificate(certificateId);

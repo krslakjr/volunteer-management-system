@@ -17,13 +17,11 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    // Get all permissions
     @GetMapping
     public List<Permission> getAllPermissions() {
         return permissionService.getAllPermissions();
     }
 
-    // Get permission by ID
     @GetMapping("/{id}")
     public ResponseEntity<Permission> getPermissionById(@PathVariable Long id) {
         Optional<Permission> permission = permissionService.getPermissionById(id);
@@ -34,7 +32,6 @@ public class PermissionController {
         }
     }
 
-    // Create a new permission
     @PostMapping
     public ResponseEntity<Permission> createPermission(@RequestBody Permission permission) {
         try {
@@ -45,7 +42,6 @@ public class PermissionController {
         }
     }
 
-    // Update an existing permission
     @PutMapping("/{id}")
     public ResponseEntity<Permission> updatePermission(@PathVariable Long id, @RequestBody Permission permission) {
         Permission updatedPermission = permissionService.updatePermission(id, permission);
@@ -56,7 +52,6 @@ public class PermissionController {
         }
     }
 
-    // Delete a permission
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePermission(@PathVariable Long id) {
         if (permissionService.deletePermission(id)) {

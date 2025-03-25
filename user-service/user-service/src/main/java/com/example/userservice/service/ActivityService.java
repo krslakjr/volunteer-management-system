@@ -18,30 +18,25 @@ public class ActivityService {
         this.activityRepository = activityRepository;
     }
 
-    // Get all Activities
     public List<Activity> getAllActivities() {
         return activityRepository.findAll();
     }
 
-    // Get Activity by ID
     public Optional<Activity> getActivityById(Long id) {
         return activityRepository.findById(id);
     }
 
-    // Create a new Activity
     public Activity createActivity(Activity activity) {
         return activityRepository.save(activity);
     }
 
-    // Update an existing Activity
     public Activity updateActivity(Long id, Activity activity) {
         if (activityRepository.existsById(id)) {
             return activityRepository.save(activity);
         }
-        return null;  // Return null or throw exception if not found
+        return null;  
     }
 
-    // Delete an Activity
     public void deleteActivity(Long id) {
         activityRepository.deleteById(id);
     }

@@ -25,7 +25,6 @@ public class Participation {
     private Date registrationDate;
     private String attendanceStatus;
 
-    // Getters and Setters
     public Long getParticipationId() {
         return participationId;
     }

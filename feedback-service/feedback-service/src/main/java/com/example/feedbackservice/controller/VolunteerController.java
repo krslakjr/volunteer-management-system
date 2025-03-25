@@ -17,14 +17,12 @@ public class VolunteerController {
     @Autowired
     private VolunteerService volunteerService;
 
-    // Get all volunteers
     @GetMapping
     public ResponseEntity<List<Volunteer>> getAllVolunteers() {
         List<Volunteer> volunteers = volunteerService.getAllVolunteers();
         return new ResponseEntity<>(volunteers, HttpStatus.OK);
     }
 
-    // Get volunteer by ID
     @GetMapping("/{id}")
     public ResponseEntity<Volunteer> getVolunteerById(@PathVariable Long id) {
         Optional<Volunteer> volunteer = volunteerService.getVolunteerById(id);
@@ -32,7 +30,6 @@ public class VolunteerController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Create or update volunteer
     @PostMapping
     public ResponseEntity<Volunteer> createOrUpdateVolunteer(@RequestBody Volunteer volunteer) {
         try {
@@ -43,7 +40,6 @@ public class VolunteerController {
         }
     }
 
-    // Delete volunteer by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteVolunteer(@PathVariable Long id) {
         try {

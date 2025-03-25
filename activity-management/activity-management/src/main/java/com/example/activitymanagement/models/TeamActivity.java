@@ -13,14 +13,13 @@ public class TeamActivity {
 
     @ManyToOne
     @JoinColumn(name = "team_id", nullable = false)
-    @JsonBackReference  // Sprečava ciklično ugnježđivanje
+    @JsonBackReference  
     private Team team;
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
     private Activity activity;
 
-    // Getteri i Setteri
     public Long getId() {
         return id;
     }

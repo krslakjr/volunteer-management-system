@@ -21,7 +21,6 @@ public class EngagementStatistics {
     private int forumPostsMade;
     private int notificationsReceived;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

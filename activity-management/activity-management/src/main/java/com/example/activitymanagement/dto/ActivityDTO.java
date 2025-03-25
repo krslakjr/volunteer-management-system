@@ -8,10 +8,8 @@ public class ActivityDTO {
     private String location;
     private int volunteersNeeded;
 
-    // Konstruktor bez parametara
     public ActivityDTO() {}
 
-    // Konstruktor sa parametrima
     public ActivityDTO(Long activityId, String description, String date, String location, int volunteersNeeded) {
         this.activityId = activityId;
         this.description = description;
@@ -20,7 +18,6 @@ public class ActivityDTO {
         this.volunteersNeeded = volunteersNeeded;
     }
 
-    // Getteri i Setteri
     public Long getActivityId() {
         return activityId;
     }

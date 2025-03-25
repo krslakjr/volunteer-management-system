@@ -17,13 +17,11 @@ public class SocialShareController {
     @Autowired
     private SocialShareService socialShareService;
 
-    // Get all SocialShares
     @GetMapping
     public List<SocialShare> getAllSocialShares() {
         return socialShareService.getAllSocialShares();
     }
 
-    // Get SocialShare by ID
     @GetMapping("/{id}")
     public ResponseEntity<SocialShare> getSocialShareById(@PathVariable Long id) {
         Optional<SocialShare> socialShare = socialShareService.getSocialShareById(id);
@@ -31,7 +29,6 @@ public class SocialShareController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Create a new SocialShare
     @PostMapping
     public ResponseEntity<SocialShare> createSocialShare(@RequestBody SocialShare socialShare) {
         try {
@@ -42,7 +39,6 @@ public class SocialShareController {
         }
     }
 
-    // Update an existing SocialShare
     @PutMapping("/{id}")
     public ResponseEntity<SocialShare> updateSocialShare(@PathVariable Long id, @RequestBody SocialShare socialShare) {
         Optional<SocialShare> updatedSocialShare = socialShareService.updateSocialShare(id, socialShare);
@@ -50,7 +46,6 @@ public class SocialShareController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Delete a SocialShare
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteSocialShare(@PathVariable Long id) {
         try {

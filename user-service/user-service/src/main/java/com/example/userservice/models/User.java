@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList; // Importuj ArrayList
+import java.util.ArrayList; 
 
 @Entity
 @Table(name = "users")
@@ -22,36 +22,31 @@ public class User {
     private String passwordHash;
     private String profilePicture;
 
-    // Role veza sa @JsonManagedReference, omogućava serijalizaciju role u User modelu
     @ManyToOne
     @JoinColumn(name = "role_id")
     @JsonManagedReference
     private Role role;
 
-    // UserPermissions veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<UserPermission> userPermissions;
 
-    // SocialShares veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<SocialShare> socialShares = new ArrayList<>(); // Inicijalizacija liste
+    private List<SocialShare> socialShares = new ArrayList<>();
 
-    // VolunteerCertificates veza sa @JsonManagedReference, omogućava serijalizaciju u User modelu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<VolunteerCertificate> volunteerCertificates = new ArrayList<>(); // Inicijalizacija liste
+    private List<VolunteerCertificate> volunteerCertificates = new ArrayList<>(); 
 
-    // Inicijalizuj listu aktivnosti
     @ManyToMany
     @JoinTable(
         name = "user_activity",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
-    @JsonIgnore // Ignoriše učestvovanje u aktivnosti prilikom serijalizacije
-    private List<Activity> activities = new ArrayList<>(); // Inicijalizacija liste
+    @JsonIgnore 
+    private List<Activity> activities = new ArrayList<>(); 
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -59,7 +54,6 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Getter and Setter for userId
     public Long getUserId() {
         return userId;
     }
@@ -68,7 +62,6 @@ public class User {
         this.userId = userId;
     }
 
-    // Getter and Setter for firstName
     public String getFirstName() {
         return firstName;
     }
@@ -86,7 +79,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    // Getter and Setter for email
     public String getEmail() {
         return email;
     }
@@ -95,7 +87,6 @@ public class User {
         this.email = email;
     }
 
-    // Getter and Setter for passwordHash
     public String getPasswordHash() {
         return passwordHash;
     }
@@ -104,7 +95,6 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    // Getter and Setter for profilePicture
     public String getProfilePicture() {
         return profilePicture;
     }
@@ -113,7 +103,6 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    // Getter and Setter for role
     public Role getRole() {
         return role;
     }
@@ -122,7 +111,6 @@ public class User {
         this.role = role;
     }
 
-    // Getter and Setter for userPermissions
     public List<UserPermission> getUserPermissions() {
         return userPermissions;
     }
@@ -131,7 +119,6 @@ public class User {
         this.userPermissions = userPermissions;
     }
 
-    // Getter and Setter for socialShares
     public List<SocialShare> getSocialShares() {
         return socialShares;
     }
@@ -140,7 +127,6 @@ public class User {
         this.socialShares = socialShares;
     }
 
-    // Getter and Setter for volunteerCertificates
     public List<VolunteerCertificate> getVolunteerCertificates() {
         return volunteerCertificates;
     }
@@ -149,7 +135,6 @@ public class User {
         this.volunteerCertificates = volunteerCertificates;
     }
 
-    // Getter and Setter for activities
     public List<Activity> getActivities() {
         return activities;
     }
@@ -158,7 +143,6 @@ public class User {
         this.activities = activities;
     }
 
-    // Getter and Setter for createdAt
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -167,7 +151,6 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    // Getter and Setter for updatedAt
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -176,14 +159,12 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    // Automatically set timestamps before persisting
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
         updatedAt = new Date();
     }
 
-    // Automatically update timestamp before updating
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

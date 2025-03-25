@@ -14,22 +14,18 @@ public class VolunteerService {
     @Autowired
     private VolunteerRepository volunteerRepository;
 
-    // Get all volunteers
     public List<Volunteer> getAllVolunteers() {
         return volunteerRepository.findAll();
     }
 
-    // Get volunteer by ID
     public Optional<Volunteer> getVolunteerById(Long id) {
         return volunteerRepository.findById(id);
     }
 
-    // Create or update volunteer
     public Volunteer saveOrUpdateVolunteer(Volunteer volunteer) {
         return volunteerRepository.save(volunteer);
     }
 
-    // Delete volunteer by ID
     public void deleteVolunteer(Long id) {
         if (volunteerRepository.existsById(id)) {
             volunteerRepository.deleteById(id);

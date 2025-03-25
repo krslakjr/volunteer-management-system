@@ -36,13 +36,13 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Kreiranje volontera
+        
         Volunteer volunteer1 = new Volunteer();
         volunteer1.setName("Ana");
         volunteer1.setContactInfo("ana@email.com");
         volunteerRepository.save(volunteer1);
 
-        // Kreiranje aktivnosti
+        
         Activity activity1 = new Activity();
         activity1.setDescription("Pomoć starijim osobama");
         activity1.setDate(new Date());
@@ -50,7 +50,7 @@ public class DataInitializer implements CommandLineRunner {
         activity1.setVolunteersNeeded(15);
         activityRepository.save(activity1);
 
-        // Kreiranje feedbacka za aktivnost
+        
         Feedback feedback1 = new Feedback();
         feedback1.setActivity(activity1);
         feedback1.setVolunteer(volunteer1);
@@ -59,7 +59,6 @@ public class DataInitializer implements CommandLineRunner {
         feedback1.setTimestamp(new Date());
         feedbackRepository.save(feedback1);
 
-        // Kreiranje statistike za aktivnost
         ActivityStatistics activityStatistics1 = new ActivityStatistics();
         activityStatistics1.setActivity(activity1);
         activityStatistics1.setTotalRatings(1);

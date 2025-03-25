@@ -37,7 +37,6 @@ public class Volunteer {
     @JsonManagedReference 
     private List<Notification> notifications;
 
-    // Getters and Setters
     public Long getVolunteerId() {
         return volunteerId;
     }

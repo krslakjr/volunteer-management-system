@@ -13,22 +13,18 @@ public class UserPermissionService {
     @Autowired
     private UserPermissionRepository userPermissionRepository;
 
-    // Dohvati sve permissions
     public List<UserPermission> getAllUserPermissions() {
         return userPermissionRepository.findAll();
     }
 
-    // Dohvati sve permisije za određenog korisnika
     public List<UserPermission> getUserPermissions(Long userId) {
         return userPermissionRepository.findByUser_UserId(userId);
     }
 
-    // Dodaj permisiju korisniku
     public UserPermission addUserPermission(UserPermission userPermission) {
         return userPermissionRepository.save(userPermission);
     }
 
-    // Obriši permisiju
     public void deleteUserPermission(Long permissionId) {
         userPermissionRepository.deleteById(permissionId);
     }

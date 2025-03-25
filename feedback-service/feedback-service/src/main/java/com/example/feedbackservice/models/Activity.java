@@ -19,14 +19,13 @@ public class Activity {
     private int volunteersNeeded;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference // Sprječava beskonačnu rekurziju s Feedback klasom
+    @JsonManagedReference 
     private List<Feedback> feedbacks;
 
     @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference // Sprječava beskonačnu rekurziju s ActivityStatistics klasom
+    @JsonManagedReference 
     private ActivityStatistics activityStatistics;
 
-    // Getter i Setter metode
 
     public Long getActivityId() {
         return activityId;

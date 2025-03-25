@@ -21,27 +21,23 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    // Get all Activities
     @GetMapping
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
 
-    // Get Activity by ID
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
         return activity.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // Create a new Activity
     @PostMapping
     public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
         Activity createdActivity = activityService.createActivity(activity);
         return new ResponseEntity<>(createdActivity, HttpStatus.CREATED);
     }
 
-    // Update an existing Activity
     @PutMapping("/{id}")
     public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
         Activity updatedActivity = activityService.updateActivity(id, activity);
@@ -50,7 +46,6 @@ public class ActivityController {
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    // Delete an Activity
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
         activityService.deleteActivity(id);

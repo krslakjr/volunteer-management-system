@@ -14,22 +14,18 @@ public class VolunteerCertificateService {
     @Autowired
     private VolunteerCertificateRepository volunteerCertificateRepository;
 
-    // Dohvati sve VolunteerCertificates
     public List<VolunteerCertificate> getAllVolunteerCertificates() {
         return volunteerCertificateRepository.findAll();
     }
 
-    // Dohvati VolunteerCertificates za određenog korisnika
     public List<VolunteerCertificate> getCertificatesByUserId(Long userId) {
         return volunteerCertificateRepository.findByUser_UserId(userId);
     }
 
-    // Dodaj novi VolunteerCertificate
     public VolunteerCertificate addVolunteerCertificate(VolunteerCertificate volunteerCertificate) {
         return volunteerCertificateRepository.save(volunteerCertificate);
     }
 
-    // Obriši VolunteerCertificate
     public void deleteVolunteerCertificate(Long certificateId) {
         volunteerCertificateRepository.deleteById(certificateId);
     }

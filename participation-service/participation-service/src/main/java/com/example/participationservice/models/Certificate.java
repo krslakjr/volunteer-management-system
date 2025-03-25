@@ -25,7 +25,6 @@ public class Certificate {
     private Date issueDate;
     private String certificateStatus;
 
-    // Getters and Setters
     public Long getCertificateId() {
         return certificateId;
     }

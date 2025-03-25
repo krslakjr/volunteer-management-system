@@ -14,13 +14,13 @@ public class VolunteerCertificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long certificateId;
 
-    // Veza sa User modelom sa @JsonBackReference da se spreči beskonačna petlja prilikom serijalizacije
+   
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
-    // Veza sa Activity modelom sa @JsonBackReference da se spreči beskonačna petlja prilikom serijalizacije
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")
     @JsonBackReference
@@ -36,7 +36,6 @@ public class VolunteerCertificate {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Getter and Setter for certificateId
     public Long getCertificateId() {
         return certificateId;
     }
@@ -45,7 +44,6 @@ public class VolunteerCertificate {
         this.certificateId = certificateId;
     }
 
-    // Getter and Setter for user
     public User getUser() {
         return user;
     }
@@ -54,7 +52,6 @@ public class VolunteerCertificate {
         this.user = user;
     }
 
-    // Getter and Setter for activity
     public Activity getActivity() {
         return activity;
     }
@@ -63,7 +60,6 @@ public class VolunteerCertificate {
         this.activity = activity;
     }
 
-    // Getter and Setter for certificateDate
     public Date getCertificateDate() {
         return certificateDate;
     }
@@ -72,7 +68,6 @@ public class VolunteerCertificate {
         this.certificateDate = certificateDate;
     }
 
-    // Getter and Setter for certificatePdfLink
     public String getCertificatePdfLink() {
         return certificatePdfLink;
     }
@@ -81,7 +76,6 @@ public class VolunteerCertificate {
         this.certificatePdfLink = certificatePdfLink;
     }
 
-    // Getter and Setter for issuedAt
     public Date getIssuedAt() {
         return issuedAt;
     }
@@ -90,7 +84,6 @@ public class VolunteerCertificate {
         this.issuedAt = issuedAt;
     }
 
-    // Getter and Setter for createdAt
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -99,7 +92,6 @@ public class VolunteerCertificate {
         this.createdAt = createdAt;
     }
 
-    // Getter and Setter for updatedAt
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -108,14 +100,12 @@ public class VolunteerCertificate {
         this.updatedAt = updatedAt;
     }
 
-    // Automatically set timestamps before persisting
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
         updatedAt = new Date();
     }
 
-    // Automatically update timestamp before updating
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

@@ -26,7 +26,6 @@ public class Volunteer {
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Certificate> certificates;
 
-    // Getters and Setters
     public Long getVolunteerId() {
         return volunteerId;
     }

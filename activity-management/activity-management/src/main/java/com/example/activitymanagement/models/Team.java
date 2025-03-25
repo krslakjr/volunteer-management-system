@@ -14,12 +14,10 @@ public class Team {
 
     private String teamName;
 
-    // Veza sa TeamActivity (M:N sa Activity)
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference  // Sprečava ciklično ugnježđivanje
+    @JsonManagedReference 
     private List<TeamActivity> teamActivities;
 
-    // Getteri i Setteri
     public Long getTeamId() {
         return teamId;
     }

@@ -24,7 +24,6 @@ public class Recommendation {
 
     private Date dateGenerated;
 
-    // Getters and Setters
     public Long getRecommendationId() {
         return recommendationId;
     }

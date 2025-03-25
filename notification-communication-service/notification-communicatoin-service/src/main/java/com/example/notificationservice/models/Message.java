@@ -30,7 +30,6 @@ public class Message {
     private String content;
     private Date timestamp;
 
-    // Getters and Setters
     public Long getMessageId() {
         return messageId;
     }

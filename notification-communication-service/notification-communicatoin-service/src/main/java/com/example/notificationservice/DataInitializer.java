@@ -34,7 +34,6 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // 1. Inicijalizacija Organizer entiteta
         Organizer organizer1 = new Organizer();
         organizer1.setName("John's Volunteer Group");
         organizer1.setEmail("johnsgroup@example.com");
@@ -49,7 +48,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Organizers saved.");
 
-        // 2. Inicijalizacija Volunteer entiteta
         Volunteer volunteer1 = new Volunteer();
         volunteer1.setName("John Doe");
         volunteer1.setEmail("john.doe@example.com");
@@ -64,7 +62,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Volunteers saved.");
 
-        // 3. Inicijalizacija EngagementStatistics entiteta za Volunteer entitete
         EngagementStatistics engagementStatistics1 = new EngagementStatistics();
         engagementStatistics1.setVolunteer(volunteer1);
         engagementStatistics1.setTotalActivities(10);
@@ -83,13 +80,12 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Engagement statistics saved.");
 
-        // 4. Inicijalizacija Activity entiteta
         Activity activity1 = new Activity();
         activity1.setTitle("Community Cleanup");
         activity1.setDescription("A cleanup event in the local park.");
         activity1.setDate(new Date());
         activity1.setLocation("City Park");
-        activity1.setOrganizer(organizer1); // Linking to organizer
+        activity1.setOrganizer(organizer1); 
         activityService.saveActivity(activity1);
 
         Activity activity2 = new Activity();
@@ -97,12 +93,11 @@ public class DataInitializer implements CommandLineRunner {
         activity2.setDescription("Fundraiser for local animal shelter.");
         activity2.setDate(new Date());
         activity2.setLocation("Community Hall");
-        activity2.setOrganizer(organizer2); // Linking to organizer
+        activity2.setOrganizer(organizer2); 
         activityService.saveActivity(activity2);
 
         System.out.println("Activities saved.");
 
-        // 5. Inicijalizacija Notification entiteta
         Notification notification1 = new Notification();
         notification1.setVolunteer(volunteer1);
         notification1.setActivity(activity1);
@@ -125,7 +120,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Notifications saved.");
 
-        // 6. Inicijalizacija ForumPost entiteta
         ForumPost forumPost1 = new ForumPost();
         forumPost1.setActivity(activity1);
         forumPost1.setAuthor(volunteer1);
@@ -142,7 +136,6 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Forum posts saved.");
 
-        // 7. Inicijalizacija Message entiteta
         Message message1 = new Message();
         message1.setSender(volunteer1);
         message1.setReceiver(volunteer2);

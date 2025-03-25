@@ -16,10 +16,9 @@ public class Volunteer {
     private String contactInfo;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference // Rješava beskonačnu rekurziju s Feedback klasom
+    @JsonManagedReference 
     private List<Feedback> feedbacks;
 
-    // Getter i Setter metode
 
     public Long getVolunteerId() {
         return volunteerId;

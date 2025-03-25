@@ -17,14 +17,12 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
-    // Get all feedbacks
     @GetMapping
     public ResponseEntity<List<Feedback>> getAllFeedbacks() {
         List<Feedback> feedbacks = feedbackService.getAllFeedbacks();
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
-    // Get feedback by ID
     @GetMapping("/{id}")
     public ResponseEntity<Feedback> getFeedbackById(@PathVariable Long id) {
         Optional<Feedback> feedback = feedbackService.getFeedbackById(id);
@@ -32,21 +30,18 @@ public class FeedbackController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Get feedbacks by activity ID
     @GetMapping("/activity/{activityId}")
     public ResponseEntity<List<Feedback>> getFeedbacksByActivityId(@PathVariable Long activityId) {
         List<Feedback> feedbacks = feedbackService.getFeedbacksByActivityId(activityId);
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
-    // Get feedbacks by volunteer ID
     @GetMapping("/volunteer/{volunteerId}")
     public ResponseEntity<List<Feedback>> getFeedbacksByVolunteerId(@PathVariable Long volunteerId) {
         List<Feedback> feedbacks = feedbackService.getFeedbacksByVolunteerId(volunteerId);
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
-    // Create or update feedback
     @PostMapping
     public ResponseEntity<Feedback> createOrUpdateFeedback(@RequestBody Feedback feedback) {
         try {
@@ -57,7 +52,6 @@ public class FeedbackController {
         }
     }
 
-    // Delete feedback by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteFeedback(@PathVariable Long id) {
         try {

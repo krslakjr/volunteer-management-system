@@ -19,7 +19,6 @@ public class Permission {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Getter and Setter for permissionId
     public Long getPermissionId() {
         return permissionId;
     }
@@ -28,7 +27,6 @@ public class Permission {
         this.permissionId = permissionId;
     }
 
-    // Getter and Setter for permissionName
     public String getPermissionName() {
         return permissionName;
     }
@@ -37,7 +35,6 @@ public class Permission {
         this.permissionName = permissionName;
     }
 
-    // Getter and Setter for createdAt
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -46,7 +43,6 @@ public class Permission {
         this.createdAt = createdAt;
     }
 
-    // Getter and Setter for updatedAt
     public Date getUpdatedAt() {
         return updatedAt;
     }

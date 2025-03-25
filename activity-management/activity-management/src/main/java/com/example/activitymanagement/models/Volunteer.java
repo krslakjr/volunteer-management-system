@@ -16,12 +16,10 @@ public class Volunteer {
 
     private String contactInfo;
 
-    // Veza sa ActivityVolunteer (M:N sa Activity)
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore // Dodajemo ovu anotaciju da bismo sprečili beskonačno ugnježđivanje
+    @JsonIgnore 
     private List<ActivityVolunteer> activityVolunteers;
 
-    // Getteri i Setteri
     public Long getVolunteerId() {
         return volunteerId;
     }

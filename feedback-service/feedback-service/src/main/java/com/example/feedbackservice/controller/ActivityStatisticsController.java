@@ -17,14 +17,12 @@ public class ActivityStatisticsController {
     @Autowired
     private ActivityStatisticsService activityStatisticsService;
 
-    // Get all activity statistics
     @GetMapping
     public ResponseEntity<List<ActivityStatistics>> getAllActivityStatistics() {
         List<ActivityStatistics> statistics = activityStatisticsService.getAllActivityStatistics();
         return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 
-    // Get activity statistics by ID
     @GetMapping("/{id}")
     public ResponseEntity<ActivityStatistics> getActivityStatisticsById(@PathVariable Long id) {
         Optional<ActivityStatistics> statistics = activityStatisticsService.getActivityStatisticsById(id);
@@ -32,7 +30,6 @@ public class ActivityStatisticsController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Create or update activity statistics
     @PostMapping
     public ResponseEntity<ActivityStatistics> createOrUpdateActivityStatistics(@RequestBody ActivityStatistics activityStatistics) {
         try {
@@ -43,7 +40,6 @@ public class ActivityStatisticsController {
         }
     }
 
-    // Delete activity statistics by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteActivityStatistics(@PathVariable Long id) {
         try {

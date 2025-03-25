@@ -31,7 +31,6 @@ public class ForumPost {
     private String content;
     private Date timestamp;
 
-    // Getters and Setters
     public Long getPostId() {
         return postId;
     }

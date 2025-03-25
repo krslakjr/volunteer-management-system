@@ -31,7 +31,6 @@ public class SocialShare {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    // Getter and Setter for shareId
     public Long getShareId() {
         return shareId;
     }
@@ -40,7 +39,6 @@ public class SocialShare {
         this.shareId = shareId;
     }
 
-    // Getter and Setter for user
     public User getUser() {
         return user;
     }
@@ -49,7 +47,6 @@ public class SocialShare {
         this.user = user;
     }
 
-    // Getter and Setter for activity
     public Activity getActivity() {
         return activity;
     }
@@ -58,7 +55,6 @@ public class SocialShare {
         this.activity = activity;
     }
 
-    // Getter and Setter for platform
     public String getPlatform() {
         return platform;
     }
@@ -67,7 +63,6 @@ public class SocialShare {
         this.platform = platform;
     }
 
-    // Getter and Setter for sharedAt
     public Date getSharedAt() {
         return sharedAt;
     }
@@ -76,7 +71,6 @@ public class SocialShare {
         this.sharedAt = sharedAt;
     }
 
-    // Getter and Setter for createdAt
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -85,7 +79,6 @@ public class SocialShare {
         this.createdAt = createdAt;
     }
 
-    // Getter and Setter for updatedAt
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -94,14 +87,12 @@ public class SocialShare {
         this.updatedAt = updatedAt;
     }
 
-    // Automatically set timestamps before persisting
     @PrePersist
     public void prePersist() {
         createdAt = new Date();
         updatedAt = new Date();
     }
 
-    // Automatically update timestamp before updating
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();

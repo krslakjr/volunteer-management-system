@@ -11,12 +11,10 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface ActivityVolunteerMapper {
 
-    // Mapiranje iz ActivityVolunteer u ActivityVolunteerDTO
     @Mapping(source = "activity", target = "activityId", qualifiedByName = "mapActivityToId")
     @Mapping(source = "volunteer", target = "volunteerId", qualifiedByName = "mapVolunteerToId")
     ActivityVolunteerDTO toDTO(ActivityVolunteer activityVolunteer);
 
-    // Mapiranje iz ActivityVolunteerDTO u ActivityVolunteer
     @Mapping(source = "activityId", target = "activity", ignore = true)
     @Mapping(source = "volunteerId", target = "volunteer", ignore = true)
     ActivityVolunteer toEntity(ActivityVolunteerDTO activityVolunteerDTO);
