@@ -1,6 +1,6 @@
 package com.example.feedbackservice.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -15,15 +15,16 @@ public class Activity {
 
     private String description;
     private Date date;
+
     private String location;
     private int volunteersNeeded;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
+    @JsonIgnore
     private List<Feedback> feedbacks;
 
     @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
+    @JsonIgnore
     private ActivityStatistics activityStatistics;
 
 

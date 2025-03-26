@@ -14,12 +14,12 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
-    @JsonBackReference 
+    @JsonBackReference("volunteer-feedback")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    @JsonBackReference 
+    @JsonBackReference("activity-feedback")
     private Activity activity;
 
     private int rating;

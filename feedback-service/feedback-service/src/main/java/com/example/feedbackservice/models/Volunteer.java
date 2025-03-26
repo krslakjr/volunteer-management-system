@@ -1,11 +1,13 @@
 package com.example.feedbackservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "volunteer")
+@JsonIgnoreProperties("feedbacks")
 public class Volunteer {
 
     @Id
