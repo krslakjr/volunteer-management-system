@@ -13,7 +13,7 @@ public class EngagementStatistics {
 
     @OneToOne
     @JoinColumn(name = "volunteer_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference ("volunteerEngagementReference")
     private Volunteer volunteer;
 
     private int totalActivities;

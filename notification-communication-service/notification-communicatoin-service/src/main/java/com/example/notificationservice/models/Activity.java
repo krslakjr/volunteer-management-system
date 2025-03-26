@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -22,16 +23,17 @@ public class Activity {
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore  
+    @JsonManagedReference("activityReference")
     private List<ForumPost> forumPosts;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference  
+    @JsonManagedReference ("activitynReference")
     private List<Notification> notifications;
+
 
     public Long getActivityId() {
         return activityId;

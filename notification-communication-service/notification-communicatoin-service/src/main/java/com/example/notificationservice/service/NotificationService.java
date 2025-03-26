@@ -3,6 +3,8 @@ package com.example.notificationservice.service;
 import com.example.notificationservice.models.Notification;
 import com.example.notificationservice.repository.NotificationRepository;
 
+import com.example.notificationservice.exception.NotificationNotFoundException;
+
 import com.example.notificationservice.models.Organizer;
 
 import org.springframework.stereotype.Service;
@@ -46,10 +48,15 @@ public class NotificationService {
                     notification.setOrganizer(updatedNotification.getOrganizer());
                     return notificationRepository.save(notification);
                 })
-                .orElseThrow(() -> new RuntimeException("Notification not found"));
+                .orElseThrow(() -> new NotificationNotFoundException("Notification with ID " + id + " not found"));
     }
+    
 
     public void deleteNotification(Long id) {
+        if (!notificationRepository.existsById(id)) {
+            throw new NotificationNotFoundException("Notification with ID " + id + " not found");
+        }
         notificationRepository.deleteById(id);
     }
+    
 }

@@ -2,6 +2,7 @@ package com.example.notificationservice.controller;
 
 import com.example.notificationservice.models.Activity;
 import com.example.notificationservice.service.ActivityService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +32,9 @@ public class ActivityController {
     }
 
     @PostMapping
-    public Activity createActivity(@RequestBody Activity activity) {
-        return activityService.createActivity(activity);
+    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
+        Activity createdActivity = activityService.createActivity(activity);
+        return new ResponseEntity<>(createdActivity, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

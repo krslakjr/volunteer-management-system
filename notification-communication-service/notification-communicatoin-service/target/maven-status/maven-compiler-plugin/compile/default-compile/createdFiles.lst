@@ -20,6 +20,7 @@ com\example\notificationservice\controller\EngagementStatisticsController.class
 com\example\notificationservice\service\OrganizerService.class
 com\example\notificationservice\service\MessageService.class
 com\example\notificationservice\models\ForumPost.class
+com\example\notificationservice\exception\NotificationNotFoundException.class
 com\example\notificationservice\repository\ActivityRepository.class
 com\example\notificationservice\repository\ForumPostRepository.class
 com\example\notificationservice\controller\OrganizerController.class

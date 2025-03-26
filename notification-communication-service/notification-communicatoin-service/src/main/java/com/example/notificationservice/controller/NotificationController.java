@@ -1,5 +1,6 @@
 package com.example.notificationservice.controller;
 
+import com.example.notificationservice.exception.NotificationNotFoundException;
 import com.example.notificationservice.models.Notification;
 import com.example.notificationservice.service.NotificationService;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +37,15 @@ public class NotificationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Notification> updateNotification(@PathVariable Long id, @RequestBody Notification updatedNotification) {
-        try {
-            Notification notification = notificationService.updateNotification(id, updatedNotification);
-            return ResponseEntity.ok(notification);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+public ResponseEntity<Notification> updateNotification(@PathVariable Long id, @RequestBody Notification updatedNotification) {
+    try {
+        Notification notification = notificationService.updateNotification(id, updatedNotification);
+        return ResponseEntity.ok(notification); // Status 200 sa ispravnim JSON objektom
+    } catch (NotificationNotFoundException e) {
+        return ResponseEntity.notFound().build();  // Status 404 ako nije pronađena notifikacija
     }
+}
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {

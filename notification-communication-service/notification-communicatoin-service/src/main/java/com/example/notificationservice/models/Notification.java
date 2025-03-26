@@ -15,17 +15,17 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("notificationsReference")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("activitynReference")
     private Activity activity;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
     private String message;

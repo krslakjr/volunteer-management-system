@@ -14,17 +14,17 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference ("volunteerSentMessagesReference")
     private Volunteer sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference  ("volunteerReceivedMessagesReference")
     private Volunteer receiver;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
     private String content;

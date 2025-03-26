@@ -4,6 +4,8 @@ import com.example.notificationservice.models.Organizer;
 import com.example.notificationservice.service.OrganizerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.persistence.EntityNotFoundException;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +48,13 @@ public class OrganizerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrganizer(@PathVariable Long id) {
+public ResponseEntity<Void> deleteOrganizer(@PathVariable Long id) {
+    try {
         organizerService.deleteOrganizer(id);
         return ResponseEntity.noContent().build();
+    } catch (EntityNotFoundException e) {
+        return ResponseEntity.notFound().build(); 
     }
+}
+
 }
