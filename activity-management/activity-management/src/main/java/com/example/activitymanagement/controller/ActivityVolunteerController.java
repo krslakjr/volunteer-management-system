@@ -2,6 +2,7 @@ package com.example.activitymanagement.controller;
 
 import com.example.activitymanagement.dto.ActivityVolunteerDTO;
 import com.example.activitymanagement.service.ActivityVolunteerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ActivityVolunteerController {
     }
 
     @PostMapping
-    public ResponseEntity<ActivityVolunteerDTO> createActivityVolunteer(@RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
+    public ResponseEntity<ActivityVolunteerDTO> createActivityVolunteer(@Valid @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
         try {
             ActivityVolunteerDTO savedActivityVolunteerDTO = activityVolunteerService.createActivityVolunteer(activityVolunteerDTO);
             return new ResponseEntity<>(savedActivityVolunteerDTO, HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class ActivityVolunteerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityVolunteerDTO> updateActivityVolunteer(@PathVariable Long id, @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
+    public ResponseEntity<ActivityVolunteerDTO> updateActivityVolunteer(@PathVariable Long id, @Valid @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
         Optional<ActivityVolunteerDTO> updatedActivityVolunteerDTO = activityVolunteerService.updateActivityVolunteer(id, activityVolunteerDTO);
         return updatedActivityVolunteerDTO.map(volunteerDTO -> new ResponseEntity<>(volunteerDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

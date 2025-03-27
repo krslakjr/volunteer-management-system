@@ -2,6 +2,7 @@ package com.example.notificationservice.controller;
 
 import com.example.notificationservice.models.ForumPost;
 import com.example.notificationservice.service.ForumPostService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +32,12 @@ public class ForumPostController {
     }
 
     @PostMapping
-    public ForumPost createForumPost(@RequestBody ForumPost forumPost) {
+    public ForumPost createForumPost(@Valid @RequestBody ForumPost forumPost) {
         return forumPostService.createForumPost(forumPost);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id, @RequestBody ForumPost updatedForumPost) {
+    public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id, @Valid @RequestBody ForumPost updatedForumPost) {
         try {
             ForumPost forumPost = forumPostService.updateForumPost(id, updatedForumPost);
             return ResponseEntity.ok(forumPost);

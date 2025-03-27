@@ -2,6 +2,7 @@ package com.example.notificationservice.controller;
 
 import com.example.notificationservice.models.Organizer;
 import com.example.notificationservice.service.OrganizerService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +32,12 @@ public class OrganizerController {
     }
 
     @PostMapping
-    public Organizer createOrganizer(@RequestBody Organizer organizer) {
+    public Organizer createOrganizer(@Valid @RequestBody Organizer organizer) {
         return organizerService.createOrganizer(organizer);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Organizer> updateOrganizer(@PathVariable Long id, @RequestBody Organizer updatedOrganizer) {
+    public ResponseEntity<Organizer> updateOrganizer(@PathVariable Long id, @Valid @RequestBody Organizer updatedOrganizer) {
         try {
             Organizer organizer = organizerService.updateOrganizer(id, updatedOrganizer);
             return ResponseEntity.ok(organizer);

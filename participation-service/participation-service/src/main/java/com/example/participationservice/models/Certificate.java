@@ -2,6 +2,9 @@ package com.example.participationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @Entity
@@ -22,7 +25,10 @@ public class Certificate {
     @JsonIgnore
     private Activity activity;
 
+    @NotNull(message = "Issue date is required")
     private Date issueDate;
+
+    @NotBlank(message = "Certificate status is required")
     private String certificateStatus;
 
     public Long getCertificateId() {

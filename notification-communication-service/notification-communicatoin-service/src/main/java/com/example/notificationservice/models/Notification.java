@@ -3,6 +3,9 @@ package com.example.notificationservice.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @Entity
@@ -28,9 +31,15 @@ public class Notification {
     @JsonBackReference 
     private Organizer organizer;
 
+    @NotBlank(message = "Message is required")
     private String message;
+
+    @NotBlank(message = "Type is required")
     private String type;
+
     private Date timestamp;
+
+    @NotNull(message = "Reading status is required")
     private boolean isRead;
 
     public Long getNotificationId() {

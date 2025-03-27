@@ -2,6 +2,7 @@ package com.example.activitymanagement.controller;
 
 import com.example.activitymanagement.models.Team;
 import com.example.activitymanagement.service.TeamService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<Team> createTeam(@RequestBody Team team) {
+    public ResponseEntity<Team> createTeam(@Valid @RequestBody Team team) {
         try {
             Team savedTeam = teamService.createTeam(team);
             return new ResponseEntity<>(savedTeam, HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team team) {
+    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @Valid @RequestBody Team team) {
         Optional<Team> updatedTeam = teamService.updateTeam(id, team);
         return updatedTeam.map(t -> new ResponseEntity<>(t, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
