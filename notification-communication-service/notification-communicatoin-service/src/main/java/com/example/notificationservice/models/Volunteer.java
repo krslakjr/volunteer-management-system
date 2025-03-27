@@ -25,23 +25,22 @@ public class Volunteer {
     private String phoneNumber;
 
     @OneToOne(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference  
+    @JsonManagedReference ("volunteerEngagementReference")
     private EngagementStatistics engagementStatistics;
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference  
+    @JsonManagedReference ("volunteerSentMessagesReference")
     private List<Message> sentMessages;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference  
+    @JsonManagedReference ("volunteerReceivedMessagesReference")
     private List<Message> receivedMessages;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
     private List<ForumPost> forumPosts;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
+    @JsonManagedReference ("notificationsReference")
     private List<Notification> notifications;
 
     public Long getVolunteerId() {

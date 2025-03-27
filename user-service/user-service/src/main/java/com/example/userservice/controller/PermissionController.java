@@ -44,7 +44,11 @@ public class PermissionController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Permission> updatePermission(@PathVariable Long id, @Valid @RequestBody Permission permission) {
+=======
+    public ResponseEntity<Permission> updatePermission(@PathVariable Long id,@Valid @RequestBody Permission permission) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Permission updatedPermission = permissionService.updatePermission(id, permission);
         if (updatedPermission != null) {
             return new ResponseEntity<>(updatedPermission, HttpStatus.OK);

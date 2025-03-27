@@ -5,6 +5,9 @@ import com.example.notificationservice.service.OrganizerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +40,11 @@ public class OrganizerController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Organizer> updateOrganizer(@PathVariable Long id, @Valid @RequestBody Organizer updatedOrganizer) {
+=======
+    public ResponseEntity<Organizer> updateOrganizer(@PathVariable Long id,@Valid @RequestBody Organizer updatedOrganizer) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             Organizer organizer = organizerService.updateOrganizer(id, updatedOrganizer);
             return ResponseEntity.ok(organizer);
@@ -47,8 +54,13 @@ public class OrganizerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrganizer(@PathVariable Long id) {
+public ResponseEntity<Void> deleteOrganizer(@PathVariable Long id) {
+    try {
         organizerService.deleteOrganizer(id);
         return ResponseEntity.noContent().build();
+    } catch (EntityNotFoundException e) {
+        return ResponseEntity.notFound().build(); 
     }
+}
+
 }

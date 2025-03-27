@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "feedback")
@@ -17,12 +19,12 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
-    @JsonBackReference 
+    @JsonBackReference("volunteer-feedback")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    @JsonBackReference 
+    @JsonBackReference("activity-feedback")
     private Activity activity;
 
     @NotNull(message = "Rating is required")
@@ -30,7 +32,11 @@ public class Feedback {
 
     @NotBlank(message = "Comment is required")
     private String comment;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     private Date timestamp;
 
 

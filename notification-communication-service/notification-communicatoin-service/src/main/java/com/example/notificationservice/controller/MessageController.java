@@ -5,6 +5,7 @@ import com.example.notificationservice.service.MessageService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,11 @@ public class MessageController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Message> updateMessage(@PathVariable Long id, @Valid @RequestBody Message updatedMessage) {
+=======
+    public ResponseEntity<Message> updateMessage(@PathVariable Long id,@Valid @RequestBody Message updatedMessage) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             Message message = messageService.updateMessage(id, updatedMessage);
             return ResponseEntity.ok(message);

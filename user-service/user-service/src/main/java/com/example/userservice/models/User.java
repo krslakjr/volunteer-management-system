@@ -1,15 +1,15 @@
 package com.example.userservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 public class User {
 
     @Id
@@ -24,29 +24,27 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    @JsonManagedReference
     private Role role;
 
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Activity> organizedActivities;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<UserPermission> userPermissions;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<SocialShare> socialShares = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<VolunteerCertificate> volunteerCertificates = new ArrayList<>(); 
 
     @ManyToMany
     @JoinTable(
-        name = "user_activity",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "activity_id")
+    name = "user_activity",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
-    @JsonIgnore 
-    private List<Activity> activities = new ArrayList<>(); 
+    private List<Activity> activities = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

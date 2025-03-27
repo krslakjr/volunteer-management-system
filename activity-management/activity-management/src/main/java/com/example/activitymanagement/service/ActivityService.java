@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ActivityService {
@@ -21,30 +22,31 @@ public class ActivityService {
     }
 
     public List<ActivityDTO> getAllActivities() {
-
         List<Activity> activities = activityRepository.findAll();
-
         return activities.stream()
                 .map(activityMapper::toActivityDTO) 
-                .toList(); 
+                .collect(Collectors.toList()); 
     }
 
-    public Optional<Activity> getActivityById(Long id) {
-        return activityRepository.findById(id);
+    public Optional<ActivityDTO> getActivityById(Long id) {
+        Optional<Activity> activity = activityRepository.findById(id);
+        return activity.map(activityMapper::toActivityDTO);  
     }
 
-    public Activity createActivity(Activity activity) {
-        return activityRepository.save(activity);
+    public ActivityDTO createActivity(Activity activity) {
+        Activity savedActivity = activityRepository.save(activity);
+        return activityMapper.toActivityDTO(savedActivity); 
     }
 
-    public Activity updateActivity(Long id, Activity updatedActivity) {
+    public ActivityDTO updateActivity(Long id, Activity updatedActivity) {
         return activityRepository.findById(id)
                 .map(activity -> {
                     activity.setDescription(updatedActivity.getDescription());
                     activity.setDate(updatedActivity.getDate());
                     activity.setLocation(updatedActivity.getLocation());
                     activity.setVolunteersNeeded(updatedActivity.getVolunteersNeeded());
-                    return activityRepository.save(activity);
+                    Activity savedActivity = activityRepository.save(activity);
+                    return activityMapper.toActivityDTO(savedActivity);  
                 })
                 .orElseThrow(() -> new RuntimeException("Activity not found"));
     }

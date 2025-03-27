@@ -44,7 +44,11 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Role> updateRole(@PathVariable Long id, @Valid @RequestBody Role role) {
+=======
+    public ResponseEntity<Role> updateRole(@PathVariable Long id,@Valid @RequestBody Role role) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Role updatedRole = roleService.updateRole(id, role);
         if (updatedRole != null) {
             return new ResponseEntity<>(updatedRole, HttpStatus.OK);

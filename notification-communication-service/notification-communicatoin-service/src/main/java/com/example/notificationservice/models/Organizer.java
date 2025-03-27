@@ -26,19 +26,19 @@ public class Organizer {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference  
+    @JsonBackReference ("organizerReference")
     private List<Activity> activities;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference  
+    @JsonBackReference  ("organizerForumPostReference")
     private List<ForumPost> forumPosts;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference 
+    @JsonBackReference ("organizerNotificationReference")
     private List<Notification> notifications;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference  
+    @JsonBackReference  ("organizerMessagesReference")
     private List<Message> messages;
 
     public Long getOrganizerId() {

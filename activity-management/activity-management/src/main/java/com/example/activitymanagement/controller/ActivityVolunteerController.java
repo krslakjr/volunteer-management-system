@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +45,11 @@ public class ActivityVolunteerController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<ActivityVolunteerDTO> updateActivityVolunteer(@PathVariable Long id, @Valid @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
+=======
+    public ResponseEntity<ActivityVolunteerDTO> updateActivityVolunteer(@PathVariable Long id,@Valid @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Optional<ActivityVolunteerDTO> updatedActivityVolunteerDTO = activityVolunteerService.updateActivityVolunteer(id, activityVolunteerDTO);
         return updatedActivityVolunteerDTO.map(volunteerDTO -> new ResponseEntity<>(volunteerDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

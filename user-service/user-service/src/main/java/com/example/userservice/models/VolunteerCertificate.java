@@ -19,22 +19,27 @@ public class VolunteerCertificate {
    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference("userCertificates")
     private User user;
 
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")
-    @JsonBackReference
+    @JsonBackReference("activityCertificates")
     private Activity activity;
 
     @NotNull(message = "Date of certificate is required")
     private Date certificateDate;
 
+<<<<<<< HEAD
     @NotBlank(message = "Pdf link is required")
     private String certificatePdfLink;
 
     @NotNull(message = "Issue date is required")
+=======
+    private String certificatePdfLink;
+
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     private Date issuedAt;
 
     @Temporal(TemporalType.TIMESTAMP)

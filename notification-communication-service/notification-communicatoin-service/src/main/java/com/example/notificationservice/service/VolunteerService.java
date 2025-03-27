@@ -1,5 +1,7 @@
 package com.example.notificationservice.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.example.notificationservice.models.Volunteer;
 import com.example.notificationservice.repository.VolunteerRepository;
 import org.springframework.stereotype.Service;
@@ -32,16 +34,18 @@ public class VolunteerService {
         return volunteerRepository.save(volunteer);
     }
 
-    public Volunteer updateVolunteer(Long id, Volunteer updatedVolunteer) {
-        return volunteerRepository.findById(id)
-                .map(volunteer -> {
-                    volunteer.setName(updatedVolunteer.getName());
-                    volunteer.setEmail(updatedVolunteer.getEmail());
-                    volunteer.setPhoneNumber(updatedVolunteer.getPhoneNumber());
-                    return volunteerRepository.save(volunteer);
-                })
-                .orElseThrow(() -> new RuntimeException("Volunteer not found"));
-    }
+
+public Volunteer updateVolunteer(Long id, Volunteer updatedVolunteer) {
+    return volunteerRepository.findById(id)
+            .map(volunteer -> {
+                volunteer.setName(updatedVolunteer.getName());
+                volunteer.setEmail(updatedVolunteer.getEmail());
+                volunteer.setPhoneNumber(updatedVolunteer.getPhoneNumber());
+                return volunteerRepository.save(volunteer);
+            })
+            .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with ID: " + id));
+}
+
 
     public void deleteVolunteer(Long id) {
         volunteerRepository.deleteById(id);

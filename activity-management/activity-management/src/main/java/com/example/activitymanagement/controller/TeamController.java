@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import lombok.val;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +47,11 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Team> updateTeam(@PathVariable Long id, @Valid @RequestBody Team team) {
+=======
+    public ResponseEntity<Team> updateTeam(@PathVariable Long id,@Valid @RequestBody Team team) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Optional<Team> updatedTeam = teamService.updateTeam(id, team);
         return updatedTeam.map(t -> new ResponseEntity<>(t, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

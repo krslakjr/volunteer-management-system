@@ -1,5 +1,6 @@
 package com.example.participationservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,12 +17,12 @@ public class Recommendation {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
-    @JsonBackReference
+    @JsonBackReference("volunteerRecommendation")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "recommendation_activity_id")
-    @JsonBackReference
+    @JsonBackReference("activityRecommendation") 
     private Activity recommendationActivity;
 
     @NotNull(message = "Date generated is required")

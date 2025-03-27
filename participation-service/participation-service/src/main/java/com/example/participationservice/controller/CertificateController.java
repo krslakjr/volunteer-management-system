@@ -36,7 +36,11 @@ public class CertificateController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id, @Valid @RequestBody Certificate certificateDetails) {
+=======
+    public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id,@Valid @RequestBody Certificate certificateDetails) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Certificate updatedCertificate = certificateService.updateCertificate(id, certificateDetails);
         if (updatedCertificate != null) {
             return ResponseEntity.ok(updatedCertificate);

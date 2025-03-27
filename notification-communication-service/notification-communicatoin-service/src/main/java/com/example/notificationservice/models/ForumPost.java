@@ -2,6 +2,7 @@ package com.example.notificationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -18,17 +19,18 @@ public class ForumPost {
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference ("authorReference")
+    @JsonIgnore
     private Volunteer author;
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
-    @JsonManagedReference  
+    @JsonBackReference("activityReference")
     private Activity activity;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
     @NotBlank(message = "Content is required")

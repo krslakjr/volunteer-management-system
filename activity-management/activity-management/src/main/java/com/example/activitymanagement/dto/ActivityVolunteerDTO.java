@@ -10,10 +10,15 @@ public class ActivityVolunteerDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+<<<<<<< HEAD
 
     @NotNull(message = "Activity ID is required")
     private Long activityId;
 
+=======
+    @NotNull(message = "Activity ID is required")
+    private Long activityId;
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     @NotNull(message = "Volunteer ID is required")
     private Long volunteerId;
 

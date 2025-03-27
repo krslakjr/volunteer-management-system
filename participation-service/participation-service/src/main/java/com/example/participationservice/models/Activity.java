@@ -1,6 +1,7 @@
 package com.example.participationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -32,12 +33,13 @@ public class Activity {
     private int volunteersNeeded;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference("activityParticipation")
     private List<Participation> participations;
 
-    @OneToMany(mappedBy = "recommendationActivity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "recommendationActivity")
+    @JsonManagedReference("activityRecommendation")  
     private List<Recommendation> recommendations;
+
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Certificate> certificates;

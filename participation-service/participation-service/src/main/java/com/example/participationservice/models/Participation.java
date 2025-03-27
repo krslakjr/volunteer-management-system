@@ -1,6 +1,6 @@
 package com.example.participationservice.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,12 +17,12 @@ public class Participation {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
-    @JsonIgnore
+    @JsonBackReference("volunteerParticipation")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    @JsonIgnore
+    @JsonBackReference("activityParticipation")
     private Activity activity;
 
     @NotNull(message = "Registration date is required")

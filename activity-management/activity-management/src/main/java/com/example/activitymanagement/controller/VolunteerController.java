@@ -5,7 +5,7 @@ import com.example.activitymanagement.service.VolunteerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,7 +36,11 @@ public class VolunteerController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @Valid @RequestBody Volunteer updatedVolunteer) {
+=======
+    public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id,@Valid @RequestBody Volunteer updatedVolunteer) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         return ResponseEntity.ok(volunteerService.updateVolunteer(id, updatedVolunteer));
     }
 

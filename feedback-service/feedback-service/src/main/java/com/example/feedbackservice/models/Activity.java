@@ -1,6 +1,6 @@
 package com.example.feedbackservice.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -32,11 +32,11 @@ public class Activity {
     private int volunteersNeeded;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
+    @JsonIgnore
     private List<Feedback> feedbacks;
 
     @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
+    @JsonIgnore
     private ActivityStatistics activityStatistics;
 
 

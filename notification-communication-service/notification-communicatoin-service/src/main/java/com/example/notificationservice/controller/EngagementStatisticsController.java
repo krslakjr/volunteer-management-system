@@ -5,6 +5,7 @@ import com.example.notificationservice.service.EngagementStatisticsService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,11 @@ public class EngagementStatisticsController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<EngagementStatistics> updateStatistics(@PathVariable Long id, @Valid @RequestBody EngagementStatistics updatedStatistics) {
+=======
+    public ResponseEntity<EngagementStatistics> updateStatistics(@PathVariable Long id,@Valid @RequestBody EngagementStatistics updatedStatistics) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             EngagementStatistics statistics = engagementStatisticsService.updateStatistics(id, updatedStatistics);
             return ResponseEntity.ok(statistics);

@@ -1,1 +1,10 @@
-AppTest.class
+com\example\participationservice\ActivityControllerTest.class
+com\example\participationservice\VolunteerControllerTest.class
+com\example\participationservice\CertificateControllerTest.class
+com\example\participationservice\ParticipationServiceTest.class
+com\example\participationservice\ActivityServiceTest.class
+com\example\participationservice\CertificateServiceTest.class
+com\example\participationservice\RecommendationServiceTest.class
+com\example\participationservice\VolunteerServiceTest.class
+com\example\participationservice\RecommendationControllerTest.class
+com\example\participationservice\ParticipationControllerTest.class

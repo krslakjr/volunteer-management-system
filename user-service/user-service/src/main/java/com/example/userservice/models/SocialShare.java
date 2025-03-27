@@ -16,17 +16,21 @@ public class SocialShare {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference ("userSocialShares")
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")
-    @JsonBackReference
+    @JsonBackReference ("activitySocialShares")
     private Activity activity;
 
     @NotBlank(message = "Platform is required")
     private String platform;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     private Date sharedAt;
 
     @Temporal(TemporalType.TIMESTAMP)

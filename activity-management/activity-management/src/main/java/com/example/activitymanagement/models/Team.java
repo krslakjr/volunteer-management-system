@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "team")
 public class Team {

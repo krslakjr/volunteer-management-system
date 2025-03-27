@@ -39,6 +39,12 @@ public class VolunteerService {
     }
 
     public void deleteVolunteer(Long id) {
-        volunteerRepository.deleteById(id);
+        Optional<Volunteer> volunteer = volunteerRepository.findById(id);
+        if (volunteer.isPresent()) {
+            volunteerRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Volunteer not found");
+        }
     }
+    
 }

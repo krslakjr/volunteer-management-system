@@ -14,7 +14,7 @@ public class EngagementStatistics {
 
     @OneToOne
     @JoinColumn(name = "volunteer_id", nullable = false)
-    @JsonBackReference  
+    @JsonBackReference ("volunteerEngagementReference")
     private Volunteer volunteer;
 
     @NotNull(message = "Total activities are required")

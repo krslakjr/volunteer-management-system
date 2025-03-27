@@ -7,8 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2025-03-25T19:51:57+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
+=======
+    date = "2025-03-27T17:19:00+0100",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.14 (OpenLogic)"
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 )
 @Component
 public class ActivityVolunteerMapperImpl implements ActivityVolunteerMapper {

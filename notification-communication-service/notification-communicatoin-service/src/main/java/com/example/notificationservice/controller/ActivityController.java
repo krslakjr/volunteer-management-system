@@ -2,9 +2,14 @@ package com.example.notificationservice.controller;
 
 import com.example.notificationservice.models.Activity;
 import com.example.notificationservice.service.ActivityService;
+<<<<<<< HEAD
 import jakarta.validation.Valid;
+=======
+import org.springframework.http.HttpStatus;
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,12 +37,22 @@ public class ActivityController {
     }
 
     @PostMapping
+<<<<<<< HEAD
     public Activity createActivity(@Valid @RequestBody Activity activity) {
         return activityService.createActivity(activity);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity updatedActivity) {
+=======
+    public ResponseEntity<Activity> createActivity(@Valid @RequestBody Activity activity) {
+        Activity createdActivity = activityService.createActivity(activity);
+        return new ResponseEntity<>(createdActivity, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Activity> updateActivity(@PathVariable Long id,@Valid @RequestBody Activity updatedActivity) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             Activity activity = activityService.updateActivity(id, updatedActivity);
             return ResponseEntity.ok(activity);

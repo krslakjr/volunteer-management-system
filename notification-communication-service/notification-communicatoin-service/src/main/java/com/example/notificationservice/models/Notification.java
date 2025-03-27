@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 import java.util.Date;
 
 @Entity
@@ -18,17 +22,17 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name = "volunteer_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("notificationsReference")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("activitynReference")
     private Activity activity;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)
-    @JsonBackReference 
+    @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
     @NotBlank(message = "Message is required")

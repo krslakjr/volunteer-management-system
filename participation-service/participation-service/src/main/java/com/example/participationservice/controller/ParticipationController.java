@@ -36,7 +36,11 @@ public class ParticipationController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Participation> updateParticipation(@PathVariable Long id, @Valid @RequestBody Participation participationDetails) {
+=======
+    public ResponseEntity<Participation> updateParticipation(@PathVariable Long id,@Valid @RequestBody Participation participationDetails) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Participation updatedParticipation = participationService.updateParticipation(id, participationDetails);
         if (updatedParticipation != null) {
             return ResponseEntity.ok(updatedParticipation);

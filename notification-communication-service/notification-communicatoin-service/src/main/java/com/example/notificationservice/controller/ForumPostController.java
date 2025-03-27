@@ -5,6 +5,7 @@ import com.example.notificationservice.service.ForumPostService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,11 @@ public class ForumPostController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id, @Valid @RequestBody ForumPost updatedForumPost) {
+=======
+    public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id,@Valid @RequestBody ForumPost updatedForumPost) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             ForumPost forumPost = forumPostService.updateForumPost(id, updatedForumPost);
             return ResponseEntity.ok(forumPost);

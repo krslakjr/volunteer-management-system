@@ -1,7 +1,11 @@
 package com.example.userservice.models;
 
 import jakarta.persistence.*;
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonBackReference;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore; 
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
@@ -18,7 +22,7 @@ public class Role {
     private String roleName;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference  
+    @JsonIgnore
     private List<User> users;
 
     public Long getRoleId() {

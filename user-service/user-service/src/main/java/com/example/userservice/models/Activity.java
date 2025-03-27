@@ -1,7 +1,7 @@
 package com.example.userservice.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference; 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "activity")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "activityId")
 public class Activity {
 
     @Id
@@ -30,26 +31,22 @@ public class Activity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organizer_id")
-    @JsonManagedReference 
     private User organizer;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<SocialShare> socialShares;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<VolunteerCertificate> volunteerCertificates;
 
     @ManyToMany(mappedBy = "activities")
-    @JsonBackReference 
     private List<User> participants;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+    private Date updatedAt; 
 
     public Long getActivityId() {
         return activityId;

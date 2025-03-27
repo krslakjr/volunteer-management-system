@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version> <!-- Ovo osigurava verzije za sve Spring Boot dependency-je -->
+        <version>3.1.2</version> <!-- Verzija Spring Boot-a -->
         <relativePath/> <!-- Omogućava automatsko preuzimanje Spring Boot verzija -->
     </parent>
 
@@ -24,7 +24,7 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- JUnit 5 Engine za pokretanje testova -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -60,51 +60,58 @@
             <scope>provided</scope>
         </dependency>
 
-         <!-- MapStruct -->
+        <!-- Jackson (za rad sa JSON) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.0</version> 
+        </dependency>
+
+        <!-- Spring Boot Starter Test (uključuje MockMvc, AssertJ, i sve potrebne alate za testiranje) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+    <groupId>javax.persistence</groupId>
+    <artifactId>javax.persistence-api</artifactId>
+    <version>2.2</version> <!-- ili odgovarajuća verzija -->
+</dependency>
+
+ <!-- MapStruct dependency -->
     <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>
-        <version>1.5.5.Final</version>
+        <version>1.5.2.Final</version>
     </dependency>
-
-    <!-- MapStruct Processor (za generisanje koda) -->
+    
+    <!-- MapStruct processor for compiling annotations -->
     <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct-processor</artifactId>
-        <version>1.5.5.Final</version>
+        <version>1.5.2.Final</version>
         <scope>provided</scope>
     </dependency>
-
-    <!-- Lombok (ako koristiš) -->
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.30</version>
-        <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok-mapstruct-binding</artifactId>
-        <version>0.2.0</version>
-        <scope>provided</scope>
-    </dependency>
-
-    <!-- Annotation Processor za MapStruct i Lombok -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
+
+           <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>3.11.2</version>
+        <scope>test</scope>
+         </dependency>
+        <!-- H2 Database (za testiranje, koristiće se umesto stvarne baze u testovima) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -113,6 +120,23 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+             <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <source>17</source> <!-- ili verzija JDK koju koristiš -->
+                <target>17</target> <!-- ili verzija JDK koju koristiš -->
+                <annotationProcessorPaths>
+                    <annotationProcessorPath>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>1.5.2.Final</version>
+                    </annotationProcessorPath>
+                </annotationProcessorPaths>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
 </project>

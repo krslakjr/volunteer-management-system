@@ -36,7 +36,11 @@ public class VolunteerController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @Valid @RequestBody Volunteer volunteerDetails) {
+=======
+    public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id,@Valid @RequestBody Volunteer volunteerDetails) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Volunteer updatedVolunteer = volunteerService.updateVolunteer(id, volunteerDetails);
         if (updatedVolunteer != null) {
             return ResponseEntity.ok(updatedVolunteer);

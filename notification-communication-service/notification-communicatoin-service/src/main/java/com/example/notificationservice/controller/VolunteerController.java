@@ -4,6 +4,11 @@ import com.example.notificationservice.models.Volunteer;
 import com.example.notificationservice.service.VolunteerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +42,7 @@ public class VolunteerController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @Valid @RequestBody Volunteer updatedVolunteer) {
         try {
             Volunteer volunteer = volunteerService.updateVolunteer(id, updatedVolunteer);
@@ -50,5 +56,25 @@ public class VolunteerController {
     public ResponseEntity<Void> deleteVolunteer(@PathVariable Long id) {
         volunteerService.deleteVolunteer(id);
         return ResponseEntity.noContent().build();
+=======
+public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id,@Valid @RequestBody Volunteer updatedVolunteer) {
+    try {
+        Volunteer volunteer = volunteerService.updateVolunteer(id, updatedVolunteer);
+        return ResponseEntity.ok(volunteer);
+    } catch (EntityNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     }
+}
+
+
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteVolunteer(@PathVariable Long id) {
+    try {
+        volunteerService.deleteVolunteer(id);
+        return ResponseEntity.noContent().build();
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+}
 }

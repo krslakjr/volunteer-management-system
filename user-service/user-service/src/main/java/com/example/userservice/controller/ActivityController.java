@@ -40,7 +40,11 @@ public class ActivityController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity activity) {
+=======
+    public ResponseEntity<Activity> updateActivity(@PathVariable Long id,@Valid @RequestBody Activity activity) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Activity updatedActivity = activityService.updateActivity(id, activity);
         return updatedActivity != null
                 ? new ResponseEntity<>(updatedActivity, HttpStatus.OK)

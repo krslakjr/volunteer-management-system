@@ -36,7 +36,11 @@ public class RecommendationController {
     }
 
     @PutMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id, @Valid @RequestBody Recommendation recommendationDetails) {
+=======
+    public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id,@Valid @RequestBody Recommendation recommendationDetails) {
+>>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Recommendation updatedRecommendation = recommendationService.updateRecommendation(id, recommendationDetails);
         if (updatedRecommendation != null) {
             return ResponseEntity.ok(updatedRecommendation);

@@ -17,13 +17,13 @@ public class UserPermission {
     
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference ("userPermissions")
     private User user;
 
     
     @ManyToOne
     @JoinColumn(name = "permission_id")
-    @JsonBackReference
+    @JsonBackReference ("permissionUsers")
     private Permission permission;
 
     @Temporal(TemporalType.TIMESTAMP)
