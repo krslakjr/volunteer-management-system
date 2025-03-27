@@ -5,6 +5,7 @@ import com.example.notificationservice.models.Notification;
 import com.example.notificationservice.service.NotificationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,17 +33,17 @@ public class NotificationController {
     }
 
     @PostMapping
-    public Notification createNotification(@RequestBody Notification notification) {
+    public Notification createNotification(@Valid @RequestBody Notification notification) {
         return notificationService.createNotification(notification);
     }
 
     @PutMapping("/{id}")
-public ResponseEntity<Notification> updateNotification(@PathVariable Long id, @RequestBody Notification updatedNotification) {
+public ResponseEntity<Notification> updateNotification(@PathVariable Long id,@Valid @RequestBody Notification updatedNotification) {
     try {
         Notification notification = notificationService.updateNotification(id, updatedNotification);
-        return ResponseEntity.ok(notification); // Status 200 sa ispravnim JSON objektom
+        return ResponseEntity.ok(notification);
     } catch (NotificationNotFoundException e) {
-        return ResponseEntity.notFound().build();  // Status 404 ako nije pronađena notifikacija
+        return ResponseEntity.notFound().build();  
     }
 }
 

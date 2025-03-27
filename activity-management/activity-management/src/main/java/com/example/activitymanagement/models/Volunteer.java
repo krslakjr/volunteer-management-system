@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "volunteer")
 public class Volunteer {
@@ -12,8 +14,10 @@ public class Volunteer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long volunteerId;
 
+    @NotBlank(message = "Name is required")
     private String name;
 
+    @NotBlank(message = "Contact info is required")
     private String contactInfo;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -2,6 +2,8 @@ package com.example.notificationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 @Entity
@@ -28,6 +30,7 @@ public class Message {
     private Organizer organizer;
 
     private String content;
+
     private Date timestamp;
 
     public Long getMessageId() {

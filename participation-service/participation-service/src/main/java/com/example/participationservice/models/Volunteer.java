@@ -3,6 +3,8 @@ package com.example.participationservice.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 @Entity
@@ -13,7 +15,10 @@ public class Volunteer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long volunteerId;
 
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "Contact info is required")
     private String contactInfo;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class ActivityStatisticsController {
     }
 
     @PostMapping
-    public ResponseEntity<ActivityStatistics> createOrUpdateActivityStatistics(@RequestBody ActivityStatistics activityStatistics) {
+    public ResponseEntity<ActivityStatistics> createOrUpdateActivityStatistics(@Valid @RequestBody ActivityStatistics activityStatistics) {
         try {
             ActivityStatistics savedStatistics = activityStatisticsService.saveOrUpdateActivityStatistics(activityStatistics);
             return new ResponseEntity<>(savedStatistics, HttpStatus.CREATED);

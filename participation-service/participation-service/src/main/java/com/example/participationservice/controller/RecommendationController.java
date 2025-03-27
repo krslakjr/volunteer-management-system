@@ -2,6 +2,7 @@ package com.example.participationservice.controller;
 
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.service.RecommendationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class RecommendationController {
     }
 
     @PostMapping
-    public ResponseEntity<Recommendation> createRecommendation(@RequestBody Recommendation recommendation) {
+    public ResponseEntity<Recommendation> createRecommendation(@Valid @RequestBody Recommendation recommendation) {
         Recommendation createdRecommendation = recommendationService.createRecommendation(recommendation);
         return ResponseEntity.ok(createdRecommendation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id, @RequestBody Recommendation recommendationDetails) {
+    public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id,@Valid @RequestBody Recommendation recommendationDetails) {
         Recommendation updatedRecommendation = recommendationService.updateRecommendation(id, recommendationDetails);
         if (updatedRecommendation != null) {
             return ResponseEntity.ok(updatedRecommendation);

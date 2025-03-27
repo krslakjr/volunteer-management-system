@@ -3,6 +3,8 @@ package com.example.userservice.models;
 import jakarta.persistence.*;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "volunteer_certificate", uniqueConstraints = {
@@ -26,8 +28,11 @@ public class VolunteerCertificate {
     @JsonBackReference("activityCertificates")
     private Activity activity;
 
+    @NotNull(message = "Date of certificate is required")
     private Date certificateDate;
+
     private String certificatePdfLink;
+
     private Date issuedAt;
 
     @Temporal(TemporalType.TIMESTAMP)

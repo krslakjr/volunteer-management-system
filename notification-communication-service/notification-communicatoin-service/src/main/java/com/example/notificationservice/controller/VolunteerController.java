@@ -4,6 +4,7 @@ import com.example.notificationservice.models.Volunteer;
 import com.example.notificationservice.service.VolunteerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -35,12 +36,12 @@ public class VolunteerController {
     }
 
     @PostMapping
-    public Volunteer createVolunteer(@RequestBody Volunteer volunteer) {
+    public Volunteer createVolunteer(@Valid @RequestBody Volunteer volunteer) {
         return volunteerService.createVolunteer(volunteer);
     }
 
     @PutMapping("/{id}")
-public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @RequestBody Volunteer updatedVolunteer) {
+public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id,@Valid @RequestBody Volunteer updatedVolunteer) {
     try {
         Volunteer volunteer = volunteerService.updateVolunteer(id, updatedVolunteer);
         return ResponseEntity.ok(volunteer);

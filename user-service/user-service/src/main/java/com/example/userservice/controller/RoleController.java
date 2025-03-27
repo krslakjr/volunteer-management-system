@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.models.Role;
 import com.example.userservice.service.RoleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+    public ResponseEntity<Role> createRole(@Valid @RequestBody Role role) {
         try {
             Role createdRole = roleService.createRole(role);
             return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
@@ -43,7 +44,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable Long id, @RequestBody Role role) {
+    public ResponseEntity<Role> updateRole(@PathVariable Long id,@Valid @RequestBody Role role) {
         Role updatedRole = roleService.updateRole(id, role);
         if (updatedRole != null) {
             return new ResponseEntity<>(updatedRole, HttpStatus.OK);

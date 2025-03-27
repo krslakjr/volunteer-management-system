@@ -2,6 +2,9 @@ package com.example.userservice.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +16,7 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long permissionId;
 
+    @NotBlank(message = "Permission name is required")
     private String permissionName;
 
     @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

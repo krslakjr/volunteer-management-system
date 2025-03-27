@@ -2,6 +2,7 @@ package com.example.participationservice.controller;
 
 import com.example.participationservice.models.Participation;
 import com.example.participationservice.service.ParticipationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class ParticipationController {
     }
 
     @PostMapping
-    public ResponseEntity<Participation> createParticipation(@RequestBody Participation participation) {
+    public ResponseEntity<Participation> createParticipation(@Valid @RequestBody Participation participation) {
         Participation createdParticipation = participationService.createParticipation(participation);
         return ResponseEntity.ok(createdParticipation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Participation> updateParticipation(@PathVariable Long id, @RequestBody Participation participationDetails) {
+    public ResponseEntity<Participation> updateParticipation(@PathVariable Long id,@Valid @RequestBody Participation participationDetails) {
         Participation updatedParticipation = participationService.updateParticipation(id, participationDetails);
         if (updatedParticipation != null) {
             return ResponseEntity.ok(updatedParticipation);

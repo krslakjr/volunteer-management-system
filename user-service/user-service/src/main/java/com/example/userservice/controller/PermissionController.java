@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.models.Permission;
 import com.example.userservice.service.PermissionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class PermissionController {
     }
 
     @PostMapping
-    public ResponseEntity<Permission> createPermission(@RequestBody Permission permission) {
+    public ResponseEntity<Permission> createPermission(@Valid @RequestBody Permission permission) {
         try {
             Permission createdPermission = permissionService.createPermission(permission);
             return new ResponseEntity<>(createdPermission, HttpStatus.CREATED);
@@ -43,7 +44,7 @@ public class PermissionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Permission> updatePermission(@PathVariable Long id, @RequestBody Permission permission) {
+    public ResponseEntity<Permission> updatePermission(@PathVariable Long id,@Valid @RequestBody Permission permission) {
         Permission updatedPermission = permissionService.updatePermission(id, permission);
         if (updatedPermission != null) {
             return new ResponseEntity<>(updatedPermission, HttpStatus.OK);

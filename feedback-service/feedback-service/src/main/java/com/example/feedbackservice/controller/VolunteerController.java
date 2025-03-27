@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +31,7 @@ public class VolunteerController {
     }
 
     @PostMapping
-    public ResponseEntity<Volunteer> createOrUpdateVolunteer(@RequestBody Volunteer volunteer) {
+    public ResponseEntity<Volunteer> createOrUpdateVolunteer(@Valid @RequestBody Volunteer volunteer) {
         try {
             Volunteer savedVolunteer = volunteerService.saveOrUpdateVolunteer(volunteer);
             return new ResponseEntity<>(savedVolunteer, HttpStatus.CREATED);

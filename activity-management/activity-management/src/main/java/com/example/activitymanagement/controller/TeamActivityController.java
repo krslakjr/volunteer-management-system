@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +40,7 @@ public class TeamActivityController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamActivity> updateTeamActivity(@PathVariable Long id, @RequestBody TeamActivity teamActivity) {
+    public ResponseEntity<TeamActivity> updateTeamActivity(@PathVariable Long id,@RequestBody TeamActivity teamActivity) {
         Optional<TeamActivity> updatedTeamActivity = teamActivityService.updateTeamActivity(id, teamActivity);
         return updatedTeamActivity.map(activity -> new ResponseEntity<>(activity, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

@@ -5,6 +5,7 @@ import com.example.notificationservice.service.ActivityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +33,13 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
+    public ResponseEntity<Activity> createActivity(@Valid @RequestBody Activity activity) {
         Activity createdActivity = activityService.createActivity(activity);
         return new ResponseEntity<>(createdActivity, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity updatedActivity) {
+    public ResponseEntity<Activity> updateActivity(@PathVariable Long id,@Valid @RequestBody Activity updatedActivity) {
         try {
             Activity activity = activityService.updateActivity(id, updatedActivity);
             return ResponseEntity.ok(activity);

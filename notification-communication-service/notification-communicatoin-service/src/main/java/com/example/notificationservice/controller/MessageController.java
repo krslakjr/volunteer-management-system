@@ -4,6 +4,7 @@ import com.example.notificationservice.models.Message;
 import com.example.notificationservice.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +32,12 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message createMessage(@RequestBody Message message) {
+    public Message createMessage(@Valid @RequestBody Message message) {
         return messageService.createMessage(message);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Message> updateMessage(@PathVariable Long id, @RequestBody Message updatedMessage) {
+    public ResponseEntity<Message> updateMessage(@PathVariable Long id,@Valid @RequestBody Message updatedMessage) {
         try {
             Message message = messageService.updateMessage(id, updatedMessage);
             return ResponseEntity.ok(message);

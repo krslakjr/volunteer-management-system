@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.List;
@@ -16,9 +19,17 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long activityId;
 
+    @NotBlank(message = "Title is required")
     private String title;
+
+    @NotBlank(message = "Description is required")
+    @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
     private String description;
+
+    @NotNull(message = "Date is required")
     private Date date;
+
+    @NotBlank(message = "Location is required")
     private String location;
 
     @ManyToOne

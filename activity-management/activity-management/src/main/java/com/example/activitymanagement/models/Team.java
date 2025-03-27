@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "team")
 public class Team {
@@ -12,6 +14,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamId;
 
+    @NotBlank(message = "Team name is required")
     private String teamName;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

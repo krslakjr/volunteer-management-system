@@ -3,6 +3,8 @@ package com.example.feedbackservice.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "feedback")
@@ -22,8 +24,12 @@ public class Feedback {
     @JsonBackReference("activity-feedback")
     private Activity activity;
 
+    @NotNull(message = "Rating is required")
     private int rating;
+
+    @NotBlank(message = "Comment is required")
     private String comment;
+    
     private Date timestamp;
 
 

@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.models.SocialShare;
 import com.example.userservice.service.SocialShareService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class SocialShareController {
     }
 
     @PostMapping
-    public ResponseEntity<SocialShare> createSocialShare(@RequestBody SocialShare socialShare) {
+    public ResponseEntity<SocialShare> createSocialShare(@Valid @RequestBody SocialShare socialShare) {
         try {
             SocialShare createdSocialShare = socialShareService.createSocialShare(socialShare);
             return new ResponseEntity<>(createdSocialShare, HttpStatus.CREATED);
@@ -40,7 +41,7 @@ public class SocialShareController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SocialShare> updateSocialShare(@PathVariable Long id, @RequestBody SocialShare socialShare) {
+    public ResponseEntity<SocialShare> updateSocialShare(@PathVariable Long id, @Valid @RequestBody SocialShare socialShare) {
         Optional<SocialShare> updatedSocialShare = socialShareService.updateSocialShare(id, socialShare);
         return updatedSocialShare.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
