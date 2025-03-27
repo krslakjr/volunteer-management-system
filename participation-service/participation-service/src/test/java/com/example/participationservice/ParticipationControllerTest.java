@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import java.util.Date;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,46 +77,72 @@ public class ParticipationControllerTest {
     }
 
     @Test
-    void testCreateParticipation() throws Exception {
-        Participation participation = new Participation();
-        participation.setParticipationId(1L);
+void testCreateParticipation() throws Exception {
+    String jsonRequest = """
+        {
+            "registrationDate": "2024-03-26T12:00:00.000+00:00",
+            "attendanceStatus": "Present"
+        }
+    """;
 
-        when(participationService.createParticipation(any(Participation.class))).thenReturn(participation);
+    Participation participation = new Participation();
+    participation.setParticipationId(1L);
+    participation.setRegistrationDate(new Date());
+    participation.setAttendanceStatus("Present");
 
-        mockMvc.perform(post("/participations")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(status().isOk());
+    when(participationService.createParticipation(any(Participation.class))).thenReturn(participation);
 
-        verify(participationService, times(1)).createParticipation(any(Participation.class));
-    }
+    mockMvc.perform(post("/participations")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonRequest))
+            .andExpect(status().isOk());
 
-    @Test
-    void testUpdateParticipation_Found() throws Exception {
-        Participation participation = new Participation();
-        participation.setParticipationId(1L);
+    verify(participationService, times(1)).createParticipation(any(Participation.class));
+}
 
-        when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(participation);
 
-        mockMvc.perform(put("/participations/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(status().isOk());
+@Test
+void testUpdateParticipation_Found() throws Exception {
+    String jsonRequest = """
+        {
+            "registrationDate": "2024-03-26T12:00:00.000+00:00",
+            "attendanceStatus": "Present"
+        }
+    """;
 
-        verify(participationService, times(1)).updateParticipation(eq(1L), any(Participation.class));
-    }
+    Participation participation = new Participation();
+    participation.setParticipationId(1L);
+    participation.setRegistrationDate(new Date());
+    participation.setAttendanceStatus("Present");
 
-    @Test
-    void testUpdateParticipation_NotFound() throws Exception {
-        when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(null);
+    when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(participation);
 
-        mockMvc.perform(put("/participations/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(status().isNotFound());
+    mockMvc.perform(put("/participations/1")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonRequest))
+            .andExpect(status().isOk());
 
-        verify(participationService, times(1)).updateParticipation(eq(1L), any(Participation.class));
-    }
+    verify(participationService, times(1)).updateParticipation(eq(1L), any(Participation.class));
+}
+
+@Test
+void testUpdateParticipation_NotFound() throws Exception {
+    String jsonRequest = """
+        {
+            "registrationDate": "2024-03-26T12:00:00.000+00:00",
+            "attendanceStatus": "Absent"
+        }
+    """;
+
+    when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(null);
+
+    mockMvc.perform(put("/participations/1")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonRequest))
+            .andExpect(status().isNotFound());
+
+    verify(participationService, times(1)).updateParticipation(eq(1L), any(Participation.class));
+}
 
     @Test
     void testDeleteParticipation_Found() throws Exception {

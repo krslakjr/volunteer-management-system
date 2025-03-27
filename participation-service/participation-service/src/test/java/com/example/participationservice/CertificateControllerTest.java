@@ -76,15 +76,16 @@ public class CertificateControllerTest {
 
     @Test
     public void testCreateCertificate() throws Exception {
-        when(certificateService.createCertificate(any(Certificate.class))).thenReturn(certificate);
+    when(certificateService.createCertificate(any(Certificate.class))).thenReturn(certificate);
 
-        mockMvc.perform(post("/certificates")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"certificateId\":1, \"certificateStatus\":\"Issued\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.certificateId", is(1)))
-                .andExpect(jsonPath("$.certificateStatus", is("Issued")));
+    mockMvc.perform(post("/certificates")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"certificateId\":1, \"certificateStatus\":\"Issued\", \"issueDate\":\"2024-03-26T12:00:00.000+00:00\"}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.certificateId", is(1)))
+            .andExpect(jsonPath("$.certificateStatus", is("Issued")));
     }
+
 
     @Test
     public void testUpdateCertificate_Found() throws Exception {
@@ -96,28 +97,34 @@ public class CertificateControllerTest {
         when(certificateService.updateCertificate(any(Long.class), any(Certificate.class)))
                 .thenReturn(updatedCertificate);
 
-        mockMvc.perform(put("/certificates/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"certificateId\":1, \"certificateStatus\":\"Updated\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.certificateId", is(1)))
-                .andExpect(jsonPath("$.certificateStatus", is("Updated")));
+                mockMvc.perform(put("/certificates/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"certificateId\":1, \"certificateStatus\":\"Updated\", \"issueDate\":\"2024-03-26T12:00:00.000+00:00\"}"))
+        .andExpect(status().isOk()) 
+        .andExpect(jsonPath("$.certificateId", is(1)))
+        .andExpect(jsonPath("$.certificateStatus", is("Updated")));
+
     }
 
     @Test
     public void testUpdateCertificate_NotFound() throws Exception {
-        Certificate updatedCertificate = new Certificate();
-        updatedCertificate.setCertificateId(1L);
-        updatedCertificate.setCertificateStatus("Updated");
-
+        String jsonRequest = """
+            {
+                "certificateId": 1,
+                "certificateStatus": "Updated",
+                "issueDate": "2024-03-26T12:00:00.000+00:00"
+            }
+        """;
+    
         when(certificateService.updateCertificate(any(Long.class), any(Certificate.class)))
                 .thenReturn(null);
-
+    
         mockMvc.perform(put("/certificates/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"certificateId\":1, \"certificateStatus\":\"Updated\"}"))
-                .andExpect(status().isNotFound());
+                        .content(jsonRequest))
+                .andExpect(status().isNotFound()); 
     }
+    
 
     @Test
     public void testDeleteCertificate_Success() throws Exception {

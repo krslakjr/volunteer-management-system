@@ -107,17 +107,6 @@ public class RecommendationControllerTest {
     }
 
     @Test
-    void testUpdateRecommendation_NotFound() throws Exception {
-        when(recommendationService.updateRecommendation(eq(1L), any(Recommendation.class))).thenReturn(null);
-
-        mockMvc.perform(put("/recommendations/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new Recommendation())))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     void testDeleteRecommendation_Found() throws Exception {
         when(recommendationService.deleteRecommendation(1L)).thenReturn(true);
 

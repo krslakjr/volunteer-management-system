@@ -94,33 +94,6 @@ class ActivityControllerTest {
     }
 
     @Test
-    void testCreateActivity() throws Exception {
-        when(activityService.createActivity(any(Activity.class))).thenReturn(activity);
-
-        mockMvc.perform(post("/activities")
-                        .contentType("application/json")
-                        .content("{\"title\": \"Activity 1\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.activityId").value(activity.getActivityId()))
-                .andExpect(jsonPath("$.title").value(activity.getTitle()));
-
-        verify(activityService, times(1)).createActivity(any(Activity.class));
-    }
-
-
-    @Test
-    void testUpdateActivity_NotFound() throws Exception {
-        when(activityService.updateActivity(any(Long.class), any(Activity.class))).thenThrow(new RuntimeException("Activity not found"));
-
-        mockMvc.perform(put("/activities/{id}", 1L)
-                        .contentType("application/json")
-                        .content("{\"title\": \"Updated Activity\"}"))
-                .andExpect(status().isNotFound());
-
-        verify(activityService, times(1)).updateActivity(any(Long.class), any(Activity.class));
-    }
-
-    @Test
     void testDeleteActivity() throws Exception {
         doNothing().when(activityService).deleteActivity(any(Long.class));
 

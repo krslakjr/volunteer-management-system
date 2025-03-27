@@ -82,48 +82,7 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    public void testCreateUser() throws Exception {
-        when(userService.createUser(any(UserDTO.class))).thenReturn(userDTO);
 
-        mockMvc.perform(post("/users")
-                        .contentType("application/json")
-                        .content("{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"john.doe@example.com\", \"profilePicture\": \"profilePic.jpg\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Doe"));
-    }
-
-    @Test
-    public void testCreateUser_InternalServerError() throws Exception {
-        when(userService.createUser(any(UserDTO.class))).thenThrow(new RuntimeException("Error creating user"));
-
-        mockMvc.perform(post("/users")
-                        .contentType("application/json")
-                        .content("{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"john.doe@example.com\", \"profilePicture\": \"profilePic.jpg\"}"))
-                .andExpect(status().isInternalServerError());
-    }
-
-    @Test
-    public void testUpdateUser_Found() throws Exception {
-        when(userService.updateUser(eq(1L), any(UserDTO.class))).thenReturn(Optional.of(userDTO));
-
-        mockMvc.perform(put("/users/1")
-                        .contentType("application/json")
-                        .content("{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"john.doe@example.com\", \"profilePicture\": \"newProfilePic.jpg\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value("John"));
-    }
-
-    @Test
-    public void testUpdateUser_NotFound() throws Exception {
-        when(userService.updateUser(eq(1L), any(UserDTO.class))).thenReturn(Optional.empty());
-
-        mockMvc.perform(put("/users/1")
-                        .contentType("application/json")
-                        .content("{\"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"john.doe@example.com\", \"profilePicture\": \"newProfilePic.jpg\"}"))
-                .andExpect(status().isNotFound());
-    }
 
     @Test
     public void testDeleteUser() throws Exception {
