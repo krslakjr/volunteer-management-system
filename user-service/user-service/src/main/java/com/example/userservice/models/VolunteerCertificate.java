@@ -17,13 +17,13 @@ public class VolunteerCertificate {
    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference("userCertificates")
     private User user;
 
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")
-    @JsonBackReference
+    @JsonBackReference("activityCertificates")
     private Activity activity;
 
     private Date certificateDate;

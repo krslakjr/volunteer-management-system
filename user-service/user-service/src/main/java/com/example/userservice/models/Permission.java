@@ -1,7 +1,9 @@
 package com.example.userservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "permission")
@@ -12,6 +14,10 @@ public class Permission {
     private Long permissionId;
 
     private String permissionName;
+
+    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("permissionUsers") 
+    private List<UserPermission> userPermissions;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

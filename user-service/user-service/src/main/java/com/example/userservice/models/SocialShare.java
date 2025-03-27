@@ -14,12 +14,12 @@ public class SocialShare {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference ("userSocialShares")
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")
-    @JsonBackReference
+    @JsonBackReference ("activitySocialShares")
     private Activity activity;
 
     private String platform;
