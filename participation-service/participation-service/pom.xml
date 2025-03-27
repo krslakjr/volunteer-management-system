@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version> <!-- Ovo osigurava verzije za sve Spring Boot dependency-je -->
+        <version>3.1.2</version> <!-- Verzija Spring Boot-a -->
         <relativePath/> <!-- Omogućava automatsko preuzimanje Spring Boot verzija -->
     </parent>
 
@@ -24,7 +24,7 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- JUnit 5 Engine za pokretanje testova -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -59,6 +59,42 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Jackson (za rad sa JSON) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.0</version> 
+        </dependency>
+
+        <!-- Spring Boot Starter Test (uključuje MockMvc, AssertJ, i sve potrebne alate za testiranje) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+    <groupId>javax.persistence</groupId>
+    <artifactId>javax.persistence-api</artifactId>
+    <version>2.2</version> <!-- ili odgovarajuća verzija -->
+</dependency>
+
+
+
+           <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>3.11.2</version>
+        <scope>test</scope>
+         </dependency>
+        <!-- H2 Database (za testiranje, koristiće se umesto stvarne baze u testovima) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
