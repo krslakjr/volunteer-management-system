@@ -14,6 +14,8 @@ com\example\activitymanagement\controller\TeamActivityController.class
 com\example\activitymanagement\repository\ActivityVolunteerRepository.class
 com\example\activitymanagement\models\TeamActivity.class
 com\example\activitymanagement\repository\TeamRepository.class
+com\example\activitymanagement\mapper\ActivityVolunteerMapper.class
+com\example\activitymanagement\mapper\ActivityVolunteerMapperImpl.class
 com\example\activitymanagement\models\Team.class
 com\example\activitymanagement\DataInitializer.class
 com\example\activitymanagement\mapper\ActivityMapper.class
@@ -22,4 +24,5 @@ com\example\activitymanagement\service\TeamService.class
 com\example\activitymanagement\controller\ActivityController.class
 com\example\activitymanagement\controller\TeamController.class
 com\example\activitymanagement\service\TeamActivityService.class
+com\example\activitymanagement\dto\ActivityVolunteerDTO.class
 com\example\activitymanagement\models\ActivityVolunteer.class
