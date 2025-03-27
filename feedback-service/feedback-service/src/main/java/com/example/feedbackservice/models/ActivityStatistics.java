@@ -2,6 +2,7 @@ package com.example.feedbackservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "activity_statistics")
@@ -16,8 +17,13 @@ public class ActivityStatistics {
     @JsonBackReference 
     private Activity activity;
 
+    @NotNull(message = "Average rating is required")
     private double averageRating;
+
+    @NotNull(message = "Total ratings are required")
     private int totalRatings;
+
+    @NotNull(message = "Total comments are required")
     private int totalComments;
 
 

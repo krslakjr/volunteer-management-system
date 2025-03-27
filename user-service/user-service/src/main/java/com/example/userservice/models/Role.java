@@ -1,7 +1,9 @@
 package com.example.userservice.models;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonBackReference; 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 @Entity
@@ -12,6 +14,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
 
+    @NotBlank(message = "Role name is required")
     private String roleName;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

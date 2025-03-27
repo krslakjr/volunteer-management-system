@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.models.VolunteerCertificate;
 import com.example.userservice.service.VolunteerCertificateService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class VolunteerCertificateController {
     }
 
     @PostMapping
-    public ResponseEntity<VolunteerCertificate> addVolunteerCertificate(@RequestBody VolunteerCertificate volunteerCertificate) {
+    public ResponseEntity<VolunteerCertificate> addVolunteerCertificate(@Valid @RequestBody VolunteerCertificate volunteerCertificate) {
         VolunteerCertificate createdCertificate = volunteerCertificateService.addVolunteerCertificate(volunteerCertificate);
         return new ResponseEntity<>(createdCertificate, HttpStatus.CREATED);
     }

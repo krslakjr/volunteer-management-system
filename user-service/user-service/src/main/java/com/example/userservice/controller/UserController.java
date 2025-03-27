@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
         try {
             UserDTO createdUser = userService.createUser(userDTO);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
         Optional<UserDTO> updatedUser = userService.updateUser(id, userDTO);
         return updatedUser.map(u -> new ResponseEntity<>(u, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

@@ -2,6 +2,7 @@ package com.example.notificationservice.controller;
 
 import com.example.notificationservice.models.Activity;
 import com.example.notificationservice.service.ActivityService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +32,12 @@ public class ActivityController {
     }
 
     @PostMapping
-    public Activity createActivity(@RequestBody Activity activity) {
+    public Activity createActivity(@Valid @RequestBody Activity activity) {
         return activityService.createActivity(activity);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity updatedActivity) {
+    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity updatedActivity) {
         try {
             Activity activity = activityService.updateActivity(id, updatedActivity);
             return ResponseEntity.ok(activity);

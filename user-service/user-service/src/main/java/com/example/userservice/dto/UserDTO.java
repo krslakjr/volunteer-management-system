@@ -1,16 +1,40 @@
 package com.example.userservice.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 import java.util.List;
 
 public class UserDTO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    @NotBlank(message = "First name is required")
     private String firstName;
+
+    @NotBlank(message = "Last name is required")
     private String lastName;
+
+    @NotBlank(message = "Email is required")
     private String email;
+
+    @NotBlank(message = "Profile picture is required")
     private String profilePicture;
+
+    @NotBlank(message = "Role name is required")
     private String roleName;
+
+    @NotEmpty(message = "Permissions cannot be empty")
     private List<String> permissions;
+
+    @NotNull(message = "Date of creation is required")
     private Date createdAt;
 
     // Getteri i setteri

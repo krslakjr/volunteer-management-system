@@ -2,6 +2,7 @@ package com.example.activitymanagement.controller;
 
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.service.VolunteerService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +31,12 @@ public class VolunteerController {
     }
 
     @PostMapping
-    public Volunteer createVolunteer(@RequestBody Volunteer volunteer) {
+    public Volunteer createVolunteer(@Valid @RequestBody Volunteer volunteer) {
         return volunteerService.createVolunteer(volunteer);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @RequestBody Volunteer updatedVolunteer) {
+    public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @Valid @RequestBody Volunteer updatedVolunteer) {
         return ResponseEntity.ok(volunteerService.updateVolunteer(id, updatedVolunteer));
     }
 

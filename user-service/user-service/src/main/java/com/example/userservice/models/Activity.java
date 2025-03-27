@@ -3,6 +3,10 @@ package com.example.userservice.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference; 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +18,14 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long activityId;
 
+    @NotBlank(message = "Activity name is required")
     private String activityName;
+
+    @NotNull(message = "Activity date is required")
     private Date activityDate;
+
+    @NotBlank(message = "Description is required")
+    @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)

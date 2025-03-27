@@ -2,6 +2,7 @@ package com.example.feedbackservice.controller;
 
 import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.service.ActivityService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<Activity> createOrUpdateActivity(@RequestBody Activity activity) {
+    public ResponseEntity<Activity> createOrUpdateActivity(@Valid @RequestBody Activity activity) {
         try {
             Activity savedActivity = activityService.saveOrUpdateActivity(activity);
             return new ResponseEntity<>(savedActivity, HttpStatus.CREATED);

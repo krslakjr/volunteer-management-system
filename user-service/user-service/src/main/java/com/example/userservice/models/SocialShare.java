@@ -2,6 +2,8 @@ package com.example.userservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 @Entity
@@ -22,7 +24,9 @@ public class SocialShare {
     @JsonBackReference
     private Activity activity;
 
+    @NotBlank(message = "Platform is required")
     private String platform;
+
     private Date sharedAt;
 
     @Temporal(TemporalType.TIMESTAMP)

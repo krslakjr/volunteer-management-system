@@ -2,6 +2,7 @@ package com.example.notificationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "engagement_statistics")
@@ -16,9 +17,16 @@ public class EngagementStatistics {
     @JsonBackReference  
     private Volunteer volunteer;
 
+    @NotNull(message = "Total activities are required")
     private int totalActivities;
+
+    @NotNull(message = "Messages sent are required")
     private int messagesSent;
+
+    @NotNull(message = "Forum posts made are required")
     private int forumPostsMade;
+
+    @NotNull(message = "Notifications received are required")
     private int notificationsReceived;
 
     public Long getId() {

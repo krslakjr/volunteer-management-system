@@ -2,6 +2,8 @@ package com.example.participationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @Entity
@@ -22,6 +24,7 @@ public class Recommendation {
     @JsonBackReference
     private Activity recommendationActivity;
 
+    @NotNull(message = "Date generated is required")
     private Date dateGenerated;
 
     public Long getRecommendationId() {

@@ -1,11 +1,30 @@
 package com.example.activitymanagement.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class ActivityDTO {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long activityId;
+
+    @NotBlank(message = "Description is required")
+    @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
     private String description;
+
+    @NotNull(message = "Date is required")
     private String date;
+
+    @NotBlank(message = "Location is required")
     private String location;
+
+    @Min(value = 1, message = "Volunteers needed must be at least 1")
     private int volunteersNeeded;
 
     public ActivityDTO() {}

@@ -3,6 +3,9 @@ package com.example.notificationservice.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.Date;
 
 @Entity
@@ -28,7 +31,10 @@ public class ForumPost {
     @JsonBackReference  
     private Organizer organizer;
 
+    @NotBlank(message = "Content is required")
+    @Size(min = 10, max = 700, message = "Content must be between 10 and 700 characters")
     private String content;
+
     private Date timestamp;
 
     public Long getPostId() {

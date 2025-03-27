@@ -2,6 +2,7 @@ package com.example.participationservice.controller;
 
 import com.example.participationservice.models.Certificate;
 import com.example.participationservice.service.CertificateService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class CertificateController {
     }
 
     @PostMapping
-    public ResponseEntity<Certificate> createCertificate(@RequestBody Certificate certificate) {
+    public ResponseEntity<Certificate> createCertificate(@Valid @RequestBody Certificate certificate) {
         Certificate createdCertificate = certificateService.createCertificate(certificate);
         return ResponseEntity.ok(createdCertificate);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id, @RequestBody Certificate certificateDetails) {
+    public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id, @Valid @RequestBody Certificate certificateDetails) {
         Certificate updatedCertificate = certificateService.updateCertificate(id, certificateDetails);
         if (updatedCertificate != null) {
             return ResponseEntity.ok(updatedCertificate);
