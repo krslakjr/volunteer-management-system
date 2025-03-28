@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/team-activities")
@@ -23,14 +23,13 @@ public class TeamActivityController {
     @GetMapping
     public ResponseEntity<List<TeamActivity>> getAllTeamActivities() {
         List<TeamActivity> teamActivities = teamActivityService.getAllTeamActivities();
-        return new ResponseEntity<>(teamActivities, HttpStatus.OK);
+        return ResponseEntity.ok(teamActivities);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TeamActivity> getTeamActivityById(@PathVariable Long id) {
-        Optional<TeamActivity> teamActivity = teamActivityService.getTeamActivityById(id);
-        return teamActivity.map(activity -> new ResponseEntity<>(activity, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        TeamActivity teamActivity = teamActivityService.getTeamActivityById(id);
+        return ResponseEntity.ok(teamActivity);
     }
 
     @PostMapping
@@ -40,15 +39,14 @@ public class TeamActivityController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamActivity> updateTeamActivity(@PathVariable Long id,@RequestBody TeamActivity teamActivity) {
-        Optional<TeamActivity> updatedTeamActivity = teamActivityService.updateTeamActivity(id, teamActivity);
-        return updatedTeamActivity.map(activity -> new ResponseEntity<>(activity, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<TeamActivity> updateTeamActivity(@PathVariable Long id, @RequestBody TeamActivity teamActivity) {
+        TeamActivity updatedTeamActivity = teamActivityService.updateTeamActivity(id, teamActivity);
+        return ResponseEntity.ok(updatedTeamActivity);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTeamActivity(@PathVariable Long id) {
-        boolean isDeleted = teamActivityService.deleteTeamActivity(id);
-        return isDeleted ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        teamActivityService.deleteTeamActivity(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

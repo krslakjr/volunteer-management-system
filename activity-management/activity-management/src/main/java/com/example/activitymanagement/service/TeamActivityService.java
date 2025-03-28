@@ -1,12 +1,12 @@
 package com.example.activitymanagement.service;
 
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.models.TeamActivity;
 import com.example.activitymanagement.repository.TeamActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TeamActivityService {
@@ -22,29 +22,29 @@ public class TeamActivityService {
         return teamActivityRepository.findAll();
     }
 
-    public Optional<TeamActivity> getTeamActivityById(Long id) {
-        return teamActivityRepository.findById(id);
+    public TeamActivity getTeamActivityById(Long id) {
+        return teamActivityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Team activity with ID " + id + " not found"));
     }
 
     public TeamActivity createTeamActivity(TeamActivity teamActivity) {
         return teamActivityRepository.save(teamActivity);
     }
 
-    public Optional<TeamActivity> updateTeamActivity(Long id, TeamActivity teamActivity) {
-        return teamActivityRepository.findById(id)
-                .map(existingTeamActivity -> {
-                    existingTeamActivity.setTeam(teamActivity.getTeam());
-                    existingTeamActivity.setActivity(teamActivity.getActivity());
-                    return teamActivityRepository.save(existingTeamActivity);
-                });
+    public TeamActivity updateTeamActivity(Long id, TeamActivity teamActivity) {
+        TeamActivity existingTeamActivity = teamActivityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Team activity with ID " + id + " not found"));
+
+        existingTeamActivity.setTeam(teamActivity.getTeam());
+        existingTeamActivity.setActivity(teamActivity.getActivity());
+
+        return teamActivityRepository.save(existingTeamActivity);
     }
 
-    public boolean deleteTeamActivity(Long id) {
-        return teamActivityRepository.findById(id)
-                .map(existingTeamActivity -> {
-                    teamActivityRepository.delete(existingTeamActivity);
-                    return true;
-                })
-                .orElse(false);
+    public void deleteTeamActivity(Long id) {
+        TeamActivity existingTeamActivity = teamActivityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Team activity with ID " + id + " not found"));
+
+        teamActivityRepository.delete(existingTeamActivity);
     }
 }

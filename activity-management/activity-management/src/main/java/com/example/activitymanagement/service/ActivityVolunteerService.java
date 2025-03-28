@@ -1,11 +1,16 @@
 package com.example.activitymanagement.service;
 
 import com.example.activitymanagement.dto.ActivityVolunteerDTO;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.mapper.ActivityVolunteerMapper;
 import com.example.activitymanagement.models.ActivityVolunteer;
 import com.example.activitymanagement.repository.ActivityVolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +38,7 @@ public class ActivityVolunteerService {
         return activityVolunteerRepository.findById(id)
                 .map(activityVolunteerMapper::toDTO);
     }
-
+    
     public ActivityVolunteerDTO createActivityVolunteer(ActivityVolunteerDTO activityVolunteerDTO) {
         ActivityVolunteer activityVolunteer = activityVolunteerMapper.toEntity(activityVolunteerDTO); 
         ActivityVolunteer savedActivityVolunteer = activityVolunteerRepository.save(activityVolunteer);
