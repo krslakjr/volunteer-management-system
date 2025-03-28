@@ -3,6 +3,7 @@ package com.example.activitymanagement;
 import com.example.activitymanagement.service.TeamService;
 import com.example.activitymanagement.models.Team;
 import com.example.activitymanagement.repository.TeamRepository;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,10 +52,10 @@ class TeamServiceTest {
     void testGetTeamById_Found() {
         when(teamRepository.findById(1L)).thenReturn(Optional.of(team));
 
-        Optional<Team> result = teamService.getTeamById(1L);
+        Team result = teamService.getTeamById(1L);
 
-        assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getTeamId());
+        assertNotNull(result);
+        assertEquals(1L, result.getTeamId());
         verify(teamRepository, times(1)).findById(1L);
     }
 
@@ -62,9 +63,7 @@ class TeamServiceTest {
     void testGetTeamById_NotFound() {
         when(teamRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Optional<Team> result = teamService.getTeamById(1L);
-
-        assertFalse(result.isPresent());
+        assertThrows(ResourceNotFoundException.class, () -> teamService.getTeamById(1L));
         verify(teamRepository, times(1)).findById(1L);
     }
 
@@ -117,9 +116,7 @@ class TeamServiceTest {
     void testDeleteTeam_NotFound() {
         when(teamRepository.findById(1L)).thenReturn(Optional.empty());
 
-        boolean result = teamService.deleteTeam(1L);
-
-        assertFalse(result);
+        assertThrows(ResourceNotFoundException.class, () -> teamService.deleteTeam(1L));
         verify(teamRepository, times(1)).findById(1L);
     }
 }

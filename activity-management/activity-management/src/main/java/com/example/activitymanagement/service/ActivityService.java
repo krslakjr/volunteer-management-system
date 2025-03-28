@@ -1,6 +1,8 @@
 package com.example.activitymanagement.service;
 
 import com.example.activitymanagement.dto.ActivityDTO;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
+import com.example.activitymanagement.exception.ValidationException;
 import com.example.activitymanagement.mapper.ActivityMapper;
 import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.repository.ActivityRepository;
@@ -22,36 +24,44 @@ public class ActivityService {
     }
 
     public List<ActivityDTO> getAllActivities() {
-        List<Activity> activities = activityRepository.findAll();
-        return activities.stream()
-                .map(activityMapper::toActivityDTO) 
-                .collect(Collectors.toList()); 
+        return activityRepository.findAll().stream()
+                .map(activityMapper::toActivityDTO)
+                .collect(Collectors.toList());
     }
 
     public Optional<ActivityDTO> getActivityById(Long id) {
         Optional<Activity> activity = activityRepository.findById(id);
-        return activity.map(activityMapper::toActivityDTO);  
+        if (activity.isEmpty()) {
+            throw new ResourceNotFoundException("Activity with ID " + id + " not found");
+        }
+        return activity.map(activityMapper::toActivityDTO);
     }
 
     public ActivityDTO createActivity(Activity activity) {
+        if (activity.getDescription() == null || activity.getDescription().length() < 10) {
+            throw new ValidationException("Description must be at least 10 characters", "description");
+        }
         Activity savedActivity = activityRepository.save(activity);
-        return activityMapper.toActivityDTO(savedActivity); 
+        return activityMapper.toActivityDTO(savedActivity);
     }
 
     public ActivityDTO updateActivity(Long id, Activity updatedActivity) {
-        return activityRepository.findById(id)
-                .map(activity -> {
-                    activity.setDescription(updatedActivity.getDescription());
-                    activity.setDate(updatedActivity.getDate());
-                    activity.setLocation(updatedActivity.getLocation());
-                    activity.setVolunteersNeeded(updatedActivity.getVolunteersNeeded());
-                    Activity savedActivity = activityRepository.save(activity);
-                    return activityMapper.toActivityDTO(savedActivity);  
-                })
-                .orElseThrow(() -> new RuntimeException("Activity not found"));
+        Activity existingActivity = activityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Activity with ID " + id + " not found"));
+
+        existingActivity.setDescription(updatedActivity.getDescription());
+        existingActivity.setDate(updatedActivity.getDate());
+        existingActivity.setLocation(updatedActivity.getLocation());
+        existingActivity.setVolunteersNeeded(updatedActivity.getVolunteersNeeded());
+
+        Activity savedActivity = activityRepository.save(existingActivity);
+        return activityMapper.toActivityDTO(savedActivity);
     }
 
     public void deleteActivity(Long id) {
+        if (!activityRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Activity with ID " + id + " not found");
+        }
         activityRepository.deleteById(id);
     }
 }

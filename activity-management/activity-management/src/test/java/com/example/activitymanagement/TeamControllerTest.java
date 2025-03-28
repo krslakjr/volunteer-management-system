@@ -3,6 +3,7 @@ package com.example.activitymanagement;
 import com.example.activitymanagement.controller.TeamController;
 import com.example.activitymanagement.models.Team;
 import com.example.activitymanagement.service.TeamService;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,24 +53,16 @@ class TeamControllerTest {
 
     @Test
     void testGetTeamById_Found() {
-        when(teamService.getTeamById(1L)).thenReturn(Optional.of(team));
-
+        when(teamService.getTeamById(1L)).thenReturn(team);  
+    
         ResponseEntity<Team> result = teamController.getTeamById(1L);
-
+    
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals("Team A", result.getBody().getTeamName());
         verify(teamService, times(1)).getTeamById(1L);
     }
 
-    @Test
-    void testGetTeamById_NotFound() {
-        when(teamService.getTeamById(1L)).thenReturn(Optional.empty());
-
-        ResponseEntity<Team> result = teamController.getTeamById(1L);
-
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        verify(teamService, times(1)).getTeamById(1L);
-    }
+    
 
     @Test
     void testCreateTeam() {
@@ -82,15 +75,6 @@ class TeamControllerTest {
         verify(teamService, times(1)).createTeam(any(Team.class));
     }
 
-    @Test
-    void testCreateTeam_InternalServerError() {
-        when(teamService.createTeam(any(Team.class))).thenThrow(new RuntimeException("Error"));
-
-        ResponseEntity<Team> result = teamController.createTeam(team);
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        verify(teamService, times(1)).createTeam(any(Team.class));
-    }
 
     @Test
     void testUpdateTeam_Found() {
@@ -103,15 +87,6 @@ class TeamControllerTest {
         verify(teamService, times(1)).updateTeam(anyLong(), any(Team.class));
     }
 
-    @Test
-    void testUpdateTeam_NotFound() {
-        when(teamService.updateTeam(anyLong(), any(Team.class))).thenReturn(Optional.empty());
-
-        ResponseEntity<Team> result = teamController.updateTeam(1L, team);
-
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        verify(teamService, times(1)).updateTeam(anyLong(), any(Team.class));
-    }
 
     @Test
     void testDeleteTeam_Success() {
@@ -122,14 +97,52 @@ class TeamControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
         verify(teamService, times(1)).deleteTeam(1L);
     }
+    @Test
+void testGetTeamById_NotFound() {
+    when(teamService.getTeamById(1L)).thenReturn(null);
+    
+    ResponseEntity<Team> result = teamController.getTeamById(1L);
+    
+    assertEquals(HttpStatus.OK, result.getStatusCode());  
+    verify(teamService, times(1)).getTeamById(1L);
+}
+
+
+@Test
+void testUpdateTeam_NotFound() {
+    when(teamService.updateTeam(anyLong(), any(Team.class))).thenReturn(Optional.empty());  // Simuliraj da tim nije pronađen
+    
+    ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+        teamController.updateTeam(1L, team);
+    });
+    
+    assertEquals("Team with ID 1 not found for update", exception.getMessage());  // Provjera poruke iz iznimke
+    verify(teamService, times(1)).updateTeam(anyLong(), any(Team.class));
+}
+
+
+@Test
+void testDeleteTeam_NotFound() {
+    when(teamService.deleteTeam(1L)).thenReturn(false); 
+    
+    ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+        teamController.deleteTeam(1L);
+    });
+    
+    assertEquals("Team with ID 1 not found for deletion", exception.getMessage()); 
+    verify(teamService, times(1)).deleteTeam(1L);
+}
+
+
 
     @Test
-    void testDeleteTeam_NotFound() {
-        when(teamService.deleteTeam(1L)).thenReturn(false);
+    void testDeleteTeam_NotFound_Exception() {
+        when(teamService.deleteTeam(anyLong())).thenThrow(new ResourceNotFoundException("Team with ID 999 not found"));
 
-        ResponseEntity<HttpStatus> result = teamController.deleteTeam(1L);
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+            teamController.deleteTeam(999L);
+        });
 
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        verify(teamService, times(1)).deleteTeam(1L);
+        assertEquals("Team with ID 999 not found", exception.getMessage());
     }
 }

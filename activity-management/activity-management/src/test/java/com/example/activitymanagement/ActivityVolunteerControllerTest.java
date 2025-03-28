@@ -2,6 +2,7 @@ package com.example.activitymanagement;
 
 import com.example.activitymanagement.controller.ActivityVolunteerController;
 import com.example.activitymanagement.dto.ActivityVolunteerDTO;
+import com.example.activitymanagement.exception.GlobalExceptionHandler;
 import com.example.activitymanagement.service.ActivityVolunteerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,9 @@ class ActivityVolunteerControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(activityVolunteerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(activityVolunteerController)
+                .setControllerAdvice(new GlobalExceptionHandler()) // Rukovanje greškama
+                .build();
 
         activityVolunteerDTO = new ActivityVolunteerDTO();
         activityVolunteerDTO.setId(1L);
@@ -76,7 +79,11 @@ class ActivityVolunteerControllerTest {
         when(activityVolunteerService.getActivityVolunteerById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/activity-volunteers/{id}", 1L))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorType").value("not_found"))
+                .andExpect(jsonPath("$.message").value("Volonter s ID-jem 1 nije pronađen"))
+                .andExpect(jsonPath("$.field").doesNotExist())  // Proverava da nema "field" u odgovoru
+                .andExpect(jsonPath("$.timestamp").exists());  // Proverava da postoji timestamp
 
         verify(activityVolunteerService, times(1)).getActivityVolunteerById(1L);
     }

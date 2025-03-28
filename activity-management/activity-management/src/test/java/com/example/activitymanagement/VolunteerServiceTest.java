@@ -3,14 +3,13 @@ package com.example.activitymanagement;
 import com.example.activitymanagement.service.VolunteerService;
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.repository.VolunteerRepository;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,23 +49,22 @@ class VolunteerServiceTest {
 
     @Test
     void testGetVolunteerById_Found() {
-        when(volunteerRepository.findById(1L)).thenReturn(Optional.of(volunteer));
+        when(volunteerRepository.findById(1L)).thenReturn(java.util.Optional.of(volunteer));
 
-        Optional<Volunteer> result = volunteerService.getVolunteerById(1L);
+        Volunteer result = volunteerService.getVolunteerById(1L);
 
-        assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getVolunteerId());
-        assertEquals("John Doe", result.get().getName());
+        assertNotNull(result);
+        assertEquals(1L, result.getVolunteerId());
+        assertEquals("John Doe", result.getName());
         verify(volunteerRepository, times(1)).findById(1L);
     }
 
     @Test
     void testGetVolunteerById_NotFound() {
-        when(volunteerRepository.findById(1L)).thenReturn(Optional.empty());
+        when(volunteerRepository.findById(1L)).thenReturn(java.util.Optional.empty());
 
-        Optional<Volunteer> result = volunteerService.getVolunteerById(1L);
+        assertThrows(ResourceNotFoundException.class, () -> volunteerService.getVolunteerById(1L));
 
-        assertFalse(result.isPresent());
         verify(volunteerRepository, times(1)).findById(1L);
     }
 
@@ -84,7 +82,7 @@ class VolunteerServiceTest {
 
     @Test
     void testUpdateVolunteer_Found() {
-        when(volunteerRepository.findById(1L)).thenReturn(Optional.of(volunteer));
+        when(volunteerRepository.findById(1L)).thenReturn(java.util.Optional.of(volunteer));
         when(volunteerRepository.save(any(Volunteer.class))).thenReturn(volunteer);
 
         Volunteer result = volunteerService.updateVolunteer(1L, volunteer);
@@ -98,16 +96,16 @@ class VolunteerServiceTest {
 
     @Test
     void testUpdateVolunteer_NotFound() {
-        when(volunteerRepository.findById(1L)).thenReturn(Optional.empty());
+        when(volunteerRepository.findById(1L)).thenReturn(java.util.Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> volunteerService.updateVolunteer(1L, volunteer));
+        assertThrows(ResourceNotFoundException.class, () -> volunteerService.updateVolunteer(1L, volunteer));
 
         verify(volunteerRepository, times(1)).findById(1L);
     }
 
     @Test
     void testDeleteVolunteer_Success() {
-        when(volunteerRepository.findById(1L)).thenReturn(Optional.of(volunteer));
+        when(volunteerRepository.findById(1L)).thenReturn(java.util.Optional.of(volunteer));
 
         volunteerService.deleteVolunteer(1L);
 
@@ -115,4 +113,12 @@ class VolunteerServiceTest {
         verify(volunteerRepository, times(1)).deleteById(1L);
     }
 
+    @Test
+    void testDeleteVolunteer_NotFound() {
+        when(volunteerRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> volunteerService.deleteVolunteer(1L));
+
+        verify(volunteerRepository, times(1)).findById(1L);
+    }
 }

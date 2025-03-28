@@ -1,6 +1,7 @@
 package com.example.activitymanagement.controller;
 
 import com.example.activitymanagement.dto.ActivityVolunteerDTO;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.service.ActivityVolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +28,11 @@ public class ActivityVolunteerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ActivityVolunteerDTO> getActivityVolunteerById(@PathVariable Long id) {
-        Optional<ActivityVolunteerDTO> activityVolunteerDTO = activityVolunteerService.getActivityVolunteerById(id);
-        return activityVolunteerDTO.map(volunteerDTO -> new ResponseEntity<>(volunteerDTO, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
+public ResponseEntity<ActivityVolunteerDTO> getActivityVolunteerById(@PathVariable Long id) {
+    return activityVolunteerService.getActivityVolunteerById(id)
+            .map(activityVolunteerDTO -> ResponseEntity.ok(activityVolunteerDTO))
+            .orElseThrow(() -> new ResourceNotFoundException("Volonter s ID-jem " + id + " nije pronađen"));
+}
     @PostMapping
     public ResponseEntity<ActivityVolunteerDTO> createActivityVolunteer(@Valid @RequestBody ActivityVolunteerDTO activityVolunteerDTO) {
         try {

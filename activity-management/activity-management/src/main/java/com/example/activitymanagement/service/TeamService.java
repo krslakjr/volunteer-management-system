@@ -1,5 +1,6 @@
 package com.example.activitymanagement.service;
 
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.models.Team;
 import com.example.activitymanagement.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class TeamService {
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
-
-    public Optional<Team> getTeamById(Long id) {
-        return teamRepository.findById(id);
+    public Team getTeamById(Long id) {
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Team with ID " + id + " not found"));
     }
+    
 
     public Team createTeam(Team team) {
         return teamRepository.save(team);
@@ -38,13 +40,14 @@ public class TeamService {
                     return teamRepository.save(existingTeam);
                 });
     }
-
+    
+  
     public boolean deleteTeam(Long id) {
         return teamRepository.findById(id)
                 .map(existingTeam -> {
                     teamRepository.delete(existingTeam);
                     return true;
                 })
-                .orElse(false);
+                .orElseThrow(() -> new ResourceNotFoundException("Team with ID " + id + " not found for deletion"));
     }
 }

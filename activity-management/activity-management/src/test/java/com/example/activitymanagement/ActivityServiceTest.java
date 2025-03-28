@@ -64,9 +64,8 @@ class ActivityServiceTest {
         when(activityRepository.findById(1L)).thenReturn(Optional.of(activity));
         when(activityMapper.toActivityDTO(any(Activity.class))).thenReturn(activityDTO);
 
-        Optional<ActivityDTO> result = activityService.getActivityById(1L);
-        assertTrue(result.isPresent());
-        assertEquals(activityDTO.getActivityId(), result.get().getActivityId());
+        ActivityDTO result = activityService.getActivityById(1L).get();
+        assertEquals(activityDTO.getActivityId(), result.getActivityId());
 
         verify(activityRepository, times(1)).findById(1L);
     }
@@ -75,9 +74,11 @@ class ActivityServiceTest {
     void testGetActivityById_NotFound() {
         when(activityRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Optional<ActivityDTO> result = activityService.getActivityById(1L);
-        assertFalse(result.isPresent());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            activityService.getActivityById(1L).get();
+        });
 
+        assertEquals("Activity with ID 1 not found", exception.getMessage());
         verify(activityRepository, times(1)).findById(1L);
     }
 
@@ -126,16 +127,28 @@ class ActivityServiceTest {
             activityService.updateActivity(1L, activity);
         });
 
-        assertEquals("Activity not found", exception.getMessage());
+        assertEquals("Activity with ID 1 not found", exception.getMessage());
         verify(activityRepository, times(1)).findById(1L);
     }
 
     @Test
     void testDeleteActivity() {
-        doNothing().when(activityRepository).deleteById(1L);
+        when(activityRepository.existsById(1L)).thenReturn(true);
 
         activityService.deleteActivity(1L);
 
         verify(activityRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testDeleteActivity_NotFound() {
+        when(activityRepository.existsById(1L)).thenReturn(false);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            activityService.deleteActivity(1L);
+        });
+
+        assertEquals("Activity with ID 1 not found", exception.getMessage());
+        verify(activityRepository, times(1)).existsById(1L);
     }
 }

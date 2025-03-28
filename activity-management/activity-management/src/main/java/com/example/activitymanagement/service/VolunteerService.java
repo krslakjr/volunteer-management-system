@@ -2,6 +2,7 @@ package com.example.activitymanagement.service;
 
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.repository.VolunteerRepository;
+import com.example.activitymanagement.exception.ResourceNotFoundException; // Importujemo ResourceNotFoundException
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +21,11 @@ public class VolunteerService {
         return volunteerRepository.findAll();
     }
 
-    public Optional<Volunteer> getVolunteerById(Long id) {
-        return volunteerRepository.findById(id);
+    public Volunteer getVolunteerById(Long id) {
+        return volunteerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Volunteer with ID " + id + " not found"));
     }
+    
 
     public Volunteer createVolunteer(Volunteer volunteer) {
         return volunteerRepository.save(volunteer);
@@ -35,7 +38,7 @@ public class VolunteerService {
                     volunteer.setContactInfo(updatedVolunteer.getContactInfo());
                     return volunteerRepository.save(volunteer);
                 })
-                .orElseThrow(() -> new RuntimeException("Volunteer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Volunteer with ID " + id + " not found"));
     }
 
     public void deleteVolunteer(Long id) {
@@ -43,8 +46,7 @@ public class VolunteerService {
         if (volunteer.isPresent()) {
             volunteerRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Volunteer not found");
+            throw new ResourceNotFoundException("Volunteer with ID " + id + " not found");
         }
     }
-    
 }

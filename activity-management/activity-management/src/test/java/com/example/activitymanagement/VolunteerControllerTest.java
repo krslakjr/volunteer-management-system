@@ -1,6 +1,7 @@
 package com.example.activitymanagement;
 
 import com.example.activitymanagement.controller.VolunteerController;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.service.VolunteerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +12,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.example.activitymanagement.exception.ErrorResponse;
+
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -53,7 +55,7 @@ class VolunteerControllerTest {
 
     @Test
     void testGetVolunteerById_Found() {
-        when(volunteerService.getVolunteerById(1L)).thenReturn(Optional.of(volunteer));
+        when(volunteerService.getVolunteerById(1L)).thenReturn(volunteer);
 
         ResponseEntity<Volunteer> result = volunteerController.getVolunteerById(1L);
 
@@ -62,15 +64,7 @@ class VolunteerControllerTest {
         verify(volunteerService, times(1)).getVolunteerById(1L);
     }
 
-    @Test
-    void testGetVolunteerById_NotFound() {
-        when(volunteerService.getVolunteerById(1L)).thenReturn(Optional.empty());
 
-        ResponseEntity<Volunteer> result = volunteerController.getVolunteerById(1L);
-
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        verify(volunteerService, times(1)).getVolunteerById(1L);
-    }
 
     @Test
     void testCreateVolunteer() {

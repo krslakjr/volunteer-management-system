@@ -1,11 +1,16 @@
 package com.example.activitymanagement.controller;
 
+import com.example.activitymanagement.exception.ResourceNotFoundException;
+import com.example.activitymanagement.models.Team;
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.service.VolunteerService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/volunteers")
@@ -24,10 +29,10 @@ public class VolunteerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Volunteer> getVolunteerById(@PathVariable Long id) {
-        return volunteerService.getVolunteerById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Volunteer volunteer = volunteerService.getVolunteerById(id);
+        return ResponseEntity.ok(volunteer);  
     }
+    
 
     @PostMapping
     public Volunteer createVolunteer(@Valid @RequestBody Volunteer volunteer) {
@@ -35,8 +40,9 @@ public class VolunteerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id,@Valid @RequestBody Volunteer updatedVolunteer) {
-        return ResponseEntity.ok(volunteerService.updateVolunteer(id, updatedVolunteer));
+    public ResponseEntity<Volunteer> updateVolunteer(@PathVariable Long id, @Valid @RequestBody Volunteer updatedVolunteer) {
+        Volunteer updated = volunteerService.updateVolunteer(id, updatedVolunteer);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
