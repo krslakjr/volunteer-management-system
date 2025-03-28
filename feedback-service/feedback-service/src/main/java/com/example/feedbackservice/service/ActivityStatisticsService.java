@@ -1,5 +1,6 @@
 package com.example.feedbackservice.service;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.ActivityStatistics;
 import com.example.feedbackservice.repository.ActivityStatisticsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,13 @@ public class ActivityStatisticsService {
         return activityStatisticsRepository.findAll();
     }
 
-    public Optional<ActivityStatistics> getActivityStatisticsById(Long id) {
-        return activityStatisticsRepository.findById(id);
+     public Optional<ActivityStatistics> getActivityStatisticsById(Long id) {
+        Optional<ActivityStatistics> statistics = activityStatisticsRepository.findById(id);
+      
+        if (!statistics.isPresent()) {
+            throw new ResourceNotFoundException("Activity Statistics not found with id " + id, "id");
+        }
+        return statistics;
     }
 
     public ActivityStatistics saveOrUpdateActivityStatistics(ActivityStatistics activityStatistics) {

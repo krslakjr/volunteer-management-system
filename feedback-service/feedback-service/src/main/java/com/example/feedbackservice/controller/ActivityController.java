@@ -1,5 +1,6 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.service.ActivityService;
 import jakarta.validation.Valid;
@@ -28,8 +29,9 @@ public class ActivityController {
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
+       
         return activity.map(a -> new ResponseEntity<>(a, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id, "id"));
     }
 
     @PostMapping

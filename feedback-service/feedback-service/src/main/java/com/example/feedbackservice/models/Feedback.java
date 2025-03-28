@@ -2,9 +2,6 @@ package com.example.feedbackservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.Date;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,11 +29,7 @@ public class Feedback {
 
     @NotBlank(message = "Comment is required")
     private String comment;
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     private Date timestamp;
 
 

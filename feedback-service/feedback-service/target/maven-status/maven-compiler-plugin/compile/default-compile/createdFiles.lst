@@ -1,1 +1,5 @@
+com\example\feedbackservice\exception\ErrorResponse.class
+com\example\feedbackservice\exception\GlobalExceptionHandler.class
+com\example\feedbackservice\exception\ValidationException.class
+com\example\feedbackservice\exception\ResourceNotFoundException.class
 com\example\App.class

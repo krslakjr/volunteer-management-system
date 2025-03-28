@@ -1,5 +1,7 @@
 package com.example.feedbackservice.service;
 
+import com.example.feedbackservice.exception.ErrorResponse;
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.models.Feedback;
 import com.example.feedbackservice.models.Volunteer;
@@ -19,17 +21,21 @@ public class FeedbackService {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private VolunteerRepository VolunteerRepository;
+    private VolunteerRepository volunteerRepository;
 
     @Autowired
-    private ActivityRepository ActivityRepository;
+    private ActivityRepository activityRepository; 
 
     public List<Feedback> getAllFeedbacks() {
         return feedbackRepository.findAll();
     }
 
     public Optional<Feedback> getFeedbackById(Long id) {
-        return feedbackRepository.findById(id);
+        Optional<Feedback> feedback = feedbackRepository.findById(id);
+        if (!feedback.isPresent()) {
+            throw new ResourceNotFoundException("Feedback not found with id " + id, "id");
+        }
+        return feedback;
     }
 
     public List<Feedback> getFeedbacksByActivityId(Long activityId) {
@@ -41,23 +47,27 @@ public class FeedbackService {
     }
 
     public Feedback saveOrUpdateFeedback(Feedback feedback) {
-        Optional<Volunteer> volunteer = VolunteerRepository.findById(feedback.getVolunteer().getVolunteerId());
-        Optional<Activity> activity = ActivityRepository.findById(feedback.getActivity().getActivityId());
-
+        Optional<Volunteer> volunteer = volunteerRepository.findById(feedback.getVolunteer().getVolunteerId());
+        Optional<Activity> activity = activityRepository.findById(feedback.getActivity().getActivityId());
+    
         if (volunteer.isPresent() && activity.isPresent()) {
             feedback.setVolunteer(volunteer.get());
             feedback.setActivity(activity.get());
             return feedbackRepository.save(feedback);
         } else {
-            throw new RuntimeException("Invalid Volunteer or Activity ID");
+            
+            throw new ResourceNotFoundException("Invalid Volunteer or Activity ID", "volunteerId or activityId");
         }
     }
-
+    
     public void deleteFeedback(Long id) {
-        if (feedbackRepository.existsById(id)) {
+        Optional<Feedback> feedback = feedbackRepository.findById(id);
+        if (feedback.isPresent()) {
             feedbackRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Feedback not found with id " + id);
+            
+            throw new ResourceNotFoundException("Feedback not found with id " + id, "id");
         }
     }
+    
 }

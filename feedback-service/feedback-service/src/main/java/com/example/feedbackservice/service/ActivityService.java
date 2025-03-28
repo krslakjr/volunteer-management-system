@@ -1,5 +1,6 @@
 package com.example.feedbackservice.service;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,14 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
-    public Optional<Activity> getActivityById(Long id) {
-        return activityRepository.findById(id);
+   public Optional<Activity> getActivityById(Long id) {
+    Optional<Activity> activity = activityRepository.findById(id);
+  
+    if (!activity.isPresent()) {
+        throw new ResourceNotFoundException("Activity not found with id " + id, "id");
     }
+    return activity;
+}
 
     public Activity saveOrUpdateActivity(Activity activity) {
         return activityRepository.save(activity);

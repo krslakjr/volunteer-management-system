@@ -1,5 +1,6 @@
 package com.example.feedbackservice.service;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Volunteer;
 import com.example.feedbackservice.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,13 @@ public class VolunteerService {
         return volunteerRepository.findAll();
     }
 
-    public Optional<Volunteer> getVolunteerById(Long id) {
-        return volunteerRepository.findById(id);
+ public Optional<Volunteer> getVolunteerById(Long id) {
+        Optional<Volunteer> volunteer = volunteerRepository.findById(id);
+        
+        if (!volunteer.isPresent()) {
+            throw new ResourceNotFoundException("Volunteer not found with id " + id, "id");
+        }
+        return volunteer;
     }
 
     public Volunteer saveOrUpdateVolunteer(Volunteer volunteer) {
