@@ -6,6 +6,8 @@ import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.service.ActivityService;
 import com.example.activitymanagement.mapper.ActivityMapper;
 import com.example.activitymanagement.exception.GlobalExceptionHandler;
+import com.example.activitymanagement.exception.ResourceNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +23,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -45,7 +48,7 @@ class ActivityControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(activityController)
-                .setControllerAdvice(new GlobalExceptionHandler()) // Dodajte GlobalExceptionHandler
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
 
         activity = new Activity();
@@ -108,7 +111,7 @@ void testGetActivityById_NotFound() throws Exception {
 
     @Test
     void testCreateActivity() throws Exception {
-        when(activityService.createActivity(any(Activity.class))).thenReturn(activityDTO);
+        when(activityService.createActivity(any(ActivityDTO.class))).thenReturn(activityDTO);
 
         mockMvc.perform(post("/activities")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -120,32 +123,66 @@ void testGetActivityById_NotFound() throws Exception {
                 .andExpect(jsonPath("$.date").value("2025-04-10"))
                 .andExpect(jsonPath("$.volunteersNeeded").value(20));
 
-        verify(activityService, times(1)).createActivity(any(Activity.class));
+        verify(activityService, times(1)).createActivity(any(ActivityDTO.class));
     }
 
     @Test
-    void testUpdateActivity() throws Exception {
-        ActivityDTO updatedActivityDTO = new ActivityDTO();
-        updatedActivityDTO.setDescription("Updated Cleanup");
+void testUpdateActivity() throws Exception {
+    ActivityDTO updatedActivityDTO = new ActivityDTO();
+    updatedActivityDTO.setDescription("Updated Cleanup");
+    updatedActivityDTO.setLocation("New Park");
+    updatedActivityDTO.setDate("2025-05-15");
+    updatedActivityDTO.setVolunteersNeeded(25);
 
-        when(activityService.updateActivity(anyLong(), any(Activity.class))).thenReturn(updatedActivityDTO);
+    when(activityService.updateActivity(anyLong(), any(ActivityDTO.class))).thenReturn(updatedActivityDTO);
 
-        mockMvc.perform(put("/activities/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"description\":\"Updated Cleanup\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.description").value("Updated Cleanup"));
+    mockMvc.perform(put("/activities/{id}", 1L)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"description\":\"Updated Cleanup\", \"location\":\"New Park\", \"date\":\"2025-05-15\", \"volunteersNeeded\":25}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.description").value("Updated Cleanup"));
 
-        verify(activityService, times(1)).updateActivity(anyLong(), any(Activity.class));
-    }
+    verify(activityService, times(1)).updateActivity(anyLong(), any(ActivityDTO.class));
+}
 
-    @Test
-    void testDeleteActivity() throws Exception {
-        doNothing().when(activityService).deleteActivity(1L);
 
-        mockMvc.perform(delete("/activities/{id}", 1L))
-                .andExpect(status().isNoContent());
+@Test
+void testUpdateActivity_NotFound() throws Exception {
+    when(activityService.updateActivity(eq(1L), any(ActivityDTO.class)))
+            .thenThrow(new ResourceNotFoundException("Activity not found"));
 
-        verify(activityService, times(1)).deleteActivity(1L);
-    }
+    mockMvc.perform(put("/activities/{id}", 1L)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"description\":\"Updated Cleanup\", \"location\":\"New Park\", \"date\":\"2025-05-15\", \"volunteersNeeded\":25}"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.errorType").value("not_found"))
+            .andExpect(jsonPath("$.message").value("Activity not found"));
+
+    verify(activityService, times(1)).updateActivity(eq(1L), any(ActivityDTO.class));
+}
+
+
+@Test
+void testDeleteActivity_NotFound() throws Exception {
+    doThrow(new ResourceNotFoundException("Activity not found")).when(activityService).deleteActivity(1L);
+
+    mockMvc.perform(delete("/activities/{id}", 1L))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.errorType").value("not_found"))
+            .andExpect(jsonPath("$.message").value("Activity not found"));
+
+    verify(activityService, times(1)).deleteActivity(1L);
+}
+
+@Test
+void testCreateActivity_InvalidData() throws Exception {
+    mockMvc.perform(post("/activities")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{ \"description\": \"\", \"date\": \"\", \"location\": \"\", \"volunteersNeeded\": -5 }"))
+            .andExpect(status().isBadRequest());
+
+    verify(activityService, never()).createActivity(any(ActivityDTO.class));
+}
+
+
 }

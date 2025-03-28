@@ -39,7 +39,7 @@ class ActivityVolunteerControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(activityVolunteerController)
-                .setControllerAdvice(new GlobalExceptionHandler()) // Rukovanje greškama
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
 
         activityVolunteerDTO = new ActivityVolunteerDTO();
@@ -82,8 +82,8 @@ class ActivityVolunteerControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.errorType").value("not_found"))
                 .andExpect(jsonPath("$.message").value("Volonter s ID-jem 1 nije pronađen"))
-                .andExpect(jsonPath("$.field").doesNotExist())  // Proverava da nema "field" u odgovoru
-                .andExpect(jsonPath("$.timestamp").exists());  // Proverava da postoji timestamp
+                .andExpect(jsonPath("$.field").doesNotExist()) 
+                .andExpect(jsonPath("$.timestamp").exists());
 
         verify(activityVolunteerService, times(1)).getActivityVolunteerById(1L);
     }
@@ -102,6 +102,18 @@ class ActivityVolunteerControllerTest {
 
         verify(activityVolunteerService, times(1)).createActivityVolunteer(any(ActivityVolunteerDTO.class));
     }
+
+    @Test
+void testCreateActivityVolunteer_InvalidData() throws Exception {
+    mockMvc.perform(post("/activity-volunteers")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{ \"activityId\": null, \"volunteerId\": 1 }")) 
+            .andExpect(status().isBadRequest()) 
+            .andExpect(jsonPath("$.errorType").value("validation_error")) 
+            .andExpect(jsonPath("$.message").value("Activity ID is required"))  
+            .andExpect(jsonPath("$.field").value("activityId")); 
+}
+
 
     @Test
     void testUpdateActivityVolunteer() throws Exception {

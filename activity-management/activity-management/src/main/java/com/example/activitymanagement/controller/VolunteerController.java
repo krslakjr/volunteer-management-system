@@ -1,16 +1,12 @@
 package com.example.activitymanagement.controller;
 
-import com.example.activitymanagement.exception.ResourceNotFoundException;
-import com.example.activitymanagement.models.Team;
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.service.VolunteerService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/volunteers")

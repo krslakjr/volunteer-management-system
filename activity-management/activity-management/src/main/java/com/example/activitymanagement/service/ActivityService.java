@@ -37,26 +37,31 @@ public class ActivityService {
         return activity.map(activityMapper::toActivityDTO);
     }
 
-    public ActivityDTO createActivity(Activity activity) {
-        if (activity.getDescription() == null || activity.getDescription().length() < 10) {
+    public ActivityDTO createActivity(ActivityDTO activityDTO) {
+        if (activityDTO.getDescription() == null || activityDTO.getDescription().trim().length() < 10) {
             throw new ValidationException("Description must be at least 10 characters", "description");
         }
+    
+        Activity activity = activityMapper.toActivity(activityDTO);
         Activity savedActivity = activityRepository.save(activity);
         return activityMapper.toActivityDTO(savedActivity);
     }
-
-    public ActivityDTO updateActivity(Long id, Activity updatedActivity) {
+    
+    
+    public ActivityDTO updateActivity(Long id, ActivityDTO updatedActivityDTO) {
         Activity existingActivity = activityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Activity with ID " + id + " not found"));
-
-        existingActivity.setDescription(updatedActivity.getDescription());
-        existingActivity.setDate(updatedActivity.getDate());
-        existingActivity.setLocation(updatedActivity.getLocation());
-        existingActivity.setVolunteersNeeded(updatedActivity.getVolunteersNeeded());
-
+    
+        existingActivity.setDescription(updatedActivityDTO.getDescription());
+        existingActivity.setDate(updatedActivityDTO.getDate());
+        existingActivity.setLocation(updatedActivityDTO.getLocation());
+        existingActivity.setVolunteersNeeded(updatedActivityDTO.getVolunteersNeeded());
+    
         Activity savedActivity = activityRepository.save(existingActivity);
         return activityMapper.toActivityDTO(savedActivity);
     }
+    
+    
 
     public void deleteActivity(Long id) {
         if (!activityRepository.existsById(id)) {

@@ -32,17 +32,18 @@ public ResponseEntity<ActivityDTO> getActivityById(@PathVariable Long id) {
 }
 
 
-    @PostMapping
-    public ResponseEntity<ActivityDTO> createActivity(@Valid @RequestBody Activity activity) {
-        ActivityDTO createdActivityDTO = activityService.createActivity(activity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdActivityDTO);
-    }
+@PostMapping
+public ResponseEntity<ActivityDTO> createActivity(@Valid @RequestBody ActivityDTO activityDTO) {
+    ActivityDTO createdActivityDTO = activityService.createActivity(activityDTO);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdActivityDTO);
+}
+
 
     @PutMapping("/{id}")
-    public ResponseEntity<ActivityDTO> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity updatedActivity) {
-        ActivityDTO updatedActivityDTO = activityService.updateActivity(id, updatedActivity);
-        return ResponseEntity.ok(updatedActivityDTO);
-    }
+    public ResponseEntity<ActivityDTO> updateActivity(@PathVariable Long id, @Valid @RequestBody ActivityDTO updatedActivityDTO) {  
+    ActivityDTO updatedActivity = activityService.updateActivity(id, updatedActivityDTO);
+    return ResponseEntity.ok(updatedActivity);
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteActivity(@PathVariable Long id) {

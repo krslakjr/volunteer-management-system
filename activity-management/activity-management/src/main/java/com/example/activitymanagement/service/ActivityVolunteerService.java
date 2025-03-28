@@ -1,16 +1,11 @@
 package com.example.activitymanagement.service;
 
 import com.example.activitymanagement.dto.ActivityVolunteerDTO;
-import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.mapper.ActivityVolunteerMapper;
 import com.example.activitymanagement.models.ActivityVolunteer;
 import com.example.activitymanagement.repository.ActivityVolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,9 +35,13 @@ public class ActivityVolunteerService {
     }
     
     public ActivityVolunteerDTO createActivityVolunteer(ActivityVolunteerDTO activityVolunteerDTO) {
-        ActivityVolunteer activityVolunteer = activityVolunteerMapper.toEntity(activityVolunteerDTO); 
+        if (activityVolunteerDTO.getActivityId() == null || activityVolunteerDTO.getVolunteerId() == null) {
+            throw new IllegalArgumentException("Activity ID and Volunteer ID must not be null");
+        }
+        
+        ActivityVolunteer activityVolunteer = activityVolunteerMapper.toEntity(activityVolunteerDTO);
         ActivityVolunteer savedActivityVolunteer = activityVolunteerRepository.save(activityVolunteer);
-        return activityVolunteerMapper.toDTO(savedActivityVolunteer); 
+        return activityVolunteerMapper.toDTO(savedActivityVolunteer);
     }
 
     public Optional<ActivityVolunteerDTO> updateActivityVolunteer(Long id, ActivityVolunteerDTO activityVolunteerDTO) {

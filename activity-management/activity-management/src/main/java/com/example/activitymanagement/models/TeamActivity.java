@@ -2,6 +2,7 @@ package com.example.activitymanagement.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "team_activity")
@@ -14,10 +15,12 @@ public class TeamActivity {
     @ManyToOne
     @JoinColumn(name = "team_id", nullable = false)
     @JsonBackReference  
+    @NotNull(message = "Team cannot be null")
     private Team team;
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = false)
+    @NotNull(message = "Activity cannot be null")
     private Activity activity;
 
     public Long getId() {

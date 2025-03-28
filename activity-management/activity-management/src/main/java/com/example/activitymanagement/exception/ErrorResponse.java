@@ -2,7 +2,11 @@ package com.example.activitymanagement.exception;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ErrorResponse {
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
     private String errorType;
     private String message;

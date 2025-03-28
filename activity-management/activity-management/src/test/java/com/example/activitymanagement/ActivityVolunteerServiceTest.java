@@ -98,6 +98,17 @@ class ActivityVolunteerServiceTest {
     }
 
     @Test
+    void testCreateActivityVolunteer_InvalidData() {
+        ActivityVolunteerDTO invalidDTO = new ActivityVolunteerDTO();
+        invalidDTO.setActivityId(null); 
+        invalidDTO.setVolunteerId(null);  
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            activityVolunteerService.createActivityVolunteer(invalidDTO);
+        });
+    }
+
+    @Test
     void testUpdateActivityVolunteer_Found() {
         when(activityVolunteerRepository.findById(1L)).thenReturn(Optional.of(activityVolunteer));
         when(activityVolunteerMapper.toEntity(any(ActivityVolunteerDTO.class))).thenReturn(activityVolunteer);

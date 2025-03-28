@@ -84,16 +84,32 @@ class ActivityServiceTest {
 
     @Test
     void testCreateActivity() {
-        when(activityRepository.save(any(Activity.class))).thenReturn(activity);
-        when(activityMapper.toActivityDTO(any(Activity.class))).thenReturn(activityDTO);
+        when(activityMapper.toActivity(any(ActivityDTO.class))).thenReturn(activity); 
+    when(activityRepository.save(any(Activity.class))).thenReturn(activity);
+    when(activityMapper.toActivityDTO(any(Activity.class))).thenReturn(activityDTO);
 
-        ActivityDTO result = activityService.createActivity(activity);
+        ActivityDTO result = activityService.createActivity(activityDTO);
         assertNotNull(result);
         assertEquals(activityDTO.getActivityId(), result.getActivityId());
         assertEquals("Community Cleanup", result.getDescription());
 
         verify(activityRepository, times(1)).save(any(Activity.class));
     }
+
+    @Test
+void testCreateActivity_InvalidData() {
+    ActivityDTO invalidActivityDTO = new ActivityDTO(1L, "", "2025-03-28", "City Park", 0);
+
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        activityService.createActivity(invalidActivityDTO);
+    });
+
+    assertEquals("Description must be at least 10 characters", exception.getMessage());
+
+    verify(activityRepository, times(0)).save(any(Activity.class));
+}
+
+
 
     @Test
     void testUpdateActivity_Found() {
@@ -109,7 +125,7 @@ class ActivityServiceTest {
         when(activityRepository.save(any(Activity.class))).thenReturn(updatedActivity);
         when(activityMapper.toActivityDTO(any(Activity.class))).thenReturn(updatedActivityDTO);
 
-        ActivityDTO result = activityService.updateActivity(1L, updatedActivity);
+        ActivityDTO result = activityService.updateActivity(1L, updatedActivityDTO);
         assertEquals("Updated Cleanup", result.getDescription());
         assertEquals("2025-03-29", result.getDate());
         assertEquals("Downtown Park", result.getLocation());
@@ -124,7 +140,7 @@ class ActivityServiceTest {
         when(activityRepository.findById(1L)).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            activityService.updateActivity(1L, activity);
+            activityService.updateActivity(1L, activityDTO);
         });
 
         assertEquals("Activity with ID 1 not found", exception.getMessage());
