@@ -2,6 +2,7 @@ package com.example.feedbackservice;
 
 import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.controller.ActivityController;
+import com.example.feedbackservice.exception.GlobalExceptionHandler;
 import com.example.feedbackservice.service.ActivityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -36,12 +38,14 @@ class ActivityControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(activityController).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(activityController)
+                .setControllerAdvice(new GlobalExceptionHandler()) 
+                .build();
     }
 
     @Test
     void testGetAllActivities() throws Exception {
-        // Arrange
         Activity a1 = new Activity();
         a1.setActivityId(1L);
         a1.setDescription("Planting trees");
@@ -52,7 +56,6 @@ class ActivityControllerTest {
 
         when(activityService.getAllActivities()).thenReturn(Arrays.asList(a1, a2));
 
-        // Act & Assert
         mockMvc.perform(get("/activities"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(2))
@@ -64,14 +67,12 @@ class ActivityControllerTest {
 
     @Test
     void testGetActivityById_Found() throws Exception {
-        // Arrange
         Activity activity = new Activity();
         activity.setActivityId(1L);
         activity.setDescription("Beach Cleanup");
 
         when(activityService.getActivityById(1L)).thenReturn(Optional.of(activity));
 
-        // Act & Assert
         mockMvc.perform(get("/activities/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description").value("Beach Cleanup"));
@@ -81,19 +82,18 @@ class ActivityControllerTest {
 
     @Test
     void testGetActivityById_NotFound() throws Exception {
-        // Arrange
         when(activityService.getActivityById(1L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         mockMvc.perform(get("/activities/1"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound()) 
+                .andExpect(jsonPath("$.errorType").value("Resource Not Found"))
+                .andExpect(jsonPath("$.message").value("Activity not found with id 1"));
 
         verify(activityService, times(1)).getActivityById(1L);
     }
 
     @Test
     void testCreateOrUpdateActivity() throws Exception {
-        // Arrange
         Activity activity = new Activity();
         activity.setActivityId(1L);
         activity.setDescription("Fundraising event");
@@ -103,7 +103,6 @@ class ActivityControllerTest {
 
         when(activityService.saveOrUpdateActivity(any(Activity.class))).thenReturn(activity);
 
-        // Act & Assert
         mockMvc.perform(post("/activities")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(activity)))
@@ -116,10 +115,8 @@ class ActivityControllerTest {
 
     @Test
     void testDeleteActivity_Success() throws Exception {
-        // Arrange
         doNothing().when(activityService).deleteActivity(1L);
 
-        // Act & Assert
         mockMvc.perform(delete("/activities/1"))
                 .andExpect(status().isNoContent());
 
@@ -128,10 +125,8 @@ class ActivityControllerTest {
 
     @Test
     void testDeleteActivity_Failure() throws Exception {
-        // Arrange
         doThrow(new RuntimeException("Database error")).when(activityService).deleteActivity(1L);
 
-        // Act & Assert
         mockMvc.perform(delete("/activities/1"))
                 .andExpect(status().isInternalServerError());
 

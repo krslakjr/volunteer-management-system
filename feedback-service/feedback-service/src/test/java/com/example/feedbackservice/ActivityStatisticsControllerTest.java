@@ -1,6 +1,7 @@
 package com.example.feedbackservice;
 
 import com.example.feedbackservice.controller.ActivityStatisticsController;
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.ActivityStatistics;
 import com.example.feedbackservice.service.ActivityStatisticsService;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,15 +66,16 @@ class ActivityStatisticsControllerTest {
     }
 
     @Test
-    void testGetActivityStatisticsById_NotFound() {
-        when(activityStatisticsService.getActivityStatisticsById(1L)).thenReturn(Optional.empty());
+void testGetActivityStatisticsById_NotFound() {
+    when(activityStatisticsService.getActivityStatisticsById(1L)).thenReturn(Optional.empty());
 
-        ResponseEntity<ActivityStatistics> response = activityStatisticsController.getActivityStatisticsById(1L);
+    ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> 
+        activityStatisticsController.getActivityStatisticsById(1L));
 
-        assertEquals(NOT_FOUND, response.getStatusCode());
-        assertNull(response.getBody());
-        verify(activityStatisticsService, times(1)).getActivityStatisticsById(1L);
-    }
+    assertEquals("Activity Statistics not found with id 1", exception.getMessage());
+    verify(activityStatisticsService, times(1)).getActivityStatisticsById(1L);
+}
+
 
     @Test
     void testCreateOrUpdateActivityStatistics_Success() {

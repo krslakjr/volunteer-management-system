@@ -1,5 +1,6 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Feedback;
 import com.example.feedbackservice.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/feedbacks")
@@ -24,11 +24,16 @@ public class FeedbackController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Feedback> getFeedbackById(@PathVariable Long id) {
-        Optional<Feedback> feedback = feedbackService.getFeedbackById(id);
-        return feedback.map(f -> new ResponseEntity<>(f, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+public ResponseEntity<Object> getFeedbackById(@PathVariable Long id) {
+    try {
+        Feedback feedback = feedbackService.getFeedbackById(id)
+                                          .orElseThrow(() -> new ResourceNotFoundException("Feedback not found with id " + id, "id"));
+        return new ResponseEntity<>(feedback, HttpStatus.OK);
+    } catch (ResourceNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+}
+
 
     @GetMapping("/activity/{activityId}")
     public ResponseEntity<List<Feedback>> getFeedbacksByActivityId(@PathVariable Long activityId) {
@@ -47,8 +52,10 @@ public class FeedbackController {
         try {
             Feedback savedFeedback = feedbackService.saveOrUpdateFeedback(feedback);
             return new ResponseEntity<>(savedFeedback, HttpStatus.CREATED);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -57,6 +64,8 @@ public class FeedbackController {
         try {
             feedbackService.deleteFeedback(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

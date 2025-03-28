@@ -84,12 +84,12 @@ public class FeedbackServiceTest {
 
     @Test
     void testDeleteFeedback_Success() {
-        when(feedbackRepository.existsById(any(Long.class))).thenReturn(true);
+    when(feedbackRepository.findById(any(Long.class))).thenReturn(Optional.of(feedback));
 
-        feedbackService.deleteFeedback(1L);
+    feedbackService.deleteFeedback(1L);
 
-        verify(feedbackRepository, times(1)).deleteById(any(Long.class));
-    }
+    verify(feedbackRepository, times(1)).deleteById(any(Long.class));
+}
 
     @Test
     void testDeleteFeedback_NotFound() {

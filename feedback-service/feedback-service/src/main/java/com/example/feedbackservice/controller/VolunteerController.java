@@ -1,12 +1,13 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Volunteer;
 import com.example.feedbackservice.service.VolunteerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +24,16 @@ public class VolunteerController {
         return new ResponseEntity<>(volunteers, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+
+
+   @GetMapping("/{id}")
     public ResponseEntity<Volunteer> getVolunteerById(@PathVariable Long id) {
         Optional<Volunteer> volunteer = volunteerService.getVolunteerById(id);
+        
         return volunteer.map(v -> new ResponseEntity<>(v, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("Volunteer not found with id " + id, "id"));
     }
+
 
     @PostMapping
     public ResponseEntity<Volunteer> createOrUpdateVolunteer(@Valid @RequestBody Volunteer volunteer) {

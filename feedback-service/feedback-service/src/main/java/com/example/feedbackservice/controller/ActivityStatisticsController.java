@@ -1,12 +1,13 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.ActivityStatistics;
 import com.example.feedbackservice.service.ActivityStatisticsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +25,14 @@ public class ActivityStatisticsController {
         return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+
+
+      @GetMapping("/{id}")
     public ResponseEntity<ActivityStatistics> getActivityStatisticsById(@PathVariable Long id) {
         Optional<ActivityStatistics> statistics = activityStatisticsService.getActivityStatisticsById(id);
+        
         return statistics.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("Activity Statistics not found with id " + id, "id"));
     }
 
     @PostMapping
