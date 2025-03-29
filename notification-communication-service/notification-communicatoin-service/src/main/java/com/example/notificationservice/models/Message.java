@@ -29,7 +29,6 @@ public class Message {
     @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
-    @NotBlank(message = "Content is required")
     private String content;
 
     private Date timestamp;

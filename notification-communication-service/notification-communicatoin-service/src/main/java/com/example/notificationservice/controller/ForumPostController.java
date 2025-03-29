@@ -1,8 +1,9 @@
 package com.example.notificationservice.controller;
 
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import com.example.notificationservice.models.ForumPost;
 import com.example.notificationservice.service.ForumPostService;
-import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -29,31 +30,40 @@ public class ForumPostController {
     public ResponseEntity<ForumPost> getForumPostById(@PathVariable Long id) {
         Optional<ForumPost> forumPost = forumPostService.getForumPostById(id);
         return forumPost.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("ForumPost not found with id " + id, "id"));
     }
 
     @PostMapping
-    public ForumPost createForumPost(@Valid @RequestBody ForumPost forumPost) {
-        return forumPostService.createForumPost(forumPost);
+    public ResponseEntity<ForumPost> createForumPost(@Valid @RequestBody ForumPost forumPost) {
+        try {
+            ForumPost createdForumPost = forumPostService.createForumPost(forumPost);
+            return new ResponseEntity<>(createdForumPost, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
-<<<<<<< HEAD
     public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id, @Valid @RequestBody ForumPost updatedForumPost) {
-=======
-    public ResponseEntity<ForumPost> updateForumPost(@PathVariable Long id,@Valid @RequestBody ForumPost updatedForumPost) {
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             ForumPost forumPost = forumPostService.updateForumPost(id, updatedForumPost);
             return ResponseEntity.ok(forumPost);
-        } catch (RuntimeException e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteForumPost(@PathVariable Long id) {
-        forumPostService.deleteForumPost(id);
-        return ResponseEntity.noContent().build();
+        try {
+            forumPostService.deleteForumPost(id);
+            return ResponseEntity.noContent().build();
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

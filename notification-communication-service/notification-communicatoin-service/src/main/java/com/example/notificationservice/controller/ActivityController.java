@@ -2,14 +2,11 @@ package com.example.notificationservice.controller;
 
 import com.example.notificationservice.models.Activity;
 import com.example.notificationservice.service.ActivityService;
-<<<<<<< HEAD
-import jakarta.validation.Valid;
-=======
 import org.springframework.http.HttpStatus;
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import com.example.notificationservice.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,22 +26,15 @@ public class ActivityController {
         return activityService.getAllActivities();
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
         return activity.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id, "id"));
     }
 
     @PostMapping
-<<<<<<< HEAD
-    public Activity createActivity(@Valid @RequestBody Activity activity) {
-        return activityService.createActivity(activity);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity updatedActivity) {
-=======
     public ResponseEntity<Activity> createActivity(@Valid @RequestBody Activity activity) {
         Activity createdActivity = activityService.createActivity(activity);
         return new ResponseEntity<>(createdActivity, HttpStatus.CREATED);
@@ -52,7 +42,6 @@ public class ActivityController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Activity> updateActivity(@PathVariable Long id,@Valid @RequestBody Activity updatedActivity) {
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         try {
             Activity activity = activityService.updateActivity(id, updatedActivity);
             return ResponseEntity.ok(activity);

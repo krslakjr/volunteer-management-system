@@ -2,7 +2,7 @@ package com.example.notificationservice.service;
 
 import com.example.notificationservice.models.EngagementStatistics;
 import com.example.notificationservice.repository.EngagementStatisticsRepository;
-
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import com.example.notificationservice.models.Organizer;
 
 import org.springframework.stereotype.Service;
@@ -30,8 +30,13 @@ public class EngagementStatisticsService {
         return engagementStatisticsRepository.findById(id);
     }
 
+   
     public EngagementStatistics createStatistics(EngagementStatistics statistics) {
-        return engagementStatisticsRepository.save(statistics);
+        try {
+            return engagementStatisticsRepository.save(statistics);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while creating engagement statistics", e);  
+        }
     }
 
     public EngagementStatistics updateStatistics(Long id, EngagementStatistics updatedStatistics) {
@@ -41,12 +46,17 @@ public class EngagementStatisticsService {
                     statistics.setMessagesSent(updatedStatistics.getMessagesSent());
                     statistics.setForumPostsMade(updatedStatistics.getForumPostsMade());
                     statistics.setNotificationsReceived(updatedStatistics.getNotificationsReceived());
-                    return engagementStatisticsRepository.save(statistics);
+                    return engagementStatisticsRepository.save(statistics); 
                 })
-                .orElseThrow(() -> new RuntimeException("EngagementStatistics not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Engagement Statistics not found with id " + id, "id"));
     }
 
     public void deleteStatistics(Long id) {
-        engagementStatisticsRepository.deleteById(id);
+        if (engagementStatisticsRepository.existsById(id)) {
+            engagementStatisticsRepository.deleteById(id);  
+        } else {
+            throw new ResourceNotFoundException("Engagement Statistics not found with id " + id, "id");
+        }
     }
-}
+    }
+

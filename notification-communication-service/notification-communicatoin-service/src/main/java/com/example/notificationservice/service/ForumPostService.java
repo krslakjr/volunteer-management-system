@@ -3,7 +3,7 @@ package com.example.notificationservice.service;
 import com.example.notificationservice.models.ForumPost;
 import com.example.notificationservice.repository.ForumPostRepository;
 import org.springframework.stereotype.Service;
-
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 

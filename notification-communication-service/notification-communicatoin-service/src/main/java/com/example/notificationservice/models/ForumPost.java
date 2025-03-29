@@ -33,8 +33,6 @@ public class ForumPost {
     @JsonBackReference ("organizerReference")
     private Organizer organizer;
 
-    @NotBlank(message = "Content is required")
-    @Size(min = 10, max = 700, message = "Content must be between 10 and 700 characters")
     private String content;
 
     private Date timestamp;

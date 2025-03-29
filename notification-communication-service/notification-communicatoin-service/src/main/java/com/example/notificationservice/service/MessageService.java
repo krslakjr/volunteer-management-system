@@ -1,5 +1,6 @@
 package com.example.notificationservice.service;
 
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import com.example.notificationservice.models.Message;
 import com.example.notificationservice.repository.MessageRepository;
 import org.springframework.stereotype.Service;
@@ -16,35 +17,64 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
+    
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
-    public void saveMessage(Message message) {
-        messageRepository.save(message);
-    }    
 
+   
+    public void saveMessage(Message message) {
+        try {
+            messageRepository.save(message);
+        } catch (Exception e) {
+          
+            throw new RuntimeException("Error saving message", e);
+        }
+    }
+
+   
     public Optional<Message> getMessageById(Long id) {
         return messageRepository.findById(id);
     }
 
+   
     public Message createMessage(Message message) {
-        return messageRepository.save(message);
+        try {
+            return messageRepository.save(message);
+        } catch (Exception e) {
+         
+            throw new RuntimeException("Error creating message", e);
+        }
     }
 
+   
     public Message updateMessage(Long id, Message updatedMessage) {
-        return messageRepository.findById(id)
-                .map(message -> {
-                    message.setContent(updatedMessage.getContent());
-                    message.setTimestamp(updatedMessage.getTimestamp());
-                    message.setSender(updatedMessage.getSender());
-                    message.setReceiver(updatedMessage.getReceiver());
-                    message.setOrganizer(updatedMessage.getOrganizer());
-                    return messageRepository.save(message);
-                })
-                .orElseThrow(() -> new RuntimeException("Message not found"));
+        Optional<Message> existingMessage = messageRepository.findById(id);
+        
+     
+        if (existingMessage.isPresent()) {
+            Message message = existingMessage.get();
+            message.setContent(updatedMessage.getContent());
+            message.setTimestamp(updatedMessage.getTimestamp());
+            message.setSender(updatedMessage.getSender());
+            message.setReceiver(updatedMessage.getReceiver());
+            message.setOrganizer(updatedMessage.getOrganizer());
+            return messageRepository.save(message);
+        } else {
+            
+            throw new ResourceNotFoundException("Message not found with id " + id, "id");
+        }
     }
 
+    
     public void deleteMessage(Long id) {
-        messageRepository.deleteById(id);
+        Optional<Message> message = messageRepository.findById(id);
+        
+        
+        if (message.isPresent()) {
+            messageRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("Message not found with id " + id, "id");
+        }
     }
 }

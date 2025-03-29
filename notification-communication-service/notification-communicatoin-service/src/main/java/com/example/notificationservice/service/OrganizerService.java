@@ -3,7 +3,6 @@ package com.example.notificationservice.service;
 import com.example.notificationservice.models.Organizer;
 import com.example.notificationservice.repository.OrganizerRepository;
 import org.springframework.stereotype.Service;
-import javax.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class OrganizerService {
                     organizer.setPhoneNumber(updatedOrganizer.getPhoneNumber());
                     return organizerRepository.save(organizer);
                 })
-                .orElseThrow(() -> new RuntimeException("Organizer not found"));
+                .orElseThrow(() -> new RuntimeException("Organizer not found with ID " + id));
     }
 
     public void saveOrganizer(Organizer organizer) {
@@ -45,12 +44,10 @@ public class OrganizerService {
     }
 
     public void deleteOrganizer(Long id) {
-        Optional<Organizer> organizer = organizerRepository.findById(id);
-        if (organizer.isPresent()) {
+        if (organizerRepository.existsById(id)) {
             organizerRepository.deleteById(id);
         } else {
-            throw new EntityNotFoundException("Organizer not found with ID " + id); 
+            throw new RuntimeException("Organizer not found with ID " + id);
         }
     }
-    
 }
