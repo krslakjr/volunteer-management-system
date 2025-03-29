@@ -1,5 +1,6 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.service.RecommendationService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class RecommendationController {
     public ResponseEntity<Recommendation> getRecommendationById(@PathVariable Long id) {
         Optional<Recommendation> recommendation = recommendationService.getRecommendationById(id);
         return recommendation.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                   .orElseThrow(() -> new ResourceNotFoundException("Recommendation not found with id " + id, "id"));
     }
 
     @PostMapping
@@ -36,11 +37,7 @@ public class RecommendationController {
     }
 
     @PutMapping("/{id}")
-<<<<<<< HEAD
-    public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id, @Valid @RequestBody Recommendation recommendationDetails) {
-=======
     public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id,@Valid @RequestBody Recommendation recommendationDetails) {
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Recommendation updatedRecommendation = recommendationService.updateRecommendation(id, recommendationDetails);
         if (updatedRecommendation != null) {
             return ResponseEntity.ok(updatedRecommendation);

@@ -1,5 +1,6 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Certificate;
 import com.example.participationservice.service.CertificateService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class CertificateController {
     public ResponseEntity<Certificate> getCertificateById(@PathVariable Long id) {
         Optional<Certificate> certificate = certificateService.getCertificateById(id);
         return certificate.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            .orElseThrow(() -> new ResourceNotFoundException("Certificate not found with id " + id, "id"));
     }
 
     @PostMapping
@@ -36,11 +37,7 @@ public class CertificateController {
     }
 
     @PutMapping("/{id}")
-<<<<<<< HEAD
-    public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id, @Valid @RequestBody Certificate certificateDetails) {
-=======
     public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id,@Valid @RequestBody Certificate certificateDetails) {
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Certificate updatedCertificate = certificateService.updateCertificate(id, certificateDetails);
         if (updatedCertificate != null) {
             return ResponseEntity.ok(updatedCertificate);

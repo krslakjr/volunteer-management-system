@@ -60,8 +60,6 @@
             <scope>provided</scope>
         </dependency>
 
-<<<<<<< HEAD
-=======
         <!-- Jackson (za rad sa JSON) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -97,15 +95,11 @@
             <scope>test</scope>
         </dependency>
 
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-<<<<<<< HEAD
-=======
 
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
     </dependencies>
 
     <build>
