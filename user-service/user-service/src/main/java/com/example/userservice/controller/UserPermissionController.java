@@ -1,5 +1,7 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
+import com.example.userservice.models.Permission;
 import com.example.userservice.models.UserPermission;
 import com.example.userservice.services.UserPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +32,12 @@ public class UserPermissionController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserPermission>> getUserPermissions(@PathVariable Long userId) {
         List<UserPermission> permissions = userPermissionService.getUserPermissions(userId);
+        
         if (permissions.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            throw new ResourceNotFoundException("User permission not found for user with id " + userId, "id");
         }
-        return new ResponseEntity<>(permissions, HttpStatus.OK);
+        
+        return ResponseEntity.ok(permissions);
     }
 
     @PostMapping

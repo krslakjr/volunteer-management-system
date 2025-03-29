@@ -1,5 +1,7 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
+import com.example.userservice.models.Permission;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.service.UserService;
 import jakarta.validation.Valid;
@@ -30,9 +32,9 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         Optional<UserDTO> user = userService.getUserById(id);
-        return user.map(u -> new ResponseEntity<>(u, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+        return user.map(ResponseEntity::ok)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id, "id"));
+}
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {

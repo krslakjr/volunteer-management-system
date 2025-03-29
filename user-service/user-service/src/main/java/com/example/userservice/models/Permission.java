@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 import java.util.Date;
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
+import com.example.userservice.models.Permission;
 import com.example.userservice.models.Role;
 import com.example.userservice.service.RoleService;
 import jakarta.validation.Valid;
@@ -26,12 +28,9 @@ public class RoleController {
     @GetMapping("/{id}")
     public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
         Optional<Role> role = roleService.getRoleById(id);
-        if (role.isPresent()) {
-            return new ResponseEntity<>(role.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+         return role.map(ResponseEntity::ok)
+        .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + id, "id"));
+}
 
     @PostMapping
     public ResponseEntity<Role> createRole(@Valid @RequestBody Role role) {
@@ -44,11 +43,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-<<<<<<< HEAD
-    public ResponseEntity<Role> updateRole(@PathVariable Long id, @Valid @RequestBody Role role) {
-=======
     public ResponseEntity<Role> updateRole(@PathVariable Long id,@Valid @RequestBody Role role) {
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Role updatedRole = roleService.updateRole(id, role);
         if (updatedRole != null) {
             return new ResponseEntity<>(updatedRole, HttpStatus.OK);

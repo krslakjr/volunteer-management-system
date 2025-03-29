@@ -1,5 +1,7 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
+import com.example.userservice.models.Permission;
 import com.example.userservice.models.SocialShare;
 import com.example.userservice.service.SocialShareService;
 import jakarta.validation.Valid;
@@ -26,9 +28,9 @@ public class SocialShareController {
     @GetMapping("/{id}")
     public ResponseEntity<SocialShare> getSocialShareById(@PathVariable Long id) {
         Optional<SocialShare> socialShare = socialShareService.getSocialShareById(id);
-        return socialShare.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+        return socialShare.map(ResponseEntity::ok)
+        .orElseThrow(() -> new ResourceNotFoundException("Social share not found with id " + id, "id"));
+}
 
     @PostMapping
     public ResponseEntity<SocialShare> createSocialShare(@Valid @RequestBody SocialShare socialShare) {

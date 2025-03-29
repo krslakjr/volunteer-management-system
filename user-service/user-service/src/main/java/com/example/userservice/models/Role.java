@@ -1,11 +1,7 @@
 package com.example.userservice.models;
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
-import com.fasterxml.jackson.annotation.JsonBackReference;
-=======
 import com.fasterxml.jackson.annotation.JsonIgnore; 
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
 import com.example.userservice.models.Permission;
 import com.example.userservice.service.PermissionService;
 import jakarta.validation.Valid;
@@ -26,12 +27,9 @@ public class PermissionController {
     @GetMapping("/{id}")
     public ResponseEntity<Permission> getPermissionById(@PathVariable Long id) {
         Optional<Permission> permission = permissionService.getPermissionById(id);
-        if (permission.isPresent()) {
-            return new ResponseEntity<>(permission.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+        return permission.map(ResponseEntity::ok)
+        .orElseThrow(() -> new ResourceNotFoundException("Permission not found with id " + id, "id"));
+}
 
     @PostMapping
     public ResponseEntity<Permission> createPermission(@Valid @RequestBody Permission permission) {
@@ -44,11 +42,7 @@ public class PermissionController {
     }
 
     @PutMapping("/{id}")
-<<<<<<< HEAD
-    public ResponseEntity<Permission> updatePermission(@PathVariable Long id, @Valid @RequestBody Permission permission) {
-=======
     public ResponseEntity<Permission> updatePermission(@PathVariable Long id,@Valid @RequestBody Permission permission) {
->>>>>>> 1f92f07d26c618f4ab802b3c248b0b97d353dacb
         Permission updatedPermission = permissionService.updatePermission(id, permission);
         if (updatedPermission != null) {
             return new ResponseEntity<>(updatedPermission, HttpStatus.OK);
