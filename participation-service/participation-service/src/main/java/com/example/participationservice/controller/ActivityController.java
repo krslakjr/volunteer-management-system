@@ -1,11 +1,13 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Activity;
 import com.example.participationservice.service.ActivityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,8 @@ public class ActivityController {
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
         return activity.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id, "id"));
+            
     }
 
     @PostMapping

@@ -3,6 +3,9 @@ package com.example.participationservice;
 import com.example.participationservice.controller.ActivityController;
 import com.example.participationservice.models.Activity;
 import com.example.participationservice.service.ActivityService;
+
+import com.example.participationservice.exception.ResourceNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,14 +62,16 @@ public class ActivityControllerTest {
     }
 
     @Test
-    public void testGetActivityById_NotFound() {
-        when(activityService.getActivityById(1L)).thenReturn(Optional.empty());
+public void testGetActivityById_NotFound() {
+    when(activityService.getActivityById(1L)).thenReturn(Optional.empty());
 
-        ResponseEntity<Activity> response = activityController.getActivityById(1L);
+    Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+        activityController.getActivityById(1L);
+    });
 
-        assertTrue(response.getStatusCode().is4xxClientError());
-        assertNull(response.getBody());
-    }
+    assertTrue(exception.getMessage().contains("Activity not found with id 1"));
+}
+
 
     @Test
     public void testCreateActivity() {

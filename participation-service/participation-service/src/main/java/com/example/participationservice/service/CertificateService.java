@@ -2,7 +2,6 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.models.Certificate;
 import com.example.participationservice.repository.CertificateRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

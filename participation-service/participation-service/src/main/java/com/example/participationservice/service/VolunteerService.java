@@ -1,5 +1,7 @@
 package com.example.participationservice.service;
 
+import com.example.participationservice.exception.VolunteerNotFoundException;
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Volunteer;
 import com.example.participationservice.repository.VolunteerRepository;
 
@@ -23,9 +25,11 @@ public class VolunteerService {
         volunteerRepository.save(volunteer);
     }
 
+ 
     public Optional<Volunteer> getVolunteerById(Long id) {
-        return volunteerRepository.findById(id);
+        return volunteerRepository.findById(id); 
     }
+    
 
     public Volunteer createVolunteer(Volunteer volunteer) {
         return volunteerRepository.save(volunteer);

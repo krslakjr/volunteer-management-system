@@ -4,6 +4,9 @@ import com.example.participationservice.controller.RecommendationController;
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.service.RecommendationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.example.participationservice.exception.GlobalExceptionHandler;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,9 +39,12 @@ public class RecommendationControllerTest {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(recommendationController).build();
-    }
+void setUp() {
+    mockMvc = MockMvcBuilders.standaloneSetup(recommendationController)
+            .setControllerAdvice(new GlobalExceptionHandler())
+            .build();
+}
+
 
     @Test
     void testGetAllRecommendations() throws Exception {

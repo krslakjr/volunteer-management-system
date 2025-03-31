@@ -1,5 +1,6 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Certificate;
 import com.example.participationservice.service.CertificateService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class CertificateController {
     public ResponseEntity<Certificate> getCertificateById(@PathVariable Long id) {
         Optional<Certificate> certificate = certificateService.getCertificateById(id);
         return certificate.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            .orElseThrow(() -> new ResourceNotFoundException("Certificate not found with id " + id, "id"));
     }
 
     @PostMapping

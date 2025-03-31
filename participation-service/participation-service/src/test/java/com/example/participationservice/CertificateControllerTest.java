@@ -3,7 +3,14 @@ package com.example.participationservice;
 import com.example.participationservice.controller.CertificateController;
 import com.example.participationservice.models.Certificate;
 import com.example.participationservice.service.CertificateService;
+
+import com.example.participationservice.exception.GlobalExceptionHandler;
+
+import com.example.participationservice.exception.ResourceNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,7 +45,10 @@ public class CertificateControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(certificateController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(certificateController)
+        .setControllerAdvice(new GlobalExceptionHandler())
+        .build();
+
 
         certificate = new Certificate();
         certificate.setCertificateId(1L);
@@ -67,12 +77,15 @@ public class CertificateControllerTest {
     }
 
     @Test
-    public void testGetCertificateById_NotFound() throws Exception {
-        when(certificateService.getCertificateById(1L)).thenReturn(Optional.empty());
+public void testGetCertificateById_NotFound() throws Exception {
+    when(certificateService.getCertificateById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/certificates/{id}", 1L))
-                .andExpect(status().isNotFound());
-    }
+    mockMvc.perform(get("/certificates/{id}", 1L))
+            .andExpect(status().isNotFound())
+            .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
+            .andExpect(result -> assertEquals("Certificate not found with id 1", result.getResolvedException().getMessage()));
+}
+
 
     @Test
     public void testCreateCertificate() throws Exception {

@@ -1,5 +1,6 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Participation;
 import com.example.participationservice.service.ParticipationService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class ParticipationController {
     public ResponseEntity<Participation> getParticipationById(@PathVariable Long id) {
         Optional<Participation> participation = participationService.getParticipationById(id);
         return participation.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        .orElseThrow(() -> new ResourceNotFoundException("Participation not found with id " + id, "id"));
     }
 
     @PostMapping

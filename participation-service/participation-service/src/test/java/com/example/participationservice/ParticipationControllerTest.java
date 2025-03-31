@@ -3,6 +3,9 @@ package com.example.participationservice;
 import com.example.participationservice.controller.ParticipationController;
 import com.example.participationservice.models.Participation;
 import com.example.participationservice.service.ParticipationService;
+
+import com.example.participationservice.exception.GlobalExceptionHandler;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +42,10 @@ public class ParticipationControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(participationController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(participationController)
+        .setControllerAdvice(new GlobalExceptionHandler())
+        .build();
+
     }
 
     @Test

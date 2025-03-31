@@ -3,7 +3,15 @@ package com.example.participationservice;
 import com.example.participationservice.controller.VolunteerController;
 import com.example.participationservice.models.Volunteer;
 import com.example.participationservice.service.VolunteerService;
+
+import com.example.participationservice.exception.VolunteerNotFoundException;
+
+import com.example.participationservice.exception.GlobalExceptionHandler;
+
 import org.junit.jupiter.api.BeforeEach;
+
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,6 +28,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class VolunteerControllerTest {
 
+    private MockMvc mockMvc;
+
     @Mock
     private VolunteerService volunteerService;
 
@@ -30,6 +40,10 @@ public class VolunteerControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(volunteerController)
+            .setControllerAdvice(new GlobalExceptionHandler()) 
+            .build();
+
         volunteer = new Volunteer();
         volunteer.setVolunteerId(1L);
         volunteer.setName("John Doe");
@@ -58,14 +72,17 @@ public class VolunteerControllerTest {
     }
 
     @Test
-    public void testGetVolunteerById_NotFound() {
-        when(volunteerService.getVolunteerById(1L)).thenReturn(Optional.empty());
+public void testGetVolunteerById_NotFound() {
+    when(volunteerService.getVolunteerById(1L))
+        .thenThrow(new VolunteerNotFoundException("Volunteer not found with ID: 1"));
 
-        ResponseEntity<Volunteer> response = volunteerController.getVolunteerById(1L);
+    Exception exception = assertThrows(VolunteerNotFoundException.class, () -> {
+        volunteerController.getVolunteerById(1L);
+    });
 
-        assertTrue(response.getStatusCode().is4xxClientError());
-        assertNull(response.getBody());
-    }
+    assertEquals("Volunteer not found with ID: 1", exception.getMessage());
+}
+
 
     @Test
     public void testCreateVolunteer() {

@@ -1,8 +1,11 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.ResourceNotFoundException;
+import com.example.participationservice.exception.VolunteerNotFoundException;
 import com.example.participationservice.models.Volunteer;
 import com.example.participationservice.service.VolunteerService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +27,9 @@ public class VolunteerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Volunteer> getVolunteerById(@PathVariable Long id) {
-        Optional<Volunteer> volunteer = volunteerService.getVolunteerById(id);
-        return volunteer.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Volunteer volunteer = volunteerService.getVolunteerById(id)
+                .orElseThrow(() -> new VolunteerNotFoundException("Volunteer not found with ID: " + id));
+        return ResponseEntity.ok(volunteer);
     }
 
     @PostMapping
