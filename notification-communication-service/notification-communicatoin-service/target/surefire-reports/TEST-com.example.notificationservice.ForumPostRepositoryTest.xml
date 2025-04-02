@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.notificationservice.ForumPostControllerTest" time="0.15" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.notificationservice.ForumPostRepositoryTest" time="0.022" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -67,40 +67,32 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testDeleteForumPost" classname="com.example.notificationservice.ForumPostControllerTest" time="0.035">
-    <system-out><![CDATA[2025-04-02T19:31:13.191+02:00  INFO 31512 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-04-02T19:31:13.192+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-04-02T19:31:13.192+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-]]></system-out>
-  </testcase>
-  <testcase name="testGetForumPostById_Found" classname="com.example.notificationservice.ForumPostControllerTest" time="0.023">
-    <system-out><![CDATA[2025-04-02T19:31:13.210+02:00  INFO 31512 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-04-02T19:31:13.210+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-04-02T19:31:13.210+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-]]></system-out>
-  </testcase>
-  <testcase name="testCreateForumPost" classname="com.example.notificationservice.ForumPostControllerTest" time="0.026">
-    <system-out><![CDATA[2025-04-02T19:31:13.229+02:00  INFO 31512 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-04-02T19:31:13.229+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-04-02T19:31:13.229+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-]]></system-out>
-  </testcase>
-  <testcase name="testGetAllForumPosts" classname="com.example.notificationservice.ForumPostControllerTest" time="0.014">
-    <system-out><![CDATA[2025-04-02T19:31:13.257+02:00  INFO 31512 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-04-02T19:31:13.257+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-04-02T19:31:13.257+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-]]></system-out>
-  </testcase>
-  <testcase name="testGetForumPostById_NotFound" classname="com.example.notificationservice.ForumPostControllerTest" time="0.016">
-    <system-out><![CDATA[2025-04-02T19:31:13.272+02:00  INFO 31512 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-04-02T19:31:13.273+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-04-02T19:31:13.273+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-]]></system-out>
-  </testcase>
-  <testcase name="testUpdateForumPost_NotFound" classname="com.example.notificationservice.ForumPostControllerTest" time="0.03">
-    <system-out><![CDATA[2025-04-02T19:31:13.288+02:00  INFO 31512 --- [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-04-02T19:31:13.288+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-04-02T19:31:13.288+02:00  INFO 31512 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+  <testcase name="testLazyLoadingWithoutNPlusOneProblem" classname="com.example.notificationservice.ForumPostRepositoryTest" time="0.009">
+    <system-out><![CDATA[2025-04-02T19:31:13.312+02:00  INFO 31512 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.notificationservice.ForumPostRepositoryTest]: ForumPostRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-04-02T19:31:13.319+02:00  INFO 31512 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.App for test class com.example.notificationservice.ForumPostRepositoryTest
+Hibernate: 
+    select
+        fp1_0.post_id,
+        fp1_0.activity_id,
+        fp1_0.author_id,
+        fp1_0.content,
+        fp1_0.organizer_id,
+        fp1_0.timestamp 
+    from
+        forum_post fp1_0
+Executed queries: 1
+2025-04-02T19:31:13.332+02:00  INFO 31512 --- [           main] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    623300 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    220700 nanoseconds spent preparing 1 JDBC statements;
+    133900 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    5400 nanoseconds spent executing 1 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
 ]]></system-out>
   </testcase>
 </testsuite>
