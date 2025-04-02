@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.mockito.Mockito.*;
+import com.example.notificationservice.exception.*;
 import java.util.Optional;
 import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,13 +32,11 @@ class VolunteerControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Otvoriti Mockito za injectovanje
         MockitoAnnotations.openMocks(this);
+mockMvc = MockMvcBuilders.standaloneSetup(volunteerController)
+.setControllerAdvice(new GlobalExceptionHandler())
+.build();
 
-        // Kreiraj mock MVC za testiranje kontrolera
-        mockMvc = MockMvcBuilders.standaloneSetup(volunteerController).build();
-
-        // Kreiraj testnog volontera
         volunteer = new Volunteer();
         volunteer.setVolunteerId(1L);
         volunteer.setName("Test Volunteer");
@@ -64,12 +63,13 @@ class VolunteerControllerTest {
     }
 
     @Test
-    void getVolunteerById_ShouldReturnNotFound_WhenDoesNotExist() throws Exception {
-        when(volunteerService.getVolunteerById(1L)).thenReturn(Optional.empty());
+void getVolunteerById_ShouldReturnNotFound_WhenDoesNotExist() throws Exception {
+    when(volunteerService.getVolunteerById(1L)).thenThrow(new VolunteerNotFoundException("Volunteer not found"));
 
-        mockMvc.perform(get("/volunteers/{id}", 1L))
-                .andExpect(status().isNotFound());
-    }
+    mockMvc.perform(get("/volunteers/{id}", 1L))
+            .andExpect(status().isNotFound());  
+}
+
 
     @Test
     void createVolunteer_ShouldReturnCreatedVolunteer() throws Exception {
@@ -91,10 +91,11 @@ class VolunteerControllerTest {
     }
 
     @Test
-    void deleteVolunteer_ShouldReturnNotFound_WhenDoesNotExist() throws Exception {
-        doThrow(new RuntimeException("Volunteer not found")).when(volunteerService).deleteVolunteer(1L);
+void deleteVolunteer_ShouldReturnNotFound_WhenDoesNotExist() throws Exception {
+    doThrow(new VolunteerNotFoundException("Volunteer not found")).when(volunteerService).deleteVolunteer(1L);
 
-        mockMvc.perform(delete("/volunteers/{id}", 1L))
-                .andExpect(status().isNotFound());
-    }
+    mockMvc.perform(delete("/volunteers/{id}", 1L))
+            .andExpect(status().isNotFound()); 
+}
+
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import com.example.notificationservice.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +26,12 @@ public class ActivityController {
         return activityService.getAllActivities();
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
         return activity.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id, "id"));
     }
 
     @PostMapping

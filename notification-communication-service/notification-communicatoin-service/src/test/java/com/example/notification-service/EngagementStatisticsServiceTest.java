@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import com.example.notificationservice.exception.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,23 +110,27 @@ class EngagementStatisticsServiceTest {
     }
 
     @Test
-    void testUpdateStatistics_NotFound() {
-        when(engagementStatisticsRepository.findById(1L)).thenReturn(Optional.empty());
+void testUpdateStatistics_NotFound() {
+    when(engagementStatisticsRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            engagementStatisticsService.updateStatistics(1L, statistics);
-        });
+    ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+        engagementStatisticsService.updateStatistics(1L, statistics);
+    });
 
-        assertEquals("EngagementStatistics not found", exception.getMessage());
-        verify(engagementStatisticsRepository, times(1)).findById(1L);
-    }
+    assertEquals("Engagement Statistics not found with id 1", exception.getMessage());
+    verify(engagementStatisticsRepository, times(1)).findById(1L);
+}
 
-    @Test
-    void testDeleteStatistics() {
-        doNothing().when(engagementStatisticsRepository).deleteById(1L);
 
-        engagementStatisticsService.deleteStatistics(1L);
+@Test
+void testDeleteStatistics() {
+    when(engagementStatisticsRepository.existsById(1L)).thenReturn(true);
+    doNothing().when(engagementStatisticsRepository).deleteById(1L);
 
-        verify(engagementStatisticsRepository, times(1)).deleteById(1L);
-    }
+    engagementStatisticsService.deleteStatistics(1L);
+
+    verify(engagementStatisticsRepository, times(1)).existsById(1L);
+    verify(engagementStatisticsRepository, times(1)).deleteById(1L);
+}
+
 }

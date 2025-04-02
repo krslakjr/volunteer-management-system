@@ -6,6 +6,7 @@ import com.example.notificationservice.models.Volunteer;
 import com.example.notificationservice.service.EngagementStatisticsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.example.notificationservice.exception.*;
 import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,7 +33,9 @@ class EngagementStatisticsControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(engagementStatisticsController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(engagementStatisticsController)
+            .setControllerAdvice(new GlobalExceptionHandler())
+            .build();
 
         Volunteer volunteer = new Volunteer();
         volunteer.setVolunteerId(1L);
@@ -77,14 +80,18 @@ class EngagementStatisticsControllerTest {
     }
 
     @Test
-    void testGetStatisticsById_NotFound() throws Exception {
-        when(engagementStatisticsService.getStatisticsById(any(Long.class))).thenReturn(Optional.empty());
+void testGetStatisticsById_NotFound() throws Exception {
+    when(engagementStatisticsService.getStatisticsById(any(Long.class))).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/engagement-statistics/{id}", 1L))
-                .andExpect(status().isNotFound());
+    mockMvc.perform(get("/engagement-statistics/{id}", 1L))
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.message").value("Engagement Statistics not found with id 1"))
+        .andExpect(jsonPath("$.errorType").value("Resource Not Found"))
+        .andExpect(jsonPath("$.field").value("id"));
 
-        verify(engagementStatisticsService, times(1)).getStatisticsById(1L);
-    }
+    verify(engagementStatisticsService, times(1)).getStatisticsById(1L);
+}
+
 
     @Test
     void testCreateStatistics() throws Exception {

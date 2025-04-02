@@ -11,7 +11,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import com.example.notificationservice.exception.*;
 
+import com.example.notificationservice.exception.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
@@ -34,7 +36,9 @@ class MessageControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(messageController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(messageController)
+        .setControllerAdvice(new GlobalExceptionHandler())
+        .build();
     }
 
     @Test
@@ -72,7 +76,9 @@ class MessageControllerTest {
 
     @Test
     void getMessageById_ShouldReturnNotFound_WhenMessageDoesNotExist() throws Exception {
-        when(messageService.getMessageById(1L)).thenReturn(Optional.empty());
+        when(messageService.updateMessage(eq(1L), any(Message.class)))
+    .thenThrow(new ResourceNotFoundException("Message not found with id 1", "id"));
+
 
         mockMvc.perform(get("/messages/1"))
                 .andExpect(status().isNotFound());
@@ -90,7 +96,7 @@ class MessageControllerTest {
         mockMvc.perform(post("/messages")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"content\":\"Hello\"}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content").value("Hello"));
     }
 
@@ -111,14 +117,15 @@ class MessageControllerTest {
     }
 
     @Test
-    void updateMessage_ShouldReturnNotFound_WhenMessageDoesNotExist() throws Exception {
-        when(messageService.updateMessage(eq(1L), any(Message.class))).thenThrow(new RuntimeException("Message not found"));
+void updateMessage_ShouldReturnNotFound_WhenMessageDoesNotExist() throws Exception {
+    when(messageService.updateMessage(eq(1L), any(Message.class)))
+            .thenThrow(new ResourceNotFoundException("Message not found with id 1", "id"));
 
-        mockMvc.perform(put("/messages/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"content\":\"Updated content\"}"))
-                .andExpect(status().isNotFound());
-    }
+    mockMvc.perform(put("/messages/1")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"content\":\"Updated content\"}"))
+            .andExpect(status().isNotFound());  // Očekivani 404 status
+}
 
     @Test
     void deleteMessage_ShouldReturnNoContent() throws Exception {

@@ -4,6 +4,7 @@ import com.example.notificationservice.controller.ActivityController;
 import com.example.notificationservice.models.Activity;
 import com.example.notificationservice.models.Organizer;
 import com.example.notificationservice.service.ActivityService;
+import com.example.notificationservice.exception.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -52,7 +53,9 @@ class ActivityControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(activityController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(activityController)
+            .setControllerAdvice(new GlobalExceptionHandler())
+            .build();
 
         activity = new Activity();
         activity.setActivityId(1L);
@@ -84,14 +87,19 @@ class ActivityControllerTest {
     }
 
     @Test
-    void testGetActivityById_NotFound() throws Exception {
-        when(activityService.getActivityById(any(Long.class))).thenReturn(Optional.empty());
+void testGetActivityById_NotFound() throws Exception {
+    when(activityService.getActivityById(any(Long.class))).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/activities/{id}", 1L))
-                .andExpect(status().isNotFound());
+    mockMvc.perform(get("/activities/{id}", 1L))
+        .andExpect(status().isNotFound()) 
+        .andExpect(jsonPath("$.message").value("Activity not found with id 1")) 
+        .andExpect(jsonPath("$.errorType").value("Resource Not Found")) 
+        .andDo(MockMvcResultHandlers.print());
 
-        verify(activityService, times(1)).getActivityById(1L);
-    }
+    verify(activityService, times(1)).getActivityById(1L);
+}
+
+
 
     @Test
     void testDeleteActivity() throws Exception {

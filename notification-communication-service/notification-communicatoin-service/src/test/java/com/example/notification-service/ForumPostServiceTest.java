@@ -86,15 +86,16 @@ class ForumPostServiceTest {
     }
 
     @Test
-    void testUpdateForumPost_NotFound() {
-        ForumPost updatedForumPost = new ForumPost();
-        when(forumPostRepository.findById(2L)).thenReturn(Optional.empty());
+void testUpdateForumPost_NotFound() {
+    ForumPost updatedForumPost = new ForumPost();
+    when(forumPostRepository.findById(2L)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(RuntimeException.class, () -> 
-            forumPostService.updateForumPost(2L, updatedForumPost)
-        );
-        assertEquals("ForumPost not found", exception.getMessage());
-    }
+    Exception exception = assertThrows(RuntimeException.class, () -> 
+        forumPostService.updateForumPost(2L, updatedForumPost)
+    );
+    assertEquals("ForumPost not found with id 2", exception.getMessage());
+}
+
 
     @Test
     void testDeleteForumPost() {

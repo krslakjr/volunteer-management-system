@@ -1,6 +1,7 @@
 package com.example.notificationservice.controller;
 
 import com.example.notificationservice.exception.NotificationNotFoundException;
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import com.example.notificationservice.models.Notification;
 import com.example.notificationservice.service.NotificationService;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,9 @@ public class NotificationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Notification> getNotificationById(@PathVariable Long id) {
-        Optional<Notification> notification = notificationService.getNotificationById(id);
-        return notification.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+       Notification notification = notificationService.getNotificationById(id)
+                .orElseThrow(() -> new NotificationNotFoundException("Notification with ID " + id + " not found"));
+        return ResponseEntity.ok(notification);
     }
 
     @PostMapping
@@ -38,15 +39,10 @@ public class NotificationController {
     }
 
     @PutMapping("/{id}")
-public ResponseEntity<Notification> updateNotification(@PathVariable Long id,@Valid @RequestBody Notification updatedNotification) {
-    try {
+    public ResponseEntity<Notification> updateNotification(@PathVariable Long id, @Valid @RequestBody Notification updatedNotification) {
         Notification notification = notificationService.updateNotification(id, updatedNotification);
         return ResponseEntity.ok(notification);
-    } catch (NotificationNotFoundException e) {
-        return ResponseEntity.notFound().build();  
     }
-}
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {

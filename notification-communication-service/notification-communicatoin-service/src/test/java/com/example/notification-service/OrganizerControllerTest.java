@@ -83,32 +83,35 @@ class OrganizerControllerTest {
     @Test
     void createOrganizer_ShouldReturnCreatedOrganizer() throws Exception {
         when(organizerService.createOrganizer(any(Organizer.class))).thenReturn(organizer);
-
+    
         mockMvc.perform(post("/organizers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Test Organizer\", \"email\":\"test@example.com\", \"phoneNumber\":\"123456789\"}"))
-                .andExpect(status().isOk())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content("{\"organizerId\":1, \"name\":\"Test Organizer\", \"email\":\"test@example.com\", \"phoneNumber\":\"123456789\"}"))
+                .andExpect(status().isCreated()) 
                 .andExpect(jsonPath("$.name").value("Test Organizer"))
                 .andExpect(jsonPath("$.email").value("test@example.com"))
                 .andExpect(jsonPath("$.phoneNumber").value("123456789"));
-
+    
         verify(organizerService, times(1)).createOrganizer(any(Organizer.class));
     }
+    
+    
+@Test
+void updateOrganizer_ShouldReturnUpdatedOrganizer() throws Exception {
+    when(organizerService.updateOrganizer(eq(1L), any(Organizer.class))).thenReturn(organizer);
 
-    @Test
-    void updateOrganizer_ShouldReturnUpdatedOrganizer() throws Exception {
-        when(organizerService.updateOrganizer(eq(1L), any(Organizer.class))).thenReturn(organizer);
+    mockMvc.perform(put("/organizers/{id}", 1L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content("{\"organizerId\":1, \"name\":\"Updated Organizer\", \"email\":\"updated@example.com\", \"phoneNumber\":\"987654321\"}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.name").value("Test Organizer"))
+            .andExpect(jsonPath("$.email").value("test@example.com"))
+            .andExpect(jsonPath("$.phoneNumber").value("123456789"));
 
-        mockMvc.perform(put("/organizers/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"Updated Organizer\", \"email\":\"updated@example.com\", \"phoneNumber\":\"987654321\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Test Organizer"))
-                .andExpect(jsonPath("$.email").value("test@example.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("123456789"));
-
-        verify(organizerService, times(1)).updateOrganizer(eq(1L), any(Organizer.class));
-    }
+    verify(organizerService, times(1)).updateOrganizer(eq(1L), any(Organizer.class));
+}
 
     @Test
     void updateOrganizer_ShouldReturnNotFound_WhenOrganizerDoesNotExist() throws Exception {

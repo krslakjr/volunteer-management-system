@@ -89,18 +89,19 @@ class OrganizerServiceTest {
     }
 
     @Test
-    void updateOrganizer_ShouldThrowException_WhenOrganizerDoesNotExist() {
-        var updatedOrganizer = new Organizer();
-        updatedOrganizer.setName("Updated Organizer");
+void updateOrganizer_ShouldThrowException_WhenOrganizerDoesNotExist() {
+    var updatedOrganizer = new Organizer();
+    updatedOrganizer.setName("Updated Organizer");
 
-        Mockito.when(organizerRepository.findById(anyLong())).thenReturn(Optional.empty());
+    Mockito.when(organizerRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            organizerService.updateOrganizer(1L, updatedOrganizer);
-        });
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        organizerService.updateOrganizer(1L, updatedOrganizer);
+    });
 
-        assertEquals("Organizer not found", exception.getMessage());
-    }
+    assertEquals("Organizer not found with ID 1", exception.getMessage());
+}
+
 
     @Test
     void saveOrganizer_ShouldSaveOrganizer() {
@@ -112,22 +113,26 @@ class OrganizerServiceTest {
     }
 
     @Test
-    void deleteOrganizer_ShouldThrowException_WhenOrganizerDoesNotExist() {
-        Mockito.when(organizerRepository.findById(anyLong())).thenReturn(Optional.empty());
+void deleteOrganizer_ShouldThrowException_WhenOrganizerDoesNotExist() {
+    Mockito.when(organizerRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            organizerService.deleteOrganizer(1L);
-        });
-
-        assertEquals("Organizer not found with ID 1", exception.getMessage());
-    }
-
-    @Test
-    void deleteOrganizer_ShouldDeleteOrganizer_WhenOrganizerExists() {
-        Mockito.when(organizerRepository.findById(anyLong())).thenReturn(Optional.of(organizer));
-
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
         organizerService.deleteOrganizer(1L);
+    });
 
-        Mockito.verify(organizerRepository).deleteById(1L);
-    }
+    assertEquals("Organizer not found with ID 1", exception.getMessage());
+}
+
+
+@Test
+void deleteOrganizer_ShouldDeleteOrganizer_WhenOrganizerExists() {
+    Mockito.when(organizerRepository.existsById(anyLong())).thenReturn(true);
+    Mockito.when(organizerRepository.findById(anyLong())).thenReturn(Optional.of(organizer));
+
+    organizerService.deleteOrganizer(1L);
+
+    Mockito.verify(organizerRepository).deleteById(1L);
+}
+
+
 }

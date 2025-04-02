@@ -37,13 +37,13 @@ public class DataInitializer implements CommandLineRunner {
         Organizer organizer1 = new Organizer();
         organizer1.setName("John's Volunteer Group");
         organizer1.setEmail("johnsgroup@example.com");
-        organizer1.setPhoneNumber("123-456-7890");
+        organizer1.setPhoneNumber("1234567890");
         organizerService.saveOrganizer(organizer1);
 
         Organizer organizer2 = new Organizer();
         organizer2.setName("Jane's Fundraisers");
         organizer2.setEmail("janesfundraisers@example.com");
-        organizer2.setPhoneNumber("987-654-3210");
+        organizer2.setPhoneNumber("9876543210");
         organizerService.saveOrganizer(organizer2);
 
         System.out.println("Organizers saved.");
@@ -51,13 +51,13 @@ public class DataInitializer implements CommandLineRunner {
         Volunteer volunteer1 = new Volunteer();
         volunteer1.setName("John Doe");
         volunteer1.setEmail("john.doe@example.com");
-        volunteer1.setPhoneNumber("555-1234");
+        volunteer1.setPhoneNumber("5551234");
         volunteerService.saveVolunteer(volunteer1);
 
         Volunteer volunteer2 = new Volunteer();
         volunteer2.setName("Jane Smith");
         volunteer2.setEmail("jane.smith@example.com");
-        volunteer2.setPhoneNumber("555-5678");
+        volunteer2.setPhoneNumber("5555678");
         volunteerService.saveVolunteer(volunteer2);
 
         System.out.println("Volunteers saved.");
@@ -125,12 +125,14 @@ public class DataInitializer implements CommandLineRunner {
         forumPost1.setAuthor(volunteer1);
         forumPost1.setOrganizer(organizer1);
         forumPost1.setTimestamp(new Date());
+        forumPost1.setContent("How many people are going to be there?");
         forumPostService.saveForumPost(forumPost1);
 
         ForumPost forumPost2 = new ForumPost();
         forumPost2.setActivity(activity2);
         forumPost2.setAuthor(volunteer2);
         forumPost2.setOrganizer(organizer2);
+        forumPost2.setContent("When does the cleanup start?");
         forumPost2.setTimestamp(new Date());
         forumPostService.saveForumPost(forumPost2);
 

@@ -4,6 +4,7 @@ import com.example.notificationservice.controller.ForumPostController;
 import com.example.notificationservice.models.ForumPost;
 import com.example.notificationservice.service.ForumPostService;
 import org.junit.jupiter.api.BeforeEach;
+import com.example.notificationservice.exception.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.example.notificationservice.exception.*;
 
 class ForumPostControllerTest {
 
@@ -33,7 +35,9 @@ class ForumPostControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(forumPostController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(forumPostController)
+            .setControllerAdvice(new GlobalExceptionHandler())
+            .build();
 
         forumPost = new ForumPost();
         forumPost.setPostId(1L);
@@ -66,14 +70,17 @@ class ForumPostControllerTest {
     }
 
     @Test
-    void testGetForumPostById_NotFound() throws Exception {
-        when(forumPostService.getForumPostById(any(Long.class))).thenReturn(Optional.empty());
+void testGetForumPostById_NotFound() throws Exception {
 
-        mockMvc.perform(get("/forum-posts/{id}", 1L))
-                .andExpect(status().isNotFound());
+    when(forumPostService.getForumPostById(any(Long.class))).thenReturn(Optional.empty());
 
-        verify(forumPostService, times(1)).getForumPostById(1L);
-    }
+    mockMvc.perform(get("/forum-posts/{id}", 1L))
+            .andExpect(status().isNotFound()) 
+            .andExpect(jsonPath("$.message").value("ForumPost not found with id 1"));
+
+    verify(forumPostService, times(1)).getForumPostById(1L);
+}
+
 
     @Test
     void testCreateForumPost() throws Exception {
@@ -82,7 +89,7 @@ class ForumPostControllerTest {
         mockMvc.perform(post("/forum-posts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"content\": \"Test content\"}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.postId").value(forumPost.getPostId()))
                 .andExpect(jsonPath("$.content").value(forumPost.getContent()));
 
@@ -90,17 +97,19 @@ class ForumPostControllerTest {
     }
 
     @Test
-    void testUpdateForumPost_NotFound() throws Exception {
-        when(forumPostService.updateForumPost(any(Long.class), any(ForumPost.class)))
-                .thenThrow(new RuntimeException("ForumPost not found"));
+void testUpdateForumPost_NotFound() throws Exception {
+    when(forumPostService.updateForumPost(any(Long.class), any(ForumPost.class)))
+            .thenThrow(new ResourceNotFoundException("ForumPost not found with id 1", "id"));
 
-        mockMvc.perform(put("/forum-posts/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"content\": \"Updated content\"}"))
-                .andExpect(status().isNotFound());
+    mockMvc.perform(put("/forum-posts/{id}", 1L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"content\": \"Updated content\"}"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value("ForumPost not found with id 1"));
 
-        verify(forumPostService, times(1)).updateForumPost(any(Long.class), any(ForumPost.class));
-    }
+    verify(forumPostService, times(1)).updateForumPost(any(Long.class), any(ForumPost.class));
+}
+
 
     @Test
     void testDeleteForumPost() throws Exception {

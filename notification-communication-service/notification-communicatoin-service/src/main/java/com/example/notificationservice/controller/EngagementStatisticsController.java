@@ -5,7 +5,7 @@ import com.example.notificationservice.service.EngagementStatisticsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
-
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class EngagementStatisticsController {
     public ResponseEntity<EngagementStatistics> getStatisticsById(@PathVariable Long id) {
         Optional<EngagementStatistics> statistics = engagementStatisticsService.getStatisticsById(id);
         return statistics.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("Engagement Statistics not found with id " + id, "id"));
     }
 
     @PostMapping

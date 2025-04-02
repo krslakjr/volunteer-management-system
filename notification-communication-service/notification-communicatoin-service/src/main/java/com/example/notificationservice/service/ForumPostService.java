@@ -3,7 +3,7 @@ package com.example.notificationservice.service;
 import com.example.notificationservice.models.ForumPost;
 import com.example.notificationservice.repository.ForumPostRepository;
 import org.springframework.stereotype.Service;
-
+import com.example.notificationservice.exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +41,9 @@ public class ForumPostService {
                     forumPost.setOrganizer(updatedForumPost.getOrganizer());
                     return forumPostRepository.save(forumPost);
                 })
-                .orElseThrow(() -> new RuntimeException("ForumPost not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("ForumPost not found with id " + id, "id"));
     }
+    
 
     public void deleteForumPost(Long id) {
         forumPostRepository.deleteById(id);

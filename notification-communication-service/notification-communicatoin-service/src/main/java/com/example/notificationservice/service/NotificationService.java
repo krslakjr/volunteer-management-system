@@ -2,11 +2,7 @@ package com.example.notificationservice.service;
 
 import com.example.notificationservice.models.Notification;
 import com.example.notificationservice.repository.NotificationRepository;
-
 import com.example.notificationservice.exception.NotificationNotFoundException;
-
-import com.example.notificationservice.models.Organizer;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +16,7 @@ public class NotificationService {
     public NotificationService(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
+
     public void saveNotification(Notification notification) {
         notificationRepository.save(notification);
     }
@@ -50,7 +47,6 @@ public class NotificationService {
                 })
                 .orElseThrow(() -> new NotificationNotFoundException("Notification with ID " + id + " not found"));
     }
-    
 
     public void deleteNotification(Long id) {
         if (!notificationRepository.existsById(id)) {
@@ -58,5 +54,4 @@ public class NotificationService {
         }
         notificationRepository.deleteById(id);
     }
-    
 }
