@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.example.userservice.exception.*;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -60,13 +61,15 @@ public void testGetAllRoles() {
     }
 
     @Test
-    public void testGetRoleById_NotFound() {
+public void testGetRoleById_NotFound() {
+    doThrow(new ResourceNotFoundException("Role not found with id 1", "id"))
+        .when(roleService).getRoleById(1L);
 
-        when(roleService.getRoleById(1L)).thenReturn(Optional.empty());
+    assertThrows(ResourceNotFoundException.class, () -> {
+        roleController.getRoleById(1L);
+    });
+}
 
-        ResponseEntity<Role> response = roleController.getRoleById(1L);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
 
     @Test
     public void testCreateRole() {

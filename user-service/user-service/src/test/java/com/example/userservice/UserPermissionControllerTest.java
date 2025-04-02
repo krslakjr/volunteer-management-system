@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import com.example.userservice.exception.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -64,12 +64,14 @@ public class UserPermissionControllerTest {
     }
 
     @Test
-    public void testGetUserPermissions_NotFound() {
-        when(userPermissionService.getUserPermissions(1L)).thenReturn(Collections.emptyList());
+public void testGetUserPermissions_NotFound() {
+    when(userPermissionService.getUserPermissions(1L)).thenReturn(Collections.emptyList());
 
-        ResponseEntity<List<UserPermission>> response = userPermissionController.getUserPermissions(1L);
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-    }
+    assertThrows(ResourceNotFoundException.class, () -> {
+        userPermissionController.getUserPermissions(1L);
+    });
+}
+
 
     @Test
     public void testAddUserPermission() {

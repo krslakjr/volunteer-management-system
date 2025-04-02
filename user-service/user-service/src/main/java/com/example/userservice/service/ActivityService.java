@@ -1,5 +1,6 @@
 package com.example.userservice.service;
 
+import com.example.userservice.exception.ResourceNotFoundException;
 import com.example.userservice.models.Activity;
 import com.example.userservice.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,23 @@ public class ActivityService {
         return activityRepository.save(activity);
     }
 
-    public Activity updateActivity(Long id, Activity activity) {
-        if (activityRepository.existsById(id)) {
-            return activityRepository.save(activity);
-        }
-        return null;  
+    public Activity updateActivity(Long id, Activity updatedActivity) {
+        return activityRepository.findById(id)
+                .map(activity -> {
+                    activity.setActivityName(updatedActivity.getActivityName());
+                    activity.setDescription(updatedActivity.getDescription());
+                    activity.setActivityDate(updatedActivity.getActivityDate());
+                    activity.setOrganizer(updatedActivity.getOrganizer());
+                    return activityRepository.save(activity);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id, "id"));
     }
-
+    
+    
     public void deleteActivity(Long id) {
+        if (!activityRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Activity not found with id " + id, "id");
+        }
         activityRepository.deleteById(id);
     }
 }

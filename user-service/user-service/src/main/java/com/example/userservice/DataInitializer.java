@@ -100,6 +100,8 @@ public class DataInitializer implements CommandLineRunner {
         volunteerCertificate.setUser(user);
         volunteerCertificate.setActivity(activity);
         volunteerCertificate.setCertificateDate(new Date());
+        volunteerCertificate.setCertificatePdfLink("https://www.africau.edu/images/default/sample.pdf");
+        volunteerCertificate.setIssuedAt(new Date());
         volunteerCertificate.setCreatedAt(new Date());
         volunteerCertificate.setUpdatedAt(new Date());
         volunteerCertificateRepository.save(volunteerCertificate);

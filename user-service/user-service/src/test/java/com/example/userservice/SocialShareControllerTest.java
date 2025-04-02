@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import com.example.userservice.exception.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
@@ -56,12 +57,14 @@ public class SocialShareControllerTest {
     }
 
     @Test
-    public void testGetSocialShareById_NotFound() {
-        when(socialShareService.getSocialShareById(1L)).thenReturn(Optional.empty());
+public void testGetSocialShareById_NotFound() {
+    when(socialShareService.getSocialShareById(1L)).thenReturn(Optional.empty());
 
-        ResponseEntity<SocialShare> response = socialShareController.getSocialShareById(1L);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
+    assertThrows(ResourceNotFoundException.class, () -> {
+        socialShareController.getSocialShareById(1L);
+    });
+}
+
 
     @Test
     public void testCreateSocialShare() {

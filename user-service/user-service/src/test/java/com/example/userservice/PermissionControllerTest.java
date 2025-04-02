@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import com.example.userservice.exception.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,9 @@ public class PermissionControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(permissionController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(permissionController)
+        .setControllerAdvice(new GlobalExceptionHandler())
+        .build();
 
         permission = new Permission();
         permission.setPermissionId(1L);

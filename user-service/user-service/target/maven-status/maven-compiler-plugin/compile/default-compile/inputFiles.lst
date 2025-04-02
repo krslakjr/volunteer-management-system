@@ -1,8 +1,10 @@
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\exception\GlobalExceptionHandler.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\service\VolunteerCertificateService.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\controller\UserPermissionController.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\repository\RoleRepository.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\service\UserPermissionService.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\dto\UserDTO.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\exception\ValidationException.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\DataInitializer.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\service\ActivityService.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\mapper\UserMapper.java
@@ -16,7 +18,9 @@ C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\repository\SocialShareRepository.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\models\UserPermission.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\App.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\exception\ResourceNotFoundException.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\models\SocialShare.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\exception\ErrorResponse.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\controller\UserController.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\service\UserService.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\main\java\com\example\userservice\models\Permission.java

@@ -14,11 +14,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import com.example.userservice.exception.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)  // Dodaj ovu anotaciju
+@ExtendWith(MockitoExtension.class) 
 public class ActivityServiceTest {
 
     @Mock
@@ -79,31 +80,35 @@ public class ActivityServiceTest {
     }
 
     @Test
-    public void testUpdateActivity_Found() {
-        when(activityRepository.existsById(1L)).thenReturn(true);
-        when(activityRepository.save(activity)).thenReturn(activity);
+public void testUpdateActivity_Found() {
+    when(activityRepository.findById(1L)).thenReturn(Optional.of(activity)); 
+    when(activityRepository.save(activity)).thenReturn(activity); 
 
-        Activity result = activityService.updateActivity(1L, activity);
-        assertNotNull(result);
-        assertEquals("Test Activity", result.getActivityName());
-        verify(activityRepository, times(1)).save(activity);
-    }
-
-    @Test
-    public void testUpdateActivity_NotFound() {
-
-        when(activityRepository.existsById(1L)).thenReturn(false);
-
-        Activity result = activityService.updateActivity(1L, activity);
-        assertNull(result);
-    }
+    Activity result = activityService.updateActivity(1L, activity);
+    assertNotNull(result); 
+    assertEquals("Test Activity", result.getActivityName()); 
+    verify(activityRepository, times(1)).save(activity); 
+}
 
     @Test
-    public void testDeleteActivity() {
-        doNothing().when(activityRepository).deleteById(1L);
+public void testUpdateActivity_NotFound() {
+    when(activityRepository.findById(1L)).thenReturn(Optional.empty());
 
-        activityService.deleteActivity(1L);
+    assertThrows(ResourceNotFoundException.class, () -> {
+        activityService.updateActivity(1L, activity);
+    });
+}
 
-        verify(activityRepository, times(1)).deleteById(1L);
-    }
+
+    @Test
+public void testDeleteActivity() {
+    when(activityRepository.existsById(1L)).thenReturn(true);
+
+    doNothing().when(activityRepository).deleteById(1L); 
+
+    activityService.deleteActivity(1L); 
+
+    verify(activityRepository, times(1)).deleteById(1L);
+}
+
 }

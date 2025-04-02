@@ -1,9 +1,11 @@
 package com.example.userservice;
 
+import com.example.userservice.exception.GlobalExceptionHandler;
 import com.example.userservice.controller.ActivityController;
 import com.example.userservice.models.Activity;
 import com.example.userservice.service.ActivityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.userservice.exception.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,7 +39,9 @@ class ActivityControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(activityController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(activityController)
+        .setControllerAdvice(new GlobalExceptionHandler())
+        .build();
 
         activity = new Activity();
         activity.setActivityId(1L);
@@ -71,14 +75,17 @@ class ActivityControllerTest {
     }
 
     @Test
-    void testGetActivityById_NotFound() throws Exception {
-        when(activityService.getActivityById(1L)).thenReturn(Optional.empty());
+void testGetActivityById_NotFound() throws Exception {
+    when(activityService.getActivityById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/activities/1"))
-                .andExpect(status().isNotFound());
+    mockMvc.perform(get("/activities/1"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.errorType").value("Resource Not Found"))
+            .andExpect(jsonPath("$.message").value("Activity not found with id 1"))
+            .andExpect(jsonPath("$.field").value("id"));
 
-        verify(activityService, times(1)).getActivityById(1L);
-    }
+    verify(activityService, times(1)).getActivityById(1L);
+}
 
     @Test
     void testCreateActivity() throws Exception {
@@ -94,29 +101,34 @@ class ActivityControllerTest {
     }
 
     @Test
-    void testUpdateActivity_Found() throws Exception {
-        when(activityService.updateActivity(eq(1L), any(Activity.class))).thenReturn(activity);
+void testUpdateActivity_Found() throws Exception {
+    when(activityService.updateActivity(eq(1L), any(Activity.class))).thenReturn(activity);
 
-        mockMvc.perform(put("/activities/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(activity)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.activityName").value("Tree Planting"));
+    mockMvc.perform(put("/activities/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(activity)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.activityName").value("Tree Planting"));
 
-        verify(activityService, times(1)).updateActivity(eq(1L), any(Activity.class));
-    }
+    verify(activityService, times(1)).updateActivity(eq(1L), any(Activity.class));
+}
 
-    @Test
-    void testUpdateActivity_NotFound() throws Exception {
-        when(activityService.updateActivity(eq(1L), any(Activity.class))).thenReturn(null);
+@Test
+void testUpdateActivity_NotFound() throws Exception {
+    when(activityService.updateActivity(eq(1L), any(Activity.class)))
+            .thenThrow(new ResourceNotFoundException("Activity not found with id 1", "id"));
 
-        mockMvc.perform(put("/activities/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(activity)))
-                .andExpect(status().isNotFound());
+    mockMvc.perform(put("/activities/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(activity)))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.errorType").value("Resource Not Found"))
+            .andExpect(jsonPath("$.message").value("Activity not found with id 1"))
+            .andExpect(jsonPath("$.field").value("id"));
 
-        verify(activityService, times(1)).updateActivity(eq(1L), any(Activity.class));
-    }
+    verify(activityService, times(1)).updateActivity(eq(1L), any(Activity.class));
+}
+
 
     @Test
     void testDeleteActivity() throws Exception {

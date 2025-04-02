@@ -1,5 +1,7 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
+import com.example.userservice.models.Permission;
 import com.example.userservice.models.VolunteerCertificate;
 import com.example.userservice.service.VolunteerCertificateService;
 import jakarta.validation.Valid;
@@ -25,11 +27,14 @@ public class VolunteerCertificateController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<VolunteerCertificate>> getCertificatesByUserId(@PathVariable Long userId) {
         List<VolunteerCertificate> certificates = volunteerCertificateService.getCertificatesByUserId(userId);
+        
         if (certificates.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            throw new ResourceNotFoundException("Volunteer certificates not found for user with id " + userId, "id");
         }
-        return new ResponseEntity<>(certificates, HttpStatus.OK);
+        
+        return ResponseEntity.ok(certificates);
     }
+    
 
     @PostMapping
     public ResponseEntity<VolunteerCertificate> addVolunteerCertificate(@Valid @RequestBody VolunteerCertificate volunteerCertificate) {

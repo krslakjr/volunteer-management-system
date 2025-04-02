@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import com.example.userservice.exception.*;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -36,7 +37,9 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController)
+        .setControllerAdvice(new GlobalExceptionHandler())
+        .build();
         userDTO = new UserDTO();
         userDTO.setUserId(1L);
         userDTO.setFirstName("John");

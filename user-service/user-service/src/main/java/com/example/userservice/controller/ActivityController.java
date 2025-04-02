@@ -1,11 +1,12 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.exception.ResourceNotFoundException;
 import com.example.userservice.models.Activity;
 import com.example.userservice.service.ActivityService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.example.userservice.exception.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,35 +18,36 @@ public class ActivityController {
 
     private final ActivityService activityService;
 
-    @Autowired
     public ActivityController(ActivityService activityService) {
         this.activityService = activityService;
     }
 
     @GetMapping
-    public List<Activity> getAllActivities() {
-        return activityService.getAllActivities();
+    public ResponseEntity<List<Activity>> getAllActivities() {
+        return ResponseEntity.ok(activityService.getAllActivities());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Optional<Activity> activity = activityService.getActivityById(id);
-        return activity.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return activity.map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Activity not found with id " + id, "id"));
     }
 
     @PostMapping
     public ResponseEntity<Activity> createActivity(@Valid @RequestBody Activity activity) {
-        Activity createdActivity = activityService.createActivity(activity);
-        return new ResponseEntity<>(createdActivity, HttpStatus.CREATED);
+        return new ResponseEntity<>(activityService.createActivity(activity), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id,@Valid @RequestBody Activity activity) {
-        Activity updatedActivity = activityService.updateActivity(id, activity);
-        return updatedActivity != null
-                ? new ResponseEntity<>(updatedActivity, HttpStatus.OK)
-                : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @Valid @RequestBody Activity updatedActivity) {
+    Activity activity = activityService.updateActivity(id, updatedActivity);
+    if (activity == null) {
+        throw new ResourceNotFoundException("Activity not found with id " + id, "id");
     }
+    return ResponseEntity.ok(activity);
+}
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
