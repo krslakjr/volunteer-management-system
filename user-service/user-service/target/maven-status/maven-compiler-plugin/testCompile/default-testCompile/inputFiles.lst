@@ -1,6 +1,8 @@
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\ActivityServiceTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\SocialShareRepositoryTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\SocialShareServiceTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\RoleControllerTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\RoleRepositoryTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\SocialShareControllerTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\UserServiceTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\PermissionControllerTest.java
@@ -10,5 +12,10 @@ C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\PermissionServiceTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\ActivityControllerTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\VolunteerCertificateServiceTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\PermissionRepositoryTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\UserRepositoryTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\ActivityRepositoryTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\UserPermissionRepositoryTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\RoleServiceTest.java
+C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\VolunteerCertificateRepositoryTest.java
 C:\Users\Lenovo\Downloads\volunteer-management-system\user-service\user-service\src\test\java\com\example\userservice\UserControllerTest.java
