@@ -8,7 +8,6 @@ com\example\participationservice\controller\CertificateController.class
 com\example\participationservice\exception\NotificationNotFoundException.class
 com\example\participationservice\repository\CertificateRepository.class
 com\example\participationservice\repository\VolunteerRepository.class
-com\example\App.class
 com\example\participationservice\exception\ValidationException.class
 com\example\participationservice\controller\ParticipationController.class
 com\example\participationservice\service\VolunteerService.class
@@ -18,6 +17,7 @@ com\example\participationservice\models\Certificate.class
 com\example\participationservice\repository\ActivityRepository.class
 com\example\participationservice\exception\VolunteerNotFoundException.class
 com\example\participationservice\exception\ErrorResponse.class
+com\example\participationservice\App.class
 com\example\participationservice\models\Activity.class
 com\example\participationservice\models\Participation.class
 com\example\participationservice\service\RecommendationService.class

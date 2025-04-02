@@ -37,14 +37,15 @@ public class ParticipationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Participation> updateParticipation(@PathVariable Long id,@Valid @RequestBody Participation participationDetails) {
+public ResponseEntity<Participation> updateParticipation(@PathVariable Long id, @Valid @RequestBody Participation participationDetails) {
+    try {
         Participation updatedParticipation = participationService.updateParticipation(id, participationDetails);
-        if (updatedParticipation != null) {
-            return ResponseEntity.ok(updatedParticipation);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(updatedParticipation);
+    } catch (ResourceNotFoundException ex) {
+        throw ex; 
     }
+}
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteParticipation(@PathVariable Long id) {

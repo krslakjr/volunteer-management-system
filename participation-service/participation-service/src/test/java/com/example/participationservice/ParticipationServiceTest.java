@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.example.participationservice.exception.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -102,16 +103,18 @@ class ParticipationServiceTest {
     }
 
     @Test
-    void testUpdateParticipation_NotFound() {
-        Participation updatedParticipation = new Participation();
-        when(participationRepository.findById(1L)).thenReturn(Optional.empty());
+void testUpdateParticipation_NotFound() {
+    Participation updatedParticipation = new Participation();
+    when(participationRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Participation result = participationService.updateParticipation(1L, updatedParticipation);
+    assertThrows(ResourceNotFoundException.class, () -> {
+        participationService.updateParticipation(1L, updatedParticipation);
+    });
 
-        assertNull(result);
-        verify(participationRepository, times(1)).findById(1L);
-        verify(participationRepository, times(0)).save(any(Participation.class));
-    }
+    verify(participationRepository, times(1)).findById(1L);
+    verify(participationRepository, times(0)).save(any(Participation.class)); 
+}
+
 
     @Test
     void testDeleteParticipation_Found() {

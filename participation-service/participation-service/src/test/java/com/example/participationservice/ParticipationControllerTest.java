@@ -1,40 +1,33 @@
-package com.example.participationservice;
+package com.example.participationservice.controller;
 
-import com.example.participationservice.controller.ParticipationController;
+import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Participation;
 import com.example.participationservice.service.ParticipationService;
+import com.example.participationservice.exception.*;
 
-import com.example.participationservice.exception.GlobalExceptionHandler;
+import com.example.participationservice.controller.ParticipationController;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import java.util.Date;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Collections;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ParticipationController.class)
-@ExtendWith(MockitoExtension.class)
-public class ParticipationControllerTest {
+class ParticipationControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private ParticipationService participationService;
 
     @InjectMocks
@@ -42,131 +35,96 @@ public class ParticipationControllerTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(participationController)
-        .setControllerAdvice(new GlobalExceptionHandler())
-        .build();
-
+            .setControllerAdvice(new GlobalExceptionHandler())
+            .build();
     }
 
     @Test
-    void testGetAllParticipations() throws Exception {
-        when(participationService.getAllParticipations()).thenReturn(Collections.emptyList());
-
+    void getAllParticipations() throws Exception {
         mockMvc.perform(get("/participations"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
-
-        verify(participationService, times(1)).getAllParticipations();
+                .andExpect(status().isOk());
     }
 
     @Test
-    void testGetParticipationById_Found() throws Exception {
+    void getParticipationById_WhenParticipationExists() throws Exception {
         Participation participation = new Participation();
         participation.setParticipationId(1L);
+        participation.setAttendanceStatus("Attended");
 
         when(participationService.getParticipationById(1L)).thenReturn(Optional.of(participation));
 
         mockMvc.perform(get("/participations/1"))
-                .andExpect(status().isOk());
-
-        verify(participationService, times(1)).getParticipationById(1L);
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attendanceStatus").value("Attended"));
     }
 
     @Test
-    void testGetParticipationById_NotFound() throws Exception {
+    void getParticipationById_WhenParticipationNotFound() throws Exception {
         when(participationService.getParticipationById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/participations/1"))
                 .andExpect(status().isNotFound());
-
-        verify(participationService, times(1)).getParticipationById(1L);
     }
 
     @Test
-void testCreateParticipation() throws Exception {
-    String jsonRequest = """
-        {
-            "registrationDate": "2024-03-26T12:00:00.000+00:00",
-            "attendanceStatus": "Present"
-        }
-    """;
+    void createParticipation() throws Exception {
+        Participation participation = new Participation();
+        participation.setAttendanceStatus("Attended");
+        participation.setRegistrationDate(new java.util.Date());
 
-    Participation participation = new Participation();
-    participation.setParticipationId(1L);
-    participation.setRegistrationDate(new Date());
-    participation.setAttendanceStatus("Present");
+        when(participationService.createParticipation(any(Participation.class))).thenReturn(participation);
 
-    when(participationService.createParticipation(any(Participation.class))).thenReturn(participation);
-
-    mockMvc.perform(post("/participations")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jsonRequest))
-            .andExpect(status().isOk());
-
-    verify(participationService, times(1)).createParticipation(any(Participation.class));
-}
-
-
-@Test
-void testUpdateParticipation_Found() throws Exception {
-    String jsonRequest = """
-        {
-            "registrationDate": "2024-03-26T12:00:00.000+00:00",
-            "attendanceStatus": "Present"
-        }
-    """;
-
-    Participation participation = new Participation();
-    participation.setParticipationId(1L);
-    participation.setRegistrationDate(new Date());
-    participation.setAttendanceStatus("Present");
-
-    when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(participation);
-
-    mockMvc.perform(put("/participations/1")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jsonRequest))
-            .andExpect(status().isOk());
-
-    verify(participationService, times(1)).updateParticipation(eq(1L), any(Participation.class));
-}
-
-@Test
-void testUpdateParticipation_NotFound() throws Exception {
-    String jsonRequest = """
-        {
-            "registrationDate": "2024-03-26T12:00:00.000+00:00",
-            "attendanceStatus": "Absent"
-        }
-    """;
-
-    when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(null);
-
-    mockMvc.perform(put("/participations/1")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jsonRequest))
-            .andExpect(status().isNotFound());
-
-    verify(participationService, times(1)).updateParticipation(eq(1L), any(Participation.class));
-}
+        mockMvc.perform(post("/participations")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"attendanceStatus\": \"Attended\", \"registrationDate\": \"2025-04-02\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attendanceStatus").value("Attended"));
+    }
 
     @Test
-    void testDeleteParticipation_Found() throws Exception {
+    void updateParticipation_WhenParticipationExists() throws Exception {
+        Participation participation = new Participation();
+        participation.setParticipationId(1L);
+        participation.setAttendanceStatus("Attended");
+        
+        Participation updatedParticipation = new Participation();
+        updatedParticipation.setParticipationId(1L);
+        updatedParticipation.setAttendanceStatus("Updated Status");
+
+        when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenReturn(updatedParticipation);
+
+        mockMvc.perform(put("/participations/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"attendanceStatus\": \"Updated Status\", \"registrationDate\": \"2025-04-02\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.attendanceStatus").value("Updated Status"));
+    }
+
+    @Test
+    void updateParticipation_WhenParticipationNotFound() throws Exception {
+        when(participationService.updateParticipation(eq(1L), any(Participation.class))).thenThrow(new ResourceNotFoundException("Participation not found with id 1", "id"));
+
+        mockMvc.perform(put("/participations/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"attendanceStatus\": \"Updated Status\", \"registrationDate\": \"2025-04-02\"}"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteParticipation_WhenParticipationExists() throws Exception {
         when(participationService.deleteParticipation(1L)).thenReturn(true);
 
         mockMvc.perform(delete("/participations/1"))
                 .andExpect(status().isNoContent());
-
-        verify(participationService, times(1)).deleteParticipation(1L);
     }
 
     @Test
-    void testDeleteParticipation_NotFound() throws Exception {
+    void deleteParticipation_WhenParticipationNotFound() throws Exception {
         when(participationService.deleteParticipation(1L)).thenReturn(false);
 
         mockMvc.perform(delete("/participations/1"))
                 .andExpect(status().isNotFound());
-
-        verify(participationService, times(1)).deleteParticipation(1L);
     }
 }

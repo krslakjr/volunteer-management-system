@@ -2,7 +2,7 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.models.Participation;
 import com.example.participationservice.repository.ParticipationRepository;
-
+import com.example.participationservice.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class ParticipationService {
 
     public Participation updateParticipation(Long id, Participation participationDetails) {
         Optional<Participation> optionalParticipation = participationRepository.findById(id);
-
+    
         if (optionalParticipation.isPresent()) {
             Participation participation = optionalParticipation.get();
             participation.setVolunteer(participationDetails.getVolunteer());
@@ -41,8 +41,9 @@ public class ParticipationService {
             participation.setAttendanceStatus(participationDetails.getAttendanceStatus());
             return participationRepository.save(participation);
         }
-        return null;
+        throw new ResourceNotFoundException("Participation not found with id " + id, "id");
     }
+    
 
     public boolean deleteParticipation(Long id) {
         if (participationRepository.existsById(id)) {
