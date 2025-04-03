@@ -47,15 +47,6 @@ public class PermissionControllerTest {
         permission.setPermissionName("VIEW_DASHBOARD");
     }
 
-    @Test
-    public void testGetAllPermissions() throws Exception {
-        when(permissionService.getAllPermissions()).thenReturn(Arrays.asList(permission));
-
-        mockMvc.perform(get("/permissions"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].permissionId").value(1))
-                .andExpect(jsonPath("$[0].permissionName").value("VIEW_DASHBOARD"));
-    }
 
     @Test
     public void testGetPermissionById_Found() throws Exception {

@@ -5,6 +5,12 @@ import com.example.notificationservice.repository.ActivityRepository;
 
 import com.example.notificationservice.models.Organizer;
 
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +31,13 @@ public class ActivityService {
     public List<Activity> getAllActivities() {
         return activityRepository.findAll();
     }
+    
+    public List<Activity> getAllActivities(Pageable pageable) {
+        Page<Activity> page = activityRepository.findAll(pageable);
+        return page.getContent();
+    }
+
+
 
     public Optional<Activity> getActivityById(Long id) {
         return activityRepository.findById(id);

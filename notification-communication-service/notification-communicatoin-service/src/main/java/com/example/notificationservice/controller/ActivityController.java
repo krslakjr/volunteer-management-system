@@ -6,8 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
 import com.example.notificationservice.exception.ResourceNotFoundException;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,9 +26,14 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @GetMapping
-    public List<Activity> getAllActivities() {
-        return activityService.getAllActivities();
+        @GetMapping
+    public List<Activity> getAllActivities(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return activityService.getAllActivities(pageable);
     }
 
 

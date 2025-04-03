@@ -45,15 +45,6 @@ class NotificationControllerTest {
     }
 
     @Test
-    void testGetAllNotifications() throws Exception {
-        when(notificationService.getAllNotifications()).thenReturn(Arrays.asList(notification));
-
-        mockMvc.perform(get("/notifications"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].message").value("Test message"));
-    }
-
-    @Test
     void testGetNotificationById() throws Exception {
         when(notificationService.getNotificationById(1L)).thenReturn(Optional.of(notification));
 

@@ -5,6 +5,13 @@ import com.example.notificationservice.repository.EngagementStatisticsRepository
 import com.example.notificationservice.exception.ResourceNotFoundException;
 import com.example.notificationservice.models.Organizer;
 
+
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +32,18 @@ public class EngagementStatisticsService {
     public List<EngagementStatistics> getAllStatistics() {
         return engagementStatisticsRepository.findAll();
     }
+    
+    public List<EngagementStatistics> getAllStatistics(Pageable pageable) {
+        Page<EngagementStatistics> page = engagementStatisticsRepository.findAll(pageable);
+        return page.getContent();
+    }
 
     public Optional<EngagementStatistics> getStatisticsById(Long id) {
         return engagementStatisticsRepository.findById(id);
     }
 
    
+    @Transactional
     public EngagementStatistics createStatistics(EngagementStatistics statistics) {
         try {
             return engagementStatisticsRepository.save(statistics);
@@ -39,6 +52,7 @@ public class EngagementStatisticsService {
         }
     }
 
+    @Transactional
     public EngagementStatistics updateStatistics(Long id, EngagementStatistics updatedStatistics) {
         return engagementStatisticsRepository.findById(id)
                 .map(statistics -> {
@@ -51,6 +65,8 @@ public class EngagementStatisticsService {
                 .orElseThrow(() -> new ResourceNotFoundException("Engagement Statistics not found with id " + id, "id"));
     }
 
+
+@Transactional
     public void deleteStatistics(Long id) {
         if (engagementStatisticsRepository.existsById(id)) {
             engagementStatisticsRepository.deleteById(id);  

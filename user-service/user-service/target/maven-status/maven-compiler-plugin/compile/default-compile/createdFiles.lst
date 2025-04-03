@@ -10,6 +10,7 @@ com\example\userservice\models\User.class
 com\example\userservice\controller\UserController.class
 com\example\userservice\service\UserService.class
 com\example\userservice\DataInitializer.class
+com\example\App.class
 com\example\userservice\service\SocialShareService.class
 com\example\userservice\controller\RoleController.class
 com\example\userservice\repository\ActivityRepository.class
@@ -29,7 +30,6 @@ com\example\userservice\service\VolunteerCertificateService.class
 com\example\userservice\controller\UserPermissionController.class
 com\example\userservice\models\SocialShare.class
 com\example\userservice\repository\UserPermissionRepository.class
-com\example\userservice\App.class
 com\example\userservice\service\RoleService.class
 com\example\userservice\controller\VolunteerCertificateController.class
 com\example\userservice\dto\UserDTO.class

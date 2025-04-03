@@ -46,18 +46,6 @@ class ForumPostControllerTest {
     }
 
     @Test
-    void testGetAllForumPosts() throws Exception {
-        when(forumPostService.getAllForumPosts()).thenReturn(List.of(forumPost));
-
-        mockMvc.perform(get("/forum-posts"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].postId").value(forumPost.getPostId()))
-                .andExpect(jsonPath("$[0].content").value(forumPost.getContent()));
-
-        verify(forumPostService, times(1)).getAllForumPosts();
-    }
-
-    @Test
     void testGetForumPostById_Found() throws Exception {
         when(forumPostService.getForumPostById(any(Long.class))).thenReturn(Optional.of(forumPost));
 

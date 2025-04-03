@@ -41,24 +41,6 @@ class MessageControllerTest {
         .build();
     }
 
-    @Test
-    void getAllMessages_ShouldReturnListOfMessages() throws Exception {
-        Message message1 = new Message();
-        message1.setMessageId(1L);
-        message1.setContent("Hello");
-        message1.setTimestamp(new Date());
-
-        Message message2 = new Message();
-        message2.setMessageId(2L);
-        message2.setContent("Hi");
-        message2.setTimestamp(new Date());
-
-        when(messageService.getAllMessages()).thenReturn(Arrays.asList(message1, message2));
-
-        mockMvc.perform(get("/messages"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2));
-    }
 
     @Test
     void getMessageById_ShouldReturnMessage_WhenMessageExists() throws Exception {

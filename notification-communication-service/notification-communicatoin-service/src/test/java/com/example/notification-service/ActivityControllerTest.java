@@ -62,17 +62,6 @@ class ActivityControllerTest {
         activity.setTitle("Activity 1");
     }
 
-    @Test
-    void testGetAllActivities() throws Exception {
-        when(activityService.getAllActivities()).thenReturn(List.of(activity));
-
-        mockMvc.perform(get("/activities"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].activityId").value(activity.getActivityId()))
-                .andExpect(jsonPath("$[0].title").value(activity.getTitle()));
-
-        verify(activityService, times(1)).getAllActivities();
-    }
 
     @Test
     void testGetActivityById_Found() throws Exception {

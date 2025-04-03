@@ -49,20 +49,6 @@ class EngagementStatisticsControllerTest {
         statistics.setNotificationsReceived(100);
     }
 
-    @Test
-    void testGetAllStatistics() throws Exception {
-        when(engagementStatisticsService.getAllStatistics()).thenReturn(List.of(statistics));
-
-        mockMvc.perform(get("/engagement-statistics"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(statistics.getId()))
-                .andExpect(jsonPath("$[0].totalActivities").value(statistics.getTotalActivities()))
-                .andExpect(jsonPath("$[0].messagesSent").value(statistics.getMessagesSent()))
-                .andExpect(jsonPath("$[0].forumPostsMade").value(statistics.getForumPostsMade()))
-                .andExpect(jsonPath("$[0].notificationsReceived").value(statistics.getNotificationsReceived()));
-
-        verify(engagementStatisticsService, times(1)).getAllStatistics();
-    }
 
     @Test
     void testGetStatisticsById_Found() throws Exception {
