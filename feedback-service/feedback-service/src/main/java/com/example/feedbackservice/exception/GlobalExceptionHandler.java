@@ -25,4 +25,9 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("server_error", "An unexpected error occurred.", null);
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(InvalidPatchException.class)
+    public ResponseEntity<String> handleInvalidPatchException(InvalidPatchException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

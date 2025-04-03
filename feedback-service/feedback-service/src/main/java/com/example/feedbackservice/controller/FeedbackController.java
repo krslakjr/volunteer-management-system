@@ -1,6 +1,8 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.exception.InvalidPatchException;
 import com.example.feedbackservice.exception.ResourceNotFoundException;
+import com.example.feedbackservice.models.ActivityStatistics;
 import com.example.feedbackservice.models.Feedback;
 import com.example.feedbackservice.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
+import com.github.fge.jsonpatch.JsonPatch;
+
 
 @RestController
 @RequestMapping("/feedbacks")
@@ -60,7 +64,7 @@ public ResponseEntity<Object> getFeedbackById(@PathVariable Long id) {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteFeedback(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteFeedback(@Valid @PathVariable Long id) {
         try {
             feedbackService.deleteFeedback(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -70,4 +74,21 @@ public ResponseEntity<Object> getFeedbackById(@PathVariable Long id) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+   
+
+    @PatchMapping("/{id}")
+public ResponseEntity<?> updateFeedback(@PathVariable Long id, @Valid @RequestBody JsonPatch patch) {
+    try {
+        Feedback updatedFeedback = feedbackService.applyPatchToFeedback(id, patch);
+        return ResponseEntity.ok(updatedFeedback);
+    } catch (ResourceNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    } catch (InvalidPatchException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating feedback.");
+    }
+}
+
+
 }

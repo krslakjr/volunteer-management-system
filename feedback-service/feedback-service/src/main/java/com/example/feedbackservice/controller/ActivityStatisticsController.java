@@ -1,16 +1,20 @@
 package com.example.feedbackservice.controller;
 
 import com.example.feedbackservice.exception.ResourceNotFoundException;
+import com.example.feedbackservice.exception.InvalidPatchException;
+import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.models.ActivityStatistics;
 import com.example.feedbackservice.service.ActivityStatisticsService;
-import jakarta.validation.Valid;
+import com.github.fge.jsonpatch.JsonPatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Optional;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/activity-statistics")
@@ -54,4 +58,18 @@ public class ActivityStatisticsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateActivityStatistics(@PathVariable Long id, @Valid @RequestBody JsonPatch patch) {
+        try {
+            ActivityStatistics updatedActivityStatistics = activityStatisticsService.applyPatchToActivityStatistics(id, patch);
+            return ResponseEntity.ok(updatedActivityStatistics);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (InvalidPatchException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating activity staistics.");
+        }
+}    
 }
