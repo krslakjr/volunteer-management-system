@@ -4,6 +4,7 @@ com\example\feedbackservice\exception\GlobalExceptionHandler.class
 com\example\feedbackservice\service\FeedbackService.class
 com\example\feedbackservice\exception\ValidationException.class
 com\example\feedbackservice\service\ActivityService.class
+com\example\feedbackservice\exception\InvalidPatchException.class
 com\example\feedbackservice\repository\ActivityStatisticsRepository.class
 com\example\feedbackservice\exception\ResourceNotFoundException.class
 com\example\feedbackservice\models\Volunteer.class

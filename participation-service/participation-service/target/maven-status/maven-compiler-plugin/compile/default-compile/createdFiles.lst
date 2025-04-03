@@ -1,4 +1,5 @@
 com\example\participationservice\controller\ActivityController.class
+com\example\participationservice\exception\InvalidPatchException.class
 com\example\participationservice\models\Recommendation.class
 com\example\participationservice\service\CertificateService.class
 com\example\participationservice\service\ActivityService.class

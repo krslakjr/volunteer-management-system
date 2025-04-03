@@ -7,7 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,4 +56,9 @@ public ResponseEntity<Participation> updateParticipation(@PathVariable Long id, 
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/paginated")
+public ResponseEntity<Page<Participation>> getPaginatedParticipations(Pageable pageable) {
+    return ResponseEntity.ok(participationService.getParticipationsPaginated(pageable));
+}
 }

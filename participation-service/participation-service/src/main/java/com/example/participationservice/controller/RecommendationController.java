@@ -1,10 +1,13 @@
 package com.example.participationservice.controller;
 
+import com.example.participationservice.exception.InvalidPatchException;
 import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.service.RecommendationService;
+import com.github.fge.jsonpatch.JsonPatch;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,5 +56,32 @@ public class RecommendationController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateRecommendation(@PathVariable Long id, @Valid @RequestBody JsonPatch patch) {
+        try {
+            Recommendation updatedRecommendation = recommendationService.applyPatchToRecommendation(id, patch);
+            return ResponseEntity.ok(updatedRecommendation);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (InvalidPatchException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing patch request.");
+        }
+    }
+
+    @GetMapping("/volunteer/{volunteerId}")
+    public ResponseEntity<List<Recommendation>> getRecommendationsByVolunteer(@PathVariable Long volunteerId) {
+        List<Recommendation> recommendations = recommendationService.getRecommendationsByVolunteer(volunteerId);
+        return ResponseEntity.ok(recommendations);
+    }
+
+    @GetMapping("/activity/{activityId}")
+    public ResponseEntity<List<Recommendation>> getRecommendationsByActivity(@PathVariable Long activityId) {
+        List<Recommendation> recommendations = recommendationService.getRecommendationsByActivity(activityId);
+        return ResponseEntity.ok(recommendations);
     }
 }

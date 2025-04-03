@@ -1,5 +1,6 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.exception.InvalidPatchException;
 import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.models.Volunteer;
 import com.example.feedbackservice.service.VolunteerService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import com.github.fge.jsonpatch.JsonPatch;
 
 @RestController
 @RequestMapping("/volunteers")
@@ -54,4 +56,20 @@ public class VolunteerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateVolunteer(@PathVariable Long id, @Valid @RequestBody JsonPatch patch) {
+        try {
+            Volunteer updatedVolunteer = volunteerService.applyPatchToVolunteer(id, patch);
+            return ResponseEntity.ok(updatedVolunteer);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (InvalidPatchException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating volunteer.");
+        }
+    }
+    
+
 }
