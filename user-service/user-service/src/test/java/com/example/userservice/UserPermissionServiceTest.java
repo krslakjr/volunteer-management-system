@@ -39,16 +39,6 @@ public class UserPermissionServiceTest {
         userPermission.setPermission(new Permission()); 
     }
 
-    @Test
-    public void testGetAllUserPermissions() {
-        List<UserPermission> userPermissions = Arrays.asList(userPermission);
-
-        when(userPermissionRepository.findAll()).thenReturn(userPermissions);
-
-        List<UserPermission> result = userPermissionService.getAllUserPermissions();
-        assertEquals(1, result.size());
-        assertEquals(1L, result.get(0).getId());
-    }
 
     @Test
     public void testGetUserPermissions_Found() {

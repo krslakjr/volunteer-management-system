@@ -6,6 +6,10 @@ import com.example.notificationservice.service.VolunteerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.List;
@@ -21,9 +25,20 @@ public class VolunteerController {
     }
 
     @GetMapping
-    public List<Volunteer> getAllVolunteers() {
-        return volunteerService.getAllVolunteers();
+    public List<Volunteer> getAllVolunteers(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return volunteerService.getAllVolunteers(pageable);
     }
+
+    @GetMapping("/search")
+public List<Volunteer> searchVolunteers(@RequestParam String name) {
+    return volunteerService.getVolunteersByName(name);
+}
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getVolunteerById(@PathVariable Long id) {

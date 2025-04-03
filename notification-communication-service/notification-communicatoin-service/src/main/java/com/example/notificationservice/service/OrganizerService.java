@@ -4,6 +4,12 @@ import com.example.notificationservice.models.Organizer;
 import com.example.notificationservice.repository.OrganizerRepository;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -20,14 +26,25 @@ public class OrganizerService {
         return organizerRepository.findAll();
     }
 
+    public List<Organizer> getAllOrganizers(Pageable pageable) {
+        Page<Organizer> page = organizerRepository.findAll(pageable);
+        return page.getContent();
+    }
+    
     public Optional<Organizer> getOrganizerById(Long id) {
         return organizerRepository.findById(id);
     }
 
+    public List<Organizer> getOrganizerByName(String name) {
+        return organizerRepository.findByName(name);
+    }
+
+    @Transactional
     public Organizer createOrganizer(Organizer organizer) {
         return organizerRepository.save(organizer);
     }
 
+    @Transactional
     public Organizer updateOrganizer(Long id, Organizer updatedOrganizer) {
         return organizerRepository.findById(id)
                 .map(organizer -> {
@@ -43,6 +60,7 @@ public class OrganizerService {
         organizerRepository.save(organizer);
     }
 
+    @Transactional
     public void deleteOrganizer(Long id) {
         if (organizerRepository.existsById(id)) {
             organizerRepository.deleteById(id);

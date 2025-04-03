@@ -5,6 +5,11 @@ import com.example.userservice.models.Permission;
 import com.example.userservice.models.Role;
 import com.example.userservice.service.RoleService;
 import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +26,19 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping
-    public List<Role> getAllRoles() {
-        return roleService.getAllRoles();
+    public List<Role> getAllRoles(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return roleService.getAllRoles(pageable);
     }
+
+    @GetMapping("/search")
+public List<Role> searchRoles(@RequestParam String name) {
+    return roleService.getByRoleName(name);
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<Role> getRoleById(@PathVariable Long id) {

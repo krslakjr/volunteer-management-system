@@ -5,6 +5,11 @@ import com.example.userservice.models.Permission;
 import com.example.userservice.models.SocialShare;
 import com.example.userservice.service.SocialShareService;
 import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +26,13 @@ public class SocialShareController {
     private SocialShareService socialShareService;
 
     @GetMapping
-    public List<SocialShare> getAllSocialShares() {
-        return socialShareService.getAllSocialShares();
+    public List<SocialShare> getAllSocialShares(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return socialShareService.getAllSocialShares(pageable);
     }
 
     @GetMapping("/{id}")

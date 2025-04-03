@@ -4,6 +4,11 @@ import com.example.userservice.exception.ResourceNotFoundException;
 import com.example.userservice.models.Permission;
 import com.example.userservice.service.PermissionService;
 import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +25,13 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @GetMapping
-    public List<Permission> getAllPermissions() {
-        return permissionService.getAllPermissions();
+    public List<Permission> getAllPermissions(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return permissionService.getAllPermissions(pageable);
     }
 
     @GetMapping("/{id}")

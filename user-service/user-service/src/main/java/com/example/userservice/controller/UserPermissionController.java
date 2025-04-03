@@ -4,6 +4,8 @@ import com.example.userservice.exception.ResourceNotFoundException;
 import com.example.userservice.models.Permission;
 import com.example.userservice.models.UserPermission;
 import com.example.userservice.services.UserPermissionService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @RestController
@@ -25,8 +31,13 @@ public class UserPermissionController {
     private UserPermissionService userPermissionService;
 
     @GetMapping
-    public List<UserPermission> getAllUserPermissions() {
-        return userPermissionService.getAllUserPermissions();
+    public List<UserPermission> getAllUserPermissions(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return userPermissionService.getAllUserPermissions(pageable);
     }
 
     @GetMapping("/user/{userId}")

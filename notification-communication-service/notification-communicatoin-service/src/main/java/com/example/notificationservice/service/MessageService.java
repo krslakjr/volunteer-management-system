@@ -5,6 +5,13 @@ import com.example.notificationservice.models.Message;
 import com.example.notificationservice.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +29,12 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    
+    public List<Message> getAllMessages(Pageable pageable) {
+        Page<Message> page = messageRepository.findAll(pageable);
+        return page.getContent();
+    }
+
    
     public void saveMessage(Message message) {
         try {
@@ -37,7 +50,8 @@ public class MessageService {
         return messageRepository.findById(id);
     }
 
-   
+
+    @Transactional
     public Message createMessage(Message message) {
         try {
             return messageRepository.save(message);
@@ -47,7 +61,7 @@ public class MessageService {
         }
     }
 
-   
+    @Transactional
     public Message updateMessage(Long id, Message updatedMessage) {
         Optional<Message> existingMessage = messageRepository.findById(id);
         
@@ -67,6 +81,7 @@ public class MessageService {
     }
 
     
+    @Transactional
     public void deleteMessage(Long id) {
         Optional<Message> message = messageRepository.findById(id);
         

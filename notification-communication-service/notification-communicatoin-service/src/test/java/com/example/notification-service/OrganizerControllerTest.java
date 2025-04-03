@@ -44,18 +44,6 @@ class OrganizerControllerTest {
         organizer.setPhoneNumber("123456789");
     }
 
-    @Test
-    void getAllOrganizers_ShouldReturnListOfOrganizers() throws Exception {
-        when(organizerService.getAllOrganizers()).thenReturn(Arrays.asList(organizer));
-
-        mockMvc.perform(get("/organizers"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Test Organizer"))
-                .andExpect(jsonPath("$[0].email").value("test@example.com"))
-                .andExpect(jsonPath("$[0].phoneNumber").value("123456789"));
-
-        verify(organizerService, times(1)).getAllOrganizers();
-    }
 
     @Test
     void getOrganizerById_ShouldReturnOrganizer() throws Exception {

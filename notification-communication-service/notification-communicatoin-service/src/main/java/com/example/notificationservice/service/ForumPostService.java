@@ -4,6 +4,14 @@ import com.example.notificationservice.models.ForumPost;
 import com.example.notificationservice.repository.ForumPostRepository;
 import org.springframework.stereotype.Service;
 import com.example.notificationservice.exception.ResourceNotFoundException;
+
+
+import org.springframework.transaction.annotation.Transactional;
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,14 +31,22 @@ public class ForumPostService {
         return forumPostRepository.findAll();
     }
 
+    
+    public List<ForumPost> getAllForumPosts(Pageable pageable) {
+        Page<ForumPost> page = forumPostRepository.findAll(pageable);
+        return page.getContent();
+    }
+
     public Optional<ForumPost> getForumPostById(Long id) {
         return forumPostRepository.findById(id);
     }
 
+    @Transactional
     public ForumPost createForumPost(ForumPost forumPost) {
         return forumPostRepository.save(forumPost);
     }
 
+    @Transactional
     public ForumPost updateForumPost(Long id, ForumPost updatedForumPost) {
         return forumPostRepository.findById(id)
                 .map(forumPost -> {
@@ -44,7 +60,7 @@ public class ForumPostService {
                 .orElseThrow(() -> new ResourceNotFoundException("ForumPost not found with id " + id, "id"));
     }
     
-
+    @Transactional
     public void deleteForumPost(Long id) {
         forumPostRepository.deleteById(id);
     }

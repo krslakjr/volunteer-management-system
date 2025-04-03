@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +25,14 @@ public class ForumPostController {
         this.forumPostService = forumPostService;
     }
 
-    @GetMapping
-    public List<ForumPost> getAllForumPosts() {
-        return forumPostService.getAllForumPosts();
+        @GetMapping
+    public List<ForumPost> getAllForumPosts(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return forumPostService.getAllForumPosts(pageable);
     }
 
     @GetMapping("/{id}")

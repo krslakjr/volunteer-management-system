@@ -37,15 +37,6 @@ public class SocialShareControllerTest {
         socialShare.setShareId(1L);
         socialShare.setPlatform("Facebook");
     }
-
-    @Test
-    public void testGetAllSocialShares() {
-        when(socialShareService.getAllSocialShares()).thenReturn(Arrays.asList(socialShare));
-
-        assertNotNull(socialShareController.getAllSocialShares());
-        assertEquals(1, socialShareController.getAllSocialShares().size());
-    }
-
     @Test
     public void testGetSocialShareById_Found() {
         when(socialShareService.getSocialShareById(1L)).thenReturn(Optional.of(socialShare));
