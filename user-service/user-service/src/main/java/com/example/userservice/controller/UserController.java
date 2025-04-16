@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +22,21 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Value("${server.port}")
+    private String serverPort;
+
+
+    @GetMapping("/test")
+public String testInstance() {
+    try {
+        String hostname = InetAddress.getLocalHost().getHostName();
+        return "Host: " + hostname + ", Port: " + serverPort;
+    } catch (UnknownHostException e) {
+        return "Unable to determine hostname. Port: " + serverPort;
+    }
+}
+
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
