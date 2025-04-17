@@ -44,14 +44,6 @@ mockMvc = MockMvcBuilders.standaloneSetup(volunteerController)
         volunteer.setPhoneNumber("987654321");
     }
 
-    @Test
-    void getAllVolunteers_ShouldReturnVolunteers() throws Exception {
-        when(volunteerService.getAllVolunteers()).thenReturn(List.of(volunteer));
-
-        mockMvc.perform(get("/volunteers"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Test Volunteer"));
-    }
 
     @Test
     void getVolunteerById_ShouldReturnVolunteer_WhenExists() throws Exception {

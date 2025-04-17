@@ -6,6 +6,8 @@ import com.example.activitymanagement.exception.ValidationException;
 import com.example.activitymanagement.mapper.ActivityMapper;
 import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.repository.ActivityRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,6 +64,11 @@ public class ActivityService {
     }
     
     
+
+    @Transactional
+    public List<Activity> saveAll(List<Activity> activities) {
+        return activityRepository.saveAll(activities);
+    }
 
     public void deleteActivity(Long id) {
         if (!activityRepository.existsById(id)) {

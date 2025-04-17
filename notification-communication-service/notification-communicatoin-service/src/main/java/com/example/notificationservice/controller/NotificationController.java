@@ -8,6 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,9 +25,14 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    @GetMapping
-    public List<Notification> getAllNotifications() {
-        return notificationService.getAllNotifications();
+        @GetMapping
+    public List<Notification> getAllNotifications(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return notificationService.getAllNotifications(pageable);
     }
 
     @GetMapping("/{id}")

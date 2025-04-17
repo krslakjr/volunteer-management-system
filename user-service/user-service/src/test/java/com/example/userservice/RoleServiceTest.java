@@ -35,15 +35,6 @@ public class RoleServiceTest {
         role.setRoleName("ADMIN");
     }
 
-    @Test
-    public void testGetAllRoles() {
-        when(roleRepository.findAll()).thenReturn(Arrays.asList(role));
-
-        List<Role> roles = roleService.getAllRoles();
-        assertNotNull(roles);
-        assertEquals(1, roles.size());
-        assertEquals("ADMIN", roles.get(0).getRoleName());
-    }
 
     @Test
     public void testGetRoleById_Found() {

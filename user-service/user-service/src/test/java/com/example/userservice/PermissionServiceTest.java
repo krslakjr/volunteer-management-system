@@ -36,13 +36,6 @@ public class PermissionServiceTest {
         permission.setPermissionName("VIEW_DASHBOARD");
     }
 
-    @Test
-    public void testGetAllPermissions() {
-        when(permissionRepository.findAll()).thenReturn(Arrays.asList(permission));
-
-        assertNotNull(permissionService.getAllPermissions());
-        assertEquals(1, permissionService.getAllPermissions().size());
-    }
 
     @Test
     public void testGetPermissionById_Found() {

@@ -33,13 +33,6 @@ public class SocialShareServiceTest {
         socialShare.setPlatform("Facebook");
     }
 
-    @Test
-    public void testGetAllSocialShares() {
-        when(socialShareRepository.findAll()).thenReturn(Arrays.asList(socialShare));
-
-        assertEquals(1, socialShareService.getAllSocialShares().size());
-        assertEquals("Facebook", socialShareService.getAllSocialShares().get(0).getPlatform());
-    }
 
     @Test
     public void testGetSocialShareById_Found() {

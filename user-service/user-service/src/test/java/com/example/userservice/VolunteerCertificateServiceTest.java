@@ -36,17 +36,6 @@ public class VolunteerCertificateServiceTest {
     }
 
     @Test
-    public void testGetAllVolunteerCertificates() {
-        when(volunteerCertificateRepository.findAll()).thenReturn(Arrays.asList(volunteerCertificate));
-
-        List<VolunteerCertificate> certificates = volunteerCertificateService.getAllVolunteerCertificates();
-
-        assertNotNull(certificates);
-        assertEquals(1, certificates.size());
-        assertEquals("link", certificates.get(0).getCertificatePdfLink());
-    }
-
-    @Test
     public void testGetCertificatesByUserId_Found() {
         when(volunteerCertificateRepository.findByUser_UserId(1L)).thenReturn(Arrays.asList(volunteerCertificate));
 

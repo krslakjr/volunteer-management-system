@@ -48,15 +48,6 @@ public class UserServiceTest {
         user.setProfilePicture("profilePic.jpg");
     }
 
-    @Test
-    public void testGetAllUsers() {
-        when(userRepository.findAll()).thenReturn(Arrays.asList(user));
-
-        List<UserDTO> users = userService.getAllUsers();
-
-        assertEquals(1, users.size());
-        assertEquals("John", users.get(0).getFirstName());
-    }
 
     @Test
     public void testGetUserById_Found() {

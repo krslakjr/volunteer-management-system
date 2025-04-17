@@ -2,7 +2,7 @@ package com.example.feedbackservice.controller;
 
 import com.example.feedbackservice.exception.InvalidPatchException;
 import com.example.feedbackservice.exception.ResourceNotFoundException;
-import com.example.feedbackservice.models.ActivityStatistics;
+import org.springframework.web.client.RestTemplate;
 import com.example.feedbackservice.models.Feedback;
 import com.example.feedbackservice.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
-import java.util.List;
-import com.github.fge.jsonpatch.JsonPatch;
 
+import com.github.fge.jsonpatch.JsonPatch;
+import java.util.*;
 
 @RestController
 @RequestMapping("/feedbacks")
@@ -20,6 +20,40 @@ public class FeedbackController {
 
     @Autowired
     private FeedbackService feedbackService;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @GetMapping("/load-test")
+    public Map<String, Integer> testUserServiceLoadBalancing() {
+        Map<String, Integer> stats = new HashMap<>();
+
+        for (int i = 0; i < 100; i++) {
+            String response = restTemplate.getForObject("http://user-service/api/test", String.class);
+            stats.put(response, stats.getOrDefault(response, 0) + 1);
+        }
+
+        return stats;
+    }
+
+    @GetMapping("/test-loadbalancer")
+public ResponseEntity<Map<String, Integer>> testLoadBalancer() {
+    Map<String, Integer> hitCount = new HashMap<>();
+    long start = System.currentTimeMillis();
+
+    for (int i = 0; i < 100; i++) {
+        try {
+            String result = restTemplate.getForObject("http://user-service/users/test", String.class);
+            hitCount.put(result, hitCount.getOrDefault(result, 0) + 1);
+        } catch (Exception e) {
+            hitCount.put("ERROR", hitCount.getOrDefault("ERROR", 0) + 1);
+        }
+    }
+
+    long duration = System.currentTimeMillis() - start;
+    hitCount.put("TotalTime(ms)", (int) duration);
+    return ResponseEntity.ok(hitCount);
+}
 
     @GetMapping
     public ResponseEntity<List<Feedback>> getAllFeedbacks() {

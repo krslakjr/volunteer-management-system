@@ -5,9 +5,15 @@ import com.example.notificationservice.service.EngagementStatisticsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
 import com.example.notificationservice.exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/engagement-statistics")
@@ -19,9 +25,14 @@ public class EngagementStatisticsController {
         this.engagementStatisticsService = engagementStatisticsService;
     }
 
-    @GetMapping
-    public List<EngagementStatistics> getAllStatistics() {
-        return engagementStatisticsService.getAllStatistics();
+        @GetMapping
+    public List<EngagementStatistics> getAllStatistics(@RequestParam(required = false) Integer page, 
+                                            @RequestParam(required = false) Integer size) {
+        Pageable pageable = Pageable.unpaged();
+        if (page != null && size != null) {
+            pageable = PageRequest.of(page, size);
+        }
+        return engagementStatisticsService.getAllStatistics(pageable);
     }
 
     @GetMapping("/{id}")

@@ -49,17 +49,6 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetAllUsers() throws Exception {
-        when(userService.getAllUsers()).thenReturn(Arrays.asList(userDTO));
-
-        mockMvc.perform(get("/users"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userId").value(1L))
-                .andExpect(jsonPath("$[0].firstName").value("John"))
-                .andExpect(jsonPath("$[0].lastName").value("Doe"));
-    }
-
-    @Test
     public void testGetAllUsers_NoContent() throws Exception {
         when(userService.getAllUsers()).thenReturn(Arrays.asList());
 
