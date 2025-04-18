@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -28,16 +28,19 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // Koristi java.sql.Date za instanciranje datuma
+        Date currentDate = new Date(System.currentTimeMillis());  // Dobijanje trenutnog vremena u SQL formatu
+
         Activity activity1 = new Activity();
-        activity1.setDescription("Community Cleanup Event");
-        activity1.setDate(new Date());
+        activity1.setDescription("Community Cleanup Event in the central park with local volunteers");
+        activity1.setDate(currentDate);
         activity1.setLocation("City Park");
         activity1.setVolunteersNeeded(20);
         activityService.saveActivity(activity1);
 
         Activity activity2 = new Activity();
-        activity2.setDescription("Charity Fundraising");
-        activity2.setDate(new Date());
+        activity2.setDescription("Charity Fundraising Event to Support Local Families in Need");
+        activity2.setDate(currentDate);
         activity2.setLocation("Community Hall");
         activity2.setVolunteersNeeded(30);
         activityService.saveActivity(activity2);
@@ -59,14 +62,14 @@ public class DataInitializer implements CommandLineRunner {
         Participation participation1 = new Participation();
         participation1.setVolunteer(volunteer1);
         participation1.setActivity(activity1);
-        participation1.setRegistrationDate(new Date());
+        participation1.setRegistrationDate(currentDate);
         participation1.setAttendanceStatus("Confirmed");
         participationService.saveParticipation(participation1);
 
         Participation participation2 = new Participation();
         participation2.setVolunteer(volunteer2);
         participation2.setActivity(activity2);
-        participation2.setRegistrationDate(new Date());
+        participation2.setRegistrationDate(currentDate);
         participation2.setAttendanceStatus("Confirmed");
         participationService.saveParticipation(participation2);
 
@@ -75,13 +78,13 @@ public class DataInitializer implements CommandLineRunner {
         Recommendation recommendation1 = new Recommendation();
         recommendation1.setVolunteer(volunteer1);
         recommendation1.setRecommendationActivity(activity1);
-        recommendation1.setDateGenerated(new Date());
+        recommendation1.setDateGenerated(currentDate);
         recommendationService.saveRecommendation(recommendation1);
 
         Recommendation recommendation2 = new Recommendation();
         recommendation2.setVolunteer(volunteer2);
         recommendation2.setRecommendationActivity(activity2);
-        recommendation2.setDateGenerated(new Date());
+        recommendation2.setDateGenerated(currentDate);
         recommendationService.saveRecommendation(recommendation2);
 
         System.out.println("Recommendations saved.");
@@ -89,14 +92,14 @@ public class DataInitializer implements CommandLineRunner {
         Certificate certificate1 = new Certificate();
         certificate1.setVolunteer(volunteer1);
         certificate1.setActivity(activity1);
-        certificate1.setIssueDate(new Date());
+        certificate1.setIssueDate(currentDate);
         certificate1.setCertificateStatus("Issued");
         certificateService.saveCertificate(certificate1);
 
         Certificate certificate2 = new Certificate();
         certificate2.setVolunteer(volunteer2);
         certificate2.setActivity(activity2);
-        certificate2.setIssueDate(new Date());
+        certificate2.setIssueDate(currentDate);
         certificate2.setCertificateStatus("Issued");
         certificateService.saveCertificate(certificate2);
 

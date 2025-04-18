@@ -71,6 +71,12 @@
             <version>42.6.0</version>  <!-- Verzija PostgreSQL JDBC drivera -->
         </dependency>
 
+        <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+
+
         <!-- Lombok (opciono, ali korisno za manje boilerplate koda) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
