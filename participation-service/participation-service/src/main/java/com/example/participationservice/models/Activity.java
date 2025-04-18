@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.util.Date;
+import org.springframework.data.annotation.CreatedDate;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +24,7 @@ public class Activity {
     private String description;
 
     @NotNull(message = "Date is required")
+    @CreatedDate
     private Date date;
 
     @NotBlank(message = "Location is required")
