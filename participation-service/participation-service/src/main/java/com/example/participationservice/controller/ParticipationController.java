@@ -2,13 +2,18 @@ package com.example.participationservice.controller;
 
 import com.example.participationservice.exception.ResourceNotFoundException;
 import com.example.participationservice.models.Participation;
+import com.example.participationservice.service.ActivityClientService;
 import com.example.participationservice.service.ParticipationService;
+import com.example.participationservice.service.UserClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +21,15 @@ import java.util.Optional;
 @RequestMapping("/participations")
 public class ParticipationController {
 
-    @Autowired
-    private ParticipationService participationService;
+    private final ParticipationService participationService;
+    private final UserClientService userClientService;
+    private final ActivityClientService activityClientService;
+
+    public ParticipationController(UserClientService client, ActivityClientService activityClientService, ParticipationService service) {
+        this.userClientService = client;
+        this.participationService = service;
+        this.activityClientService = activityClientService;
+    }
 
     @GetMapping
     public List<Participation> getAllParticipations() {
@@ -32,9 +44,25 @@ public class ParticipationController {
     }
 
     @PostMapping
-    public ResponseEntity<Participation> createParticipation(@Valid @RequestBody Participation participation) {
-        Participation createdParticipation = participationService.createParticipation(participation);
-        return ResponseEntity.ok(createdParticipation);
+    public ResponseEntity<?> createParticipation(@Valid @RequestBody Participation participation) {
+        try {
+            Long userId = participation.getVolunteer().getVolunteerId();
+            Long activityId = participation.getActivity().getActivityId();
+
+            if (!userClientService.isValidVolunteer(userId)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("User must exist and have role Volunteer");
+            }
+
+            activityClientService.doesActivityExist(activityId);
+            activityClientService.decreaseActivitySlot(activityId);
+
+            participationService.createParticipation(participation);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getReason());
+        }
     }
 
     @PutMapping("/{id}")

@@ -21,9 +21,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/activities")
@@ -73,6 +75,21 @@ public class ActivityController {
             throw new ResourceNotFoundException("Activity not found");
         }
         return ResponseEntity.ok(activityMapper.toActivity(updatedDTO));
+    }
+
+    @PutMapping("/{id}/decrement-spot")
+    public ResponseEntity<?> decreaseSlot(@PathVariable Long id) {
+        Optional<Activity> activityOpt = activityRepository.findById(id);
+        Activity activity = activityOpt.get();
+
+        if (activity.getAvailableSpots() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No available slots");
+        }
+
+        activity.setAvailableSpots(activity.getAvailableSpots() - 1);
+        activityRepository.save(activity);
+
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")

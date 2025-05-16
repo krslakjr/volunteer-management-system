@@ -2,6 +2,8 @@ package com.example.feedbackservice.controller;
 
 import com.example.feedbackservice.exception.InvalidPatchException;
 import com.example.feedbackservice.exception.ResourceNotFoundException;
+import com.example.feedbackservice.service.ActivityClientService;
+import com.example.feedbackservice.service.UserClientService;
 import org.springframework.web.client.RestTemplate;
 import com.example.feedbackservice.models.Feedback;
 import com.example.feedbackservice.service.FeedbackService;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import com.github.fge.jsonpatch.JsonPatch;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.*;
 
 @RestController
@@ -20,6 +24,16 @@ public class FeedbackController {
 
     @Autowired
     private FeedbackService feedbackService;
+    private final UserClientService userClientService;
+    private final ActivityClientService activityClientService;
+
+    public FeedbackController(FeedbackService feedbackService,
+                              UserClientService userClientService,
+                              ActivityClientService activityClientService) {
+        this.feedbackService = feedbackService;
+        this.userClientService = userClientService;
+        this.activityClientService = activityClientService;
+    }
 
     @Autowired
     private RestTemplate restTemplate;
@@ -86,14 +100,20 @@ public ResponseEntity<Object> getFeedbackById(@PathVariable Long id) {
     }
 
     @PostMapping
-    public ResponseEntity<Feedback> createOrUpdateFeedback(@Valid @RequestBody Feedback feedback) {
+    public ResponseEntity<?> createOrUpdateFeedback(@Valid @RequestBody Feedback feedback) {
         try {
+            Long userId = feedback.getVolunteer().getVolunteerId();
+            Long activityId = feedback.getActivity().getActivityId();
+            if (!userClientService.isValidVolunteer(userId)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("User must exist and have role Volunteer");
+            }
+            activityClientService.doesActivityExist(activityId);
             Feedback savedFeedback = feedbackService.saveOrUpdateFeedback(feedback);
             return new ResponseEntity<>(savedFeedback, HttpStatus.CREATED);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getReason());
         }
     }
 

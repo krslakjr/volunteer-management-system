@@ -49,6 +49,21 @@ public class DataInitializer implements CommandLineRunner {
         user.setUpdatedAt(new Date());
         userRepository.save(user);
 
+        Role role2 = new Role();
+        role2.setRoleName("Volunteer");
+        roleRepository.save(role2);
+
+        User user2 = new User();
+        user2.setFirstName("Johnny");
+        user2.setLastName("Cash");
+        user2.setEmail("johnnycash@example.com");
+        user2.setPasswordHash("hashedpassword1223");
+        user2.setProfilePicture("profilePicUrl");
+        user2.setRole(role2);
+        user2.setCreatedAt(new Date());
+        user2.setUpdatedAt(new Date());
+        userRepository.save(user2);
+
         Activity activity = new Activity();
         activity.setActivityName("Charity Event");
         activity.setActivityDate(new Date());

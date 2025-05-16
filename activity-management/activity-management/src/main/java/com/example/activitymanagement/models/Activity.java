@@ -16,6 +16,7 @@ public class Activity {
     private String date;
     private String location;
     private int volunteersNeeded;
+    private Integer availableSpots;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ActivityVolunteer> activityVolunteers;
@@ -78,5 +79,13 @@ public class Activity {
 
     public void setTeamActivities(List<TeamActivity> teamActivities) {
         this.teamActivities = teamActivities;
+    }
+
+    public Integer getAvailableSpots() {
+        return availableSpots;
+    }
+
+    public void setAvailableSpots(Integer availableSpots) {
+        this.availableSpots = availableSpots;
     }
 }

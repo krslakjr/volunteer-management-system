@@ -64,15 +64,9 @@ public class FeedbackService {
     public Feedback saveOrUpdateFeedback(Feedback feedback) {
         Optional<Volunteer> volunteer = volunteerRepository.findById(feedback.getVolunteer().getVolunteerId());
         Optional<Activity> activity = activityRepository.findById(feedback.getActivity().getActivityId());
-    
-        if (volunteer.isPresent() && activity.isPresent()) {
-            feedback.setVolunteer(volunteer.get());
-            feedback.setActivity(activity.get());
-            return feedbackRepository.save(feedback);
-        } else {
-            
-            throw new ResourceNotFoundException("Invalid Volunteer or Activity ID", "volunteerId or activityId");
-        }
+        feedback.setVolunteer(volunteer.get());
+        feedback.setActivity(activity.get());
+        return feedbackRepository.save(feedback);
     }
     
     public void deleteFeedback(Long id) {

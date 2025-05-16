@@ -21,6 +21,7 @@ public class ActivityDTO {
     private String location;
     @Min(value = 1, message = "Volunteers needed must be at least 1")
     private int volunteersNeeded;
+    private Integer availableSpots;
 
     public ActivityDTO() {}
 
@@ -30,6 +31,7 @@ public class ActivityDTO {
         this.date = date;
         this.location = location;
         this.volunteersNeeded = volunteersNeeded;
+        this.availableSpots = volunteersNeeded;
     }
 
     public Long getActivityId() {
@@ -70,5 +72,13 @@ public class ActivityDTO {
 
     public void setVolunteersNeeded(int volunteersNeeded) {
         this.volunteersNeeded = volunteersNeeded;
+    }
+
+    public Integer getAvailableSpots() {
+        return availableSpots;
+    }
+
+    public void setAvailableSpots(Integer availableSpots) {
+        this.availableSpots = availableSpots;
     }
 }

@@ -45,6 +45,7 @@ public class DataInitializer implements CommandLineRunner {
         activity1.setDate("2025-04-10");
         activity1.setLocation("Gradski park");
         activity1.setVolunteersNeeded(10);
+        activity1.setAvailableSpots(activity1.getVolunteersNeeded());
         activityRepository.save(activity1);
 
         // Kreiranje volontera
