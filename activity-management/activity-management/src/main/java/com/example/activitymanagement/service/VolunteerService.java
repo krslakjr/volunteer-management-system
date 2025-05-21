@@ -2,7 +2,7 @@ package com.example.activitymanagement.service;
 
 import com.example.activitymanagement.models.Volunteer;
 import com.example.activitymanagement.repository.VolunteerRepository;
-import com.example.activitymanagement.exception.ResourceNotFoundException; // Importujemo ResourceNotFoundException
+import com.example.activitymanagement.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

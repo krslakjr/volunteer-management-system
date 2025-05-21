@@ -19,7 +19,6 @@ public class UserClientService {
 
     public boolean isValidVolunteer(Long userId) {
         try {
-            // Use the service name instead of the hardcoded URL
             String url = "http://USER-SERVICE/users/" + userId;
             ResponseEntity<UserDTO> response = restTemplate.getForEntity(url, UserDTO.class);
             UserDTO user = response.getBody();
