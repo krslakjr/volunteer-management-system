@@ -1,8 +1,14 @@
 package com.example.feedbackservice;
 
 import com.example.feedbackservice.controller.FeedbackController;
+import com.example.feedbackservice.models.Activity;
 import com.example.feedbackservice.models.Feedback;
+import com.example.feedbackservice.models.Volunteer;
+import com.example.feedbackservice.service.ActivityClientService; 
 import com.example.feedbackservice.service.FeedbackService;
+import com.example.feedbackservice.service.UserClientService; 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -31,20 +38,40 @@ class FeedbackControllerTest {
     @Mock
     private FeedbackService feedbackService;
 
+    @Mock 
+    private UserClientService userClientService;
+
+    @Mock 
+    private ActivityClientService activityClientService;
+
     @InjectMocks
     private FeedbackController feedbackController;
 
     private Feedback feedback;
+    private Volunteer volunteer;
+    private Activity activity;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(feedbackController).build();
+
+        volunteer = new Volunteer();
+        volunteer.setVolunteerId(1L);
+        volunteer.setName("Test Volunteer");
+
+        activity = new Activity();
+        activity.setActivityId(1L);
+        activity.setDescription("Test Activity");
 
         feedback = new Feedback();
         feedback.setFeedbackId(1L);
         feedback.setRating(5);
         feedback.setComment("Great work!");
         feedback.setTimestamp(new Date());
+        feedback.setVolunteer(volunteer);
+        feedback.setActivity(activity);
     }
 
     @Test
@@ -110,15 +137,36 @@ class FeedbackControllerTest {
     @Test
     void testCreateOrUpdateFeedback_Success() throws Exception {
         when(feedbackService.saveOrUpdateFeedback(any(Feedback.class))).thenReturn(feedback);
+        when(userClientService.isValidVolunteer(anyLong())).thenReturn(true);
+        when(activityClientService.doesActivityExist(anyLong())).thenReturn(true);
+
+        ObjectNode requestBody = objectMapper.createObjectNode();
+        requestBody.put("rating", 5);
+        requestBody.put("comment", "Great work!");
+        requestBody.put("timestamp", new Date().getTime());
+
+        ObjectNode volunteerNode = objectMapper.createObjectNode();
+        volunteerNode.put("volunteerId", 1L);
+        requestBody.set("volunteer", volunteerNode);
+
+        ObjectNode activityNode = objectMapper.createObjectNode();
+        activityNode.put("activityId", 1L);
+        requestBody.set("activity", activityNode);
+
+        String jsonFeedback = objectMapper.writeValueAsString(requestBody);
 
         mockMvc.perform(post("/feedbacks")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"rating\": 5, \"comment\": \"Great work!\"}"))
+                        .content(jsonFeedback))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.feedbackId").value(feedback.getFeedbackId()));
 
+        verify(userClientService, times(1)).isValidVolunteer(1L);
+        verify(activityClientService, times(1)).doesActivityExist(1L);
         verify(feedbackService, times(1)).saveOrUpdateFeedback(any(Feedback.class));
     }
+
 
     @Test
     void testDeleteFeedback_Success() throws Exception {
