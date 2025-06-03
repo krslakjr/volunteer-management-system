@@ -25,7 +25,7 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-        @GetMapping
+    @GetMapping
     public List<Notification> getAllNotifications(@RequestParam(required = false) Integer page, 
                                             @RequestParam(required = false) Integer size) {
         Pageable pageable = Pageable.unpaged();
@@ -37,8 +37,7 @@ public class NotificationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Notification> getNotificationById(@PathVariable Long id) {
-       Notification notification = notificationService.getNotificationById(id)
-                .orElseThrow(() -> new NotificationNotFoundException("Notification with ID " + id + " not found"));
+       Notification notification = notificationService.getNotificationById(id);
         return ResponseEntity.ok(notification);
     }
 

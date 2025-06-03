@@ -2,6 +2,7 @@ package com.example.participationservice.service;
 
 import com.example.participationservice.exception.InvalidPatchException;
 import com.example.participationservice.exception.ResourceNotFoundException;
+import com.example.participationservice.logging.LoggableAction;
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.repository.RecommendationRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,10 +25,12 @@ public class RecommendationService {
     @Autowired
     private RecommendationRepository recommendationRepository;
 
+    @LoggableAction
     public List<Recommendation> getAllRecommendations() {
         return recommendationRepository.findAll();
     }
-     public void saveRecommendation(Recommendation recommendation) {
+
+    public void saveRecommendation(Recommendation recommendation) {
         recommendationRepository.save(recommendation);
     }
 
@@ -35,6 +38,7 @@ public class RecommendationService {
         return recommendationRepository.findById(id);
     }
 
+    @LoggableAction
     public Recommendation createRecommendation(Recommendation recommendation) {
         return recommendationRepository.save(recommendation);
     }
@@ -60,6 +64,7 @@ public class RecommendationService {
         return false;
     }
 
+    @LoggableAction
     @Transactional
     public Recommendation applyPatchToRecommendation(Long id, JsonPatch patch) {
         Recommendation recommendation = recommendationRepository.findById(id)
@@ -86,6 +91,8 @@ public class RecommendationService {
             throw new InvalidPatchException("Error processing patch request: " + e.getMessage());
         }
     }
+
+    @LoggableAction
     public List<Recommendation> getRecommendationsByVolunteer(Long volunteerId) {
         List<Recommendation> recommendations = recommendationRepository.findByVolunteer_VolunteerId(volunteerId);
         if (recommendations.isEmpty()) {
@@ -94,6 +101,7 @@ public class RecommendationService {
         return recommendations;
     }
 
+    @LoggableAction
     public List<Recommendation> getRecommendationsByActivity(Long activityId) {
         List<Recommendation> recommendations = recommendationRepository.findByRecommendationActivity_ActivityId(activityId);
         if (recommendations.isEmpty()) {

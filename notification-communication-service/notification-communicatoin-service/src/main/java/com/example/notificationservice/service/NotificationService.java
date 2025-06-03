@@ -1,5 +1,6 @@
 package com.example.notificationservice.service;
 
+import com.example.notificationservice.logging.LoggableAction;
 import com.example.notificationservice.models.Notification;
 import com.example.notificationservice.repository.NotificationRepository;
 
@@ -31,21 +32,24 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
+    @LoggableAction
     public List<Notification> getAllNotifications(Pageable pageable) {
         Page<Notification> page = notificationRepository.findAll(pageable);
         return page.getContent();
     }
 
-    public Optional<Notification> getNotificationById(Long id) {
-        return notificationRepository.findById(id);
+    @LoggableAction
+    public Notification getNotificationById(Long id) {
+        return notificationRepository.findById(id).orElseThrow(() -> new NotificationNotFoundException("Notification with ID " + id + " not found"));
     }
 
-
+    @LoggableAction
     @Transactional
     public Notification createNotification(Notification notification) {
         return notificationRepository.save(notification);
     }
 
+    @LoggableAction
     @Transactional
     public Notification updateNotification(Long id, Notification updatedNotification) {
         return notificationRepository.findById(id)
@@ -62,6 +66,7 @@ public class NotificationService {
                 .orElseThrow(() -> new NotificationNotFoundException("Notification with ID " + id + " not found"));
     }
 
+    @LoggableAction
     @Transactional
     public void deleteNotification(Long id) {
         if (!notificationRepository.existsById(id)) {

@@ -1,5 +1,6 @@
 package com.example.feedbackservice.service;
 
+import com.example.feedbackservice.logging.LoggableAction;
 import com.example.feedbackservice.repository.FeedbackRepository;
 import com.example.feedbackservice.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,12 @@ public class FeedbackService {
     @Autowired
     private ActivityRepository activityRepository; 
 
+    @LoggableAction
     public List<Feedback> getAllFeedbacks() {
         return feedbackRepository.findAll();
     }
 
+    @LoggableAction
     public Optional<Feedback> getFeedbackById(Long id) {
         Optional<Feedback> feedback = feedbackRepository.findById(id);
         if (!feedback.isPresent()) {
@@ -45,14 +48,17 @@ public class FeedbackService {
         return feedback;
     }
 
+    @LoggableAction
     public List<Feedback> getFeedbacksByActivityId(Long activityId) {
         return feedbackRepository.findByActivityActivityId(activityId);
     }
 
+    @LoggableAction
     public List<Feedback> getFeedbacksByVolunteerId(Long volunteerId) {
         return feedbackRepository.findByVolunteerVolunteerId(volunteerId);
     }
 
+    @LoggableAction
     public Feedback saveOrUpdateFeedback(Feedback feedback) {
         Long volunteerId = null;
         if (feedback.getVolunteer() != null) {
@@ -83,7 +89,8 @@ public class FeedbackService {
         
         return feedbackRepository.save(feedback);
     }
-    
+
+    @LoggableAction
     public void deleteFeedback(Long id) {
         Optional<Feedback> feedback = feedbackRepository.findById(id);
         if (feedback.isPresent()) {

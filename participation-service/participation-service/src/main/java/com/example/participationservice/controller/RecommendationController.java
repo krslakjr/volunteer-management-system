@@ -2,6 +2,7 @@ package com.example.participationservice.controller;
 
 import com.example.participationservice.exception.InvalidPatchException;
 import com.example.participationservice.exception.ResourceNotFoundException;
+import com.example.participationservice.logging.LoggableAction;
 import com.example.participationservice.models.Recommendation;
 import com.example.participationservice.service.RecommendationService;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -26,6 +27,7 @@ public class RecommendationController {
         return recommendationService.getAllRecommendations();
     }
 
+    @LoggableAction
     @GetMapping("/{id}")
     public ResponseEntity<Recommendation> getRecommendationById(@PathVariable Long id) {
         Optional<Recommendation> recommendation = recommendationService.getRecommendationById(id);
@@ -39,6 +41,7 @@ public class RecommendationController {
         return ResponseEntity.ok(createdRecommendation);
     }
 
+    @LoggableAction
     @PutMapping("/{id}")
     public ResponseEntity<Recommendation> updateRecommendation(@PathVariable Long id,@Valid @RequestBody Recommendation recommendationDetails) {
         Recommendation updatedRecommendation = recommendationService.updateRecommendation(id, recommendationDetails);
@@ -49,6 +52,7 @@ public class RecommendationController {
         }
     }
 
+    @LoggableAction
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecommendation(@PathVariable Long id) {
         if (recommendationService.deleteRecommendation(id)) {

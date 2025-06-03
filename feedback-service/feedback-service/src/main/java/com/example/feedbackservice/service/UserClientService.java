@@ -22,9 +22,8 @@ public class UserClientService {
             
             ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
             Map userData = response.getBody();
-            
-            return userData != null && "Volunteer".equals(userData.get("roleName"));
-            
+
+            return userData != null && "Volunteer".equalsIgnoreCase(userData.get("roleName").toString());
         } catch (HttpClientErrorException.NotFound e) {
             return false;
         } catch (HttpClientErrorException e) {

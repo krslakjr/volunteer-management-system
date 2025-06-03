@@ -68,19 +68,19 @@ public class NotificationServiceTest {
     void getNotificationById_ShouldReturnNotification_WhenExists() {
         when(notificationRepository.findById(1L)).thenReturn(Optional.of(notification));
 
-        Optional<Notification> result = notificationService.getNotificationById(1L);
+        Notification result = notificationService.getNotificationById(1L);
 
-        assertTrue(result.isPresent());
-        assertEquals(notification, result.get());
+        assertTrue(result != null);
+        assertEquals(notification, result);
     }
 
     @Test
     void getNotificationById_ShouldReturnEmpty_WhenNotExists() {
         when(notificationRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Optional<Notification> result = notificationService.getNotificationById(1L);
+        Notification result = notificationService.getNotificationById(1L);
 
-        assertFalse(result.isPresent());
+        assertFalse(result != null);
     }
 
     @Test

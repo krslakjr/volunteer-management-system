@@ -2,6 +2,7 @@ package com.example.activitymanagement.controller;
 
 import com.example.activitymanagement.dto.ActivityDTO;
 import com.example.activitymanagement.exception.ResourceNotFoundException;
+import com.example.activitymanagement.logging.LoggableAction;
 import com.example.activitymanagement.mapper.ActivityMapper;
 import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.repository.ActivityRepository;
@@ -43,6 +44,7 @@ public class ActivityController {
         this.activityRepository = activityRepository;
     }
 
+    @LoggableAction
     @GetMapping
     public ResponseEntity<Page<ActivityDTO>> getAllActivities(Pageable pageable) {
         Page<Activity> activityPage = activityRepository.findAll(pageable);

@@ -46,7 +46,7 @@ class NotificationControllerTest {
 
     @Test
     void testGetNotificationById() throws Exception {
-        when(notificationService.getNotificationById(1L)).thenReturn(Optional.of(notification));
+        when(notificationService.getNotificationById(1L)).thenReturn(notification);
 
         mockMvc.perform(get("/notifications/{id}", 1L))
                 .andExpect(status().isOk())
@@ -55,7 +55,7 @@ class NotificationControllerTest {
 
     @Test
     void testGetNotificationByIdNotFound() throws Exception {
-        when(notificationService.getNotificationById(1L)).thenReturn(Optional.empty());
+        when(notificationService.getNotificationById(1L)).thenReturn(null);
 
         mockMvc.perform(get("/notifications/{id}", 1L))
                 .andExpect(status().isNotFound());

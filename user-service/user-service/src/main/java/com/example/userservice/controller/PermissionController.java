@@ -1,6 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.exception.ResourceNotFoundException;
+import com.example.userservice.logging.LoggableAction;
 import com.example.userservice.models.Permission;
 import com.example.userservice.service.PermissionService;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
+    @LoggableAction
     @GetMapping
     public List<Permission> getAllPermissions(@RequestParam(required = false) Integer page, 
                                             @RequestParam(required = false) Integer size) {
@@ -34,6 +36,7 @@ public class PermissionController {
         return permissionService.getAllPermissions(pageable);
     }
 
+    @LoggableAction
     @GetMapping("/{id}")
     public ResponseEntity<Permission> getPermissionById(@PathVariable Long id) {
         Optional<Permission> permission = permissionService.getPermissionById(id);
@@ -41,6 +44,7 @@ public class PermissionController {
         .orElseThrow(() -> new ResourceNotFoundException("Permission not found with id " + id, "id"));
 }
 
+    @LoggableAction
     @PostMapping
     public ResponseEntity<Permission> createPermission(@Valid @RequestBody Permission permission) {
         try {
@@ -51,6 +55,7 @@ public class PermissionController {
         }
     }
 
+    @LoggableAction
     @PutMapping("/{id}")
     public ResponseEntity<Permission> updatePermission(@PathVariable Long id,@Valid @RequestBody Permission permission) {
         Permission updatedPermission = permissionService.updatePermission(id, permission);
@@ -61,6 +66,7 @@ public class PermissionController {
         }
     }
 
+    @LoggableAction
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePermission(@PathVariable Long id) {
         if (permissionService.deletePermission(id)) {

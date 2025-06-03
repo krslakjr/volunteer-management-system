@@ -3,10 +3,12 @@ package com.example.activitymanagement.service;
 import com.example.activitymanagement.dto.ActivityDTO;
 import com.example.activitymanagement.exception.ResourceNotFoundException;
 import com.example.activitymanagement.exception.ValidationException;
+import com.example.activitymanagement.logging.LoggableAction;
 import com.example.activitymanagement.mapper.ActivityMapper;
 import com.example.activitymanagement.models.Activity;
 import com.example.activitymanagement.repository.ActivityRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +33,13 @@ public class ActivityService {
                 .collect(Collectors.toList());
     }
 
+    @LoggableAction
     public Optional<ActivityDTO> getActivityById(Long id) {
         Optional<Activity> activity = activityRepository.findById(id);
-        if (activity.isEmpty()) {
-            throw new ResourceNotFoundException("Activity with ID " + id + " not found");
-        }
         return activity.map(activityMapper::toActivityDTO);
     }
 
+    @LoggableAction
     public ActivityDTO createActivity(ActivityDTO activityDTO) {
         if (activityDTO.getDescription() == null || activityDTO.getDescription().trim().length() < 10) {
             throw new ValidationException("Description must be at least 10 characters", "description");
@@ -49,7 +50,7 @@ public class ActivityService {
         return activityMapper.toActivityDTO(savedActivity);
     }
     
-    
+    @LoggableAction
     public ActivityDTO updateActivity(Long id, ActivityDTO updatedActivityDTO) {
         Activity existingActivity = activityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Activity with ID " + id + " not found"));
@@ -70,6 +71,7 @@ public class ActivityService {
         return activityRepository.saveAll(activities);
     }
 
+    @LoggableAction
     public void deleteActivity(Long id) {
         if (!activityRepository.existsById(id)) {
             throw new ResourceNotFoundException("Activity with ID " + id + " not found");
