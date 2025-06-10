@@ -52,6 +52,7 @@ public class ActivityController {
         return new ResponseEntity<>(activityDTOPage, HttpStatus.OK);
     }
 
+    @LoggableAction
     @GetMapping("/{id}")
     public ResponseEntity<ActivityDTO> getActivityById(@PathVariable Long id) {
         return activityService.getActivityById(id)

@@ -33,7 +33,6 @@ public class ActivityService {
                 .collect(Collectors.toList());
     }
 
-    @LoggableAction
     public Optional<ActivityDTO> getActivityById(Long id) {
         Optional<Activity> activity = activityRepository.findById(id);
         return activity.map(activityMapper::toActivityDTO);
