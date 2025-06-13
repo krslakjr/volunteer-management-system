@@ -13,6 +13,10 @@
         <protobuf.version>3.25.1</protobuf.version>
         <os.detected.classifier>windows-x86_64</os.detected.classifier>
         <java.version>17</java.version>
+        <jjwt.version>0.11.5</jjwt.version> <!-- Koristimo verziju kompatibilnu sa JDK 17 i Spring Boot 3 -->
+        <spring-security.version>6.1.2</spring-security.version> <!-- Ako koristite Spring Boot 3.1.2, ova verzija je kompatibilna -->
+        <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
+        <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
     </properties>
 
     <parent>
@@ -75,8 +79,8 @@
         </dependency>
 
         <!-- Hibernate -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
+       <dependency>
+            <groupId>org.hibernate.orm</groupId> <!-- ISPRAVLJENO: org.hibernate -> org.hibernate.orm -->
             <artifactId>hibernate-core</artifactId>
             <version>6.3.1.Final</version>
         </dependency>
@@ -103,12 +107,11 @@
         </dependency>
 
         <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
 
         <!-- Testiranje -->
         <dependency>
@@ -184,6 +187,54 @@
             <artifactId>javax.persistence-api</artifactId>
             <version>2.2</version>
         </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- JWT Libraries -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Lombok MapStruct Binding za pravilno generisanje MapStruct mapera sa Lombokom -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Ažurirana Jakarta API za Persistence (zamjenjuje javax.persistence-api) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>${jakarta.persistence.version}</version>
+        </dependency>
+
+        <!-- Ažurirana Jakarta API za Annotation (zamjenjuje javax.annotation-api) -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${jakarta.annotation.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,128 +1,84 @@
 package com.example.userservice;
 
-import com.example.userservice.models.*;
-import com.example.userservice.repository.*;
+import com.example.userservice.models.Role;
+import com.example.userservice.models.User;
+import com.example.userservice.repository.RoleRepository;
+import com.example.userservice.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Component
-public class DataInitializer implements CommandLineRunner {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final ActivityRepository activityRepository;
-    private final UserPermissionRepository userPermissionRepository;
-    private final SocialShareRepository socialShareRepository;
-    private final VolunteerCertificateRepository volunteerCertificateRepository;
-    private final PermissionRepository permissionRepository;
+@Configuration
+public class DataInitializer {
 
-    public DataInitializer(UserRepository userRepository, RoleRepository roleRepository,
-                           ActivityRepository activityRepository, UserPermissionRepository userPermissionRepository,
-                           SocialShareRepository socialShareRepository, VolunteerCertificateRepository volunteerCertificateRepository,
-                           PermissionRepository permissionRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.activityRepository = activityRepository;
-        this.userPermissionRepository = userPermissionRepository;
-        this.socialShareRepository = socialShareRepository;
-        this.volunteerCertificateRepository = volunteerCertificateRepository;
-        this.permissionRepository = permissionRepository;
-    }
+    private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
-    @Override
-    public void run(String... args) throws Exception {
-        Role role = new Role();
-        role.setRoleName("Admin");
-        roleRepository.save(role);
+    @Bean
+    public CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        return args -> {
+            logger.info("Pokreće se inicijalizacija podataka...");
 
-        User user = new User();
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setEmail("john.doe@example.com");
-        user.setPasswordHash("hashedpassword123");
-        user.setProfilePicture("profilePicUrl");
-        user.setRole(role); 
-        user.setCreatedAt(new Date());
-        user.setUpdatedAt(new Date());
-        userRepository.save(user);
+            Role volunteerRole = roleRepository.findByRoleName("ROLE_VOLUNTEER")
+                    .orElseGet(() -> {
+                        logger.info("Kreiram ulogu: ROLE_VOLUNTEER");
+                        return roleRepository.save(new Role(null, "ROLE_VOLUNTEER"));
+                    });
 
-        Role role2 = new Role();
-        role2.setRoleName("Volunteer");
-        roleRepository.save(role2);
+            Role organizerRole = roleRepository.findByRoleName("ROLE_ORGANIZER")
+                    .orElseGet(() -> {
+                        logger.info("Kreiram ulogu: ROLE_ORGANIZER");
+                        return roleRepository.save(new Role(null, "ROLE_ORGANIZER"));
+                    });
 
-        User user2 = new User();
-        user2.setFirstName("Johnny");
-        user2.setLastName("Cash");
-        user2.setEmail("johnnycash@example.com");
-        user2.setPasswordHash("hashedpassword1223");
-        user2.setProfilePicture("profilePicUrl");
-        user2.setRole(role2);
-        user2.setCreatedAt(new Date());
-        user2.setUpdatedAt(new Date());
-        userRepository.save(user2);
+            Role adminRole = roleRepository.findByRoleName("ROLE_ADMIN")
+                    .orElseGet(() -> {
+                        logger.info("Kreiram ulogu: ROLE_ADMIN");
+                        return roleRepository.save(new Role(null, "ROLE_ADMIN"));
+                    });
 
-        Activity activity = new Activity();
-        activity.setActivityName("Charity Event");
-        activity.setActivityDate(new Date());
-        activity.setDescription("A charity event for helping the local community.");
-        activity.setOrganizer(user);
-        activity.setCreatedAt(new Date());
-        activity.setUpdatedAt(new Date());
-        activityRepository.save(activity);
+            if (userRepository.findByUsername("testuser").isEmpty()) {
+                logger.info("Kreiram korisnika: testuser");
+                User user = new User();
+                user.setUsername("testuser");
+                user.setFirstName("Test");
+                user.setLastName("User");
+                user.setEmail("testuser@example.com");
+                user.setPasswordHash(passwordEncoder.encode("Password123!"));
+                user.setProfilePicture("https://placehold.co/100x100/aabbcc/ffffff?text=TU");
 
-        Permission perm1 = new Permission();
-        perm1.setPermissionName("READ_USERS");
-        perm1.setCreatedAt(new Date());
-        perm1.setUpdatedAt(new Date());
-        
-        Permission perm2 = new Permission();
-        perm2.setPermissionName("EDIT_EVENTS");
-        perm2.setCreatedAt(new Date());
-        perm2.setUpdatedAt(new Date());
-        
-        permissionRepository.saveAll(List.of(perm1, perm2));
+                Set<Role> roles = new HashSet<>();
+                roles.add(volunteerRole);
+                user.setRoles(roles);
 
-        UserPermission userPermission1 = new UserPermission();
-        userPermission1.setUser(user);
-        userPermission1.setPermission(perm1);
-        userPermission1.setCreatedAt(new Date());
-        userPermission1.setUpdatedAt(new Date());
-        
-        UserPermission userPermission2 = new UserPermission();
-        userPermission2.setUser(user);
-        userPermission2.setPermission(perm2);
-        userPermission2.setCreatedAt(new Date());
-        userPermission2.setUpdatedAt(new Date());
-        
-        userPermissionRepository.saveAll(List.of(userPermission1, userPermission2));
+                userRepository.save(user);
+            }
 
-        user.getActivities().add(activity);
-        userRepository.save(user);
+            if (userRepository.findByUsername("adminuser").isEmpty()) {
+                logger.info("Kreiram korisnika: adminuser");
+                User adminUser = new User();
+                adminUser.setUsername("adminuser");
+                adminUser.setFirstName("Admin");
+                adminUser.setLastName("User");
+                adminUser.setEmail("admin@example.com");
+                adminUser.setPasswordHash(passwordEncoder.encode("AdminPassword123!"));
+                adminUser.setProfilePicture("https://placehold.co/100x100/ccbbaa/ffffff?text=AU");
 
-        SocialShare socialShare = new SocialShare();
-        socialShare.setUser(user);
-        socialShare.setActivity(activity);
-        socialShare.setPlatform("Facebook");
-        socialShare.setSharedAt(new Date());
-        socialShare.setCreatedAt(new Date());
-        socialShare.setUpdatedAt(new Date());
-        socialShareRepository.save(socialShare);
+                Set<Role> roles = new HashSet<>();
+                roles.add(adminRole);
+                adminUser.setRoles(roles);
 
-        VolunteerCertificate volunteerCertificate = new VolunteerCertificate();
-        volunteerCertificate.setUser(user);
-        volunteerCertificate.setActivity(activity);
-        volunteerCertificate.setCertificateDate(new Date());
-        volunteerCertificate.setCertificatePdfLink("https://www.africau.edu/images/default/sample.pdf");
-        volunteerCertificate.setIssuedAt(new Date());
-        volunteerCertificate.setCreatedAt(new Date());
-        volunteerCertificate.setUpdatedAt(new Date());
-        volunteerCertificateRepository.save(volunteerCertificate);
+                userRepository.save(adminUser);
+            }
 
-        user.getSocialShares().add(socialShare);
-        user.getVolunteerCertificates().add(volunteerCertificate);
-        userRepository.save(user);
+            logger.info("Inicijalizacija podataka završena.");
+        };
     }
 }

@@ -7,6 +7,7 @@ com\example\activitymanagement\exception\ValidationException.class
 com\example\activitymanagement\exception\ResourceNotFoundException.class
 com\example\activitymanagement\controller\VolunteerController.class
 com\example\systemevents\proto\SystemEventsGrpc$SystemEventsImplBase.class
+application.properties
 com\example\activitymanagement\mapper\ActivityMapperImpl.class
 com\example\activitymanagement\repository\VolunteerRepository.class
 com\example\systemevents\proto\AckOrBuilder.class
@@ -48,6 +49,7 @@ com\example\systemevents\proto\SystemEventsGrpc$1.class
 com\example\App.class
 com\example\activitymanagement\exception\GlobalExceptionHandler.class
 com\example\activitymanagement\controller\TeamActivityController.class
+system_events.proto
 com\example\systemevents\proto\SystemEventsOuterClass.class
 com\example\activitymanagement\logging\LoggableAction.class
 com\example\systemevents\proto\Outcome.class

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package systemevents;
+option java_package = "com.example.systemevents.proto";
+option java_multiple_files = true;
+
+// Tip akcije
+enum ActionType {
+  CREATE = 0;
+  DELETE = 1;
+  GET    = 2;
+  UPDATE = 3;
+}
+
+// Rezultat akcije
+enum Outcome {
+  SUCCESS = 0;
+  ERROR   = 1;
+}
+
+// Poruka koju šaljemo u system-events servis
+message SystemEvent {
+  string timestamp       = 1; // ISO8601, npr. "2025-05-30T14:23:00Z"
+  string microservice    = 2; // naziv mikroservisa, npr. "orders-service"
+  string userId          = 3; // ID ili username korisnika
+  ActionType actionType  = 4; // CREATE, DELETE, GET, UPDATE
+  string resourceName    = 5; // npr. "Order", "Product"
+  Outcome outcome        = 6; // SUCCESS ili ERROR
+  string errorMessage    = 7; // popuniti samo ako je outcome == ERROR
+}
+
+// Prazna poruka za potvrdu prijema
+message Ack {
+  bool ok = 1;
+}
+
+// Servis u system-events aplikaciji
+service SystemEvents {
+  rpc LogEvent(SystemEvent) returns (Ack);
+}

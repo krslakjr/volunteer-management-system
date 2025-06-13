@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "users")
@@ -16,21 +18,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+  
+    @Column(unique = true, nullable = false)
+    private String username;
+
     private String firstName;
     private String lastName;
     private String email;
     private String passwordHash;
     private String profilePicture;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Activity> organizedActivities;
+    private List<Activity> organizedActivities = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<UserPermission> userPermissions;
+    private List<UserPermission> userPermissions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SocialShare> socialShares = new ArrayList<>();
@@ -40,9 +51,9 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-    name = "user_activity",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "activity_id")
+        name = "user_activity",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
     private List<Activity> activities = new ArrayList<>();
 
@@ -52,12 +63,22 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    // --- Getteri i setteri ---
+
     public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -68,7 +89,6 @@ public class User {
         this.firstName = firstName;
     }
 
-    // Getter and Setter for lastName
     public String getLastName() {
         return lastName;
     }
@@ -101,12 +121,20 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Activity> getOrganizedActivities() {
+        return organizedActivities;
+    }
+
+    public void setOrganizedActivities(List<Activity> organizedActivities) {
+        this.organizedActivities = organizedActivities;
     }
 
     public List<UserPermission> getUserPermissions() {

@@ -1,78 +1,69 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.exception.ResourceNotFoundException;
-import com.example.userservice.models.Permission;
 import com.example.userservice.models.Role;
-import com.example.userservice.service.RoleService;
-import jakarta.validation.Valid;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.example.userservice.repository.RoleRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/api/roles")
 public class RoleController {
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleRepository roleRepository;
 
-    @GetMapping
-    public List<Role> getAllRoles(@RequestParam(required = false) Integer page, 
-                                            @RequestParam(required = false) Integer size) {
-        Pageable pageable = Pageable.unpaged();
-        if (page != null && size != null) {
-            pageable = PageRequest.of(page, size);
-        }
-        return roleService.getAllRoles(pageable);
+    public RoleController(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/search")
-public List<Role> searchRoles(@RequestParam String name) {
-    return roleService.getByRoleName(name);
+    @GetMapping("/{roleName}")
+    public ResponseEntity<Role> getRoleByName(@PathVariable String roleName) {
+        Optional<Role> roleOpt = roleRepository.findByRoleName(roleName);
+        return roleOpt.map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/id/{id}")
+public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
+    Optional<Role> roleOpt = roleRepository.findById(id);
+    return roleOpt.map(ResponseEntity::ok)
+                  .orElseGet(() -> ResponseEntity.notFound().build());
 }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
-        Optional<Role> role = roleService.getRoleById(id);
-         return role.map(ResponseEntity::ok)
-        .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + id, "id"));
-}
+    @GetMapping
+    public ResponseEntity<List<Role>> getAllRoles() {
+        List<Role> roles = roleRepository.findAll();
+        return ResponseEntity.ok(roles);
+    }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@Valid @RequestBody Role role) {
-        try {
-            Role createdRole = roleService.createRole(role);
-            return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+        Role saved = roleRepository.save(role);
+        return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable Long id,@Valid @RequestBody Role role) {
-        Role updatedRole = roleService.updateRole(id, role);
-        if (updatedRole != null) {
-            return new ResponseEntity<>(updatedRole, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Role> updateRole(@PathVariable Long id, @RequestBody Role role) {
+        Optional<Role> roleOpt = roleRepository.findById(id);
+        if (roleOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
+        Role existing = roleOpt.get();
+        existing.setRoleName(role.getRoleName());
+        Role updated = roleRepository.save(existing);
+        return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteRole(@PathVariable Long id) {
-        if (roleService.deleteRole(id)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+  @DeleteMapping("/{id}")
+public ResponseEntity<HttpStatus> deleteRole(@PathVariable Long id) {
+    if (!roleRepository.existsById(id)) {
+        return ResponseEntity.notFound().build();
     }
+    roleRepository.deleteById(id);
+    return ResponseEntity.ok(HttpStatus.OK);
+}
+
 }

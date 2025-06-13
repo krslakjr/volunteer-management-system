@@ -19,8 +19,7 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-
-    public List<Role> getByRoleName(String name) {
+    public Optional<Role> getByRoleName(String name) {
         return roleRepository.findByRoleName(name);
     }
 
@@ -37,14 +36,14 @@ public class RoleService {
     public Role createRole(Role role) {
         return roleRepository.save(role);
     }
-    
+
     @Transactional
     public Role updateRole(Long id, Role role) {
         if (roleRepository.existsById(id)) {
-            role.setRoleId(id); 
+            role.setRoleId(id);
             return roleRepository.save(role);
         }
-        return null; 
+        return null;
     }
 
     @Transactional
