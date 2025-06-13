@@ -7,15 +7,11 @@ import com.example.userservice.models.Role;
 import com.example.userservice.models.User;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -23,28 +19,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
 
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
-                       PasswordEncoder passwordEncoder,
-                       UserMapper userMapper) { // Dodan UserMapper u konstruktor
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper; // Inicijalizacija
     }
 
-    @Transactional
-    public UserDTO registerUser(RegisterRequest registerRequest) {
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
-            throw new RuntimeException("Korisničko ime je već zauzeto!");
-        }
-
-        if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
-            throw new RuntimeException("Email je već zauzet!");
-        }
-
+    // Kreiranje korisnika (registracija)
+    public UserDTO createUser(RegisterRequest registerRequest) {
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setFirstName(registerRequest.getFirstName());
@@ -52,123 +37,73 @@ public class UserService {
         user.setEmail(registerRequest.getEmail());
         user.setPasswordHash(passwordEncoder.encode(registerRequest.getPassword()));
         user.setProfilePicture(registerRequest.getProfilePicture());
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
 
-
-        Set<String> strRoles = registerRequest.getRoles();
+        // Dodaj default ulogu "USER"
+        Optional<Role> defaultRole = roleRepository.findByRoleName("USER");
         Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null || strRoles.isEmpty()) {
-            Role defaultRole = roleRepository.findByRoleName("ROLE_VOLUNTEER")
-                    .orElseThrow(() -> new RuntimeException("Greška: Uloga 'VOLUNTEER' nije pronađena."));
-            roles.add(defaultRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByRoleName("ROLE_ADMIN")
-                                .orElseThrow(() -> new RuntimeException("Error: Role ROLE_ADMIN is not found."));
-                        roles.add(adminRole);
-                        break;
-                    case "organizer":
-                        Role organizerRole = roleRepository.findByRoleName("ROLE_ORGANIZER")
-                                .orElseThrow(() -> new RuntimeException("Error: Role ROLE_ORGANIZER is not found."));
-                        roles.add(organizerRole);
-                        break;
-                    default:
-                        Role volunteerRole = roleRepository.findByRoleName("ROLE_VOLUNTEER")
-                                .orElseThrow(() -> new RuntimeException("Error: Role ROLE_VOLUNTEER is not found."));
-                        roles.add(volunteerRole);
-                }
-            });
-        }
+        defaultRole.ifPresent(roles::add);
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
-        return userMapper.toDTO(savedUser);
+        return UserMapper.toDTO(savedUser);
     }
 
-    public List<UserDTO> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
+    // Dohvati korisnika po ID
     public Optional<UserDTO> getUserById(Long userId) {
-        return userRepository.findById(userId).map(userMapper::toDTO);
+        return userRepository.findById(userId).map(UserMapper::toDTO);
     }
 
-    @Transactional
-    public UserDTO createUser(UserDTO userDTO) {
-        User user = userMapper.toEntity(userDTO);
+    // Dohvati sve korisnike
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> dtos = new ArrayList<>();
+        for (User u : users) {
+            dtos.add(UserMapper.toDTO(u));
+        }
+        return dtos;
+    }
 
-        if (userDTO.getRoles() != null && !userDTO.getRoles().isEmpty()) {
+    // Update korisnika po ID
+    public Optional<UserDTO> updateUser(Long userId, UserDTO userDTO) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        User user = userOpt.get();
+        user.setUsername(userDTO.getUsername());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setProfilePicture(userDTO.getProfilePicture());
+        user.setUpdatedAt(new Date());
+
+        // Update uloga ako su prisutne u DTO
+        if (userDTO.getRoles() != null) {
             Set<Role> roles = new HashSet<>();
-            userDTO.getRoles().forEach(roleName -> {
-                roleRepository.findByRoleName(roleName)
-                        .ifPresent(roles::add);
-            });
-            user.setRoles(roles);
-        } else {
-            roleRepository.findByRoleName("ROLE_VOLUNTEER")
-                    .ifPresent(role -> user.setRoles(Set.of(role)));
-        }
-
-        user = userRepository.save(user);
-        return userMapper.toDTO(user);
-    }
-
-    @Transactional
-    public UserDTO updateUser(Long id, UserDTO userDTO) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User existingUser = userOptional.get();
-
-            existingUser.setFirstName(userDTO.getFirstName());
-            existingUser.setLastName(userDTO.getLastName());
-            existingUser.setEmail(userDTO.getEmail());
-            existingUser.setProfilePicture(userDTO.getProfilePicture());
-            existingUser.setUsername(userDTO.getUsername());
-
-            if (userDTO.getRoles() != null && !userDTO.getRoles().isEmpty()) {
-                Set<Role> roles = new HashSet<>();
-                for (String roleName : userDTO.getRoles()) {
-                    roleRepository.findByRoleName(roleName)
-                            .ifPresentOrElse(
-                                    roles::add,
-                                    () -> {
-                                        throw new RuntimeException("Error: Role '" + roleName + "' is not found.");
-                                    }
-                            );
-                }
-                existingUser.setRoles(roles);
-            } else {
-                existingUser.setRoles(new HashSet<>());
+            for (String roleName : userDTO.getRoles()) {
+                roleRepository.findByRoleName(roleName).ifPresent(roles::add);
             }
-
-            User updatedUser = userRepository.save(existingUser);
-            return userMapper.toDTO(updatedUser);
+            user.setRoles(roles);
         }
-        return null;
+
+        // Ako želiš dodati ažuriranje permisija, možeš to ovdje proširiti
+
+        User savedUser = userRepository.save(user);
+        return Optional.of(UserMapper.toDTO(savedUser));
     }
 
-    @Transactional
-    public void deleteUser(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("User not found with id " + id);
+    // Brisanje korisnika po ID
+    public boolean deleteUser(Long userId) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+            return true;
         }
+        return false;
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+  
 
-    public Boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    public Boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
 }

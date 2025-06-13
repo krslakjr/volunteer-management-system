@@ -27,6 +27,7 @@ com\example\systemevents\proto\SystemEventsGrpc$SystemEventsBlockingStub.class
 com\example\userservice\mapper\UserMapper.class
 com\example\userservice\security\services\UserDetailsServiceImpl.class
 com\example\systemevents\proto\SystemEventsGrpc$AsyncService.class
+com\example\userservice\controller\TestController.class
 com\example\userservice\models\UserPermission.class
 com\example\userservice\service\VolunteerCertificateService.class
 com\example\systemevents\proto\SystemEventsGrpc$SystemEventsMethodDescriptorSupplier.class

@@ -1,51 +1,65 @@
-package com.example.userservice;
+package com.example.userservice; // Ili gdje god se DataInitializer nalazi
 
 import com.example.userservice.models.Role;
 import com.example.userservice.models.User;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.repository.UserRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Configuration
 public class DataInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
+    /**
+     * Bean koji se izvršava pri pokretanju Spring Boot aplikacije.
+     * Koristi se za inicijalizaciju uloga i korisnika u bazi podataka.
+     *
+     * @param roleRepository     Repozitorij za Role entitet.
+     * @param userRepository     Repozitorij za User entitet.
+     * @param passwordEncoder    Koder lozinki za sigurno spremanje lozinki.
+     * @return CommandLineRunner instanca.
+     */
     @Bean
-    public CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner initData(RoleRepository roleRepository,
+                                      UserRepository userRepository,
+                                      PasswordEncoder passwordEncoder) {
         return args -> {
             logger.info("Pokreće se inicijalizacija podataka...");
 
+            // Inicijalizacija uloga
             Role volunteerRole = roleRepository.findByRoleName("ROLE_VOLUNTEER")
-                    .orElseGet(() -> {
-                        logger.info("Kreiram ulogu: ROLE_VOLUNTEER");
-                        return roleRepository.save(new Role(null, "ROLE_VOLUNTEER"));
-                    });
+                .orElseGet(() -> {
+                    logger.info("Kreiram ulogu: ROLE_VOLUNTEER");
+                    return roleRepository.save(new Role(null, "ROLE_VOLUNTEER"));
+                });
 
             Role organizerRole = roleRepository.findByRoleName("ROLE_ORGANIZER")
-                    .orElseGet(() -> {
-                        logger.info("Kreiram ulogu: ROLE_ORGANIZER");
-                        return roleRepository.save(new Role(null, "ROLE_ORGANIZER"));
-                    });
+                .orElseGet(() -> {
+                    logger.info("Kreiram ulogu: ROLE_ORGANIZER");
+                    return roleRepository.save(new Role(null, "ROLE_ORGANIZER"));
+                });
 
             Role adminRole = roleRepository.findByRoleName("ROLE_ADMIN")
-                    .orElseGet(() -> {
-                        logger.info("Kreiram ulogu: ROLE_ADMIN");
-                        return roleRepository.save(new Role(null, "ROLE_ADMIN"));
-                    });
+                .orElseGet(() -> {
+                    logger.info("Kreiram ulogu: ROLE_ADMIN");
+                    return roleRepository.save(new Role(null, "ROLE_ADMIN"));
+                });
 
+            // Inicijalizacija korisnika: testuser
             if (userRepository.findByUsername("testuser").isEmpty()) {
                 logger.info("Kreiram korisnika: testuser");
+
                 User user = new User();
                 user.setUsername("testuser");
                 user.setFirstName("Test");
@@ -61,8 +75,10 @@ public class DataInitializer {
                 userRepository.save(user);
             }
 
+            // Inicijalizacija korisnika: adminuser
             if (userRepository.findByUsername("adminuser").isEmpty()) {
                 logger.info("Kreiram korisnika: adminuser");
+
                 User adminUser = new User();
                 adminUser.setUsername("adminuser");
                 adminUser.setFirstName("Admin");

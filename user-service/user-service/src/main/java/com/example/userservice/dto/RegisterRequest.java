@@ -1,5 +1,7 @@
 package com.example.userservice.dto;
 
+import java.util.Set;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -28,6 +30,7 @@ public class RegisterRequest {
 
     @NotBlank(message = "Password is required")
     private String password;
-
+    
+    private Set<String> roles;
     private String profilePicture;
 }
