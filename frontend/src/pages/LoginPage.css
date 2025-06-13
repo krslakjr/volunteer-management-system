@@ -1,0 +1,90 @@
+/* src/pages/LoginPage.module.css */
+
+.authPageContainer {
+    display: flex;
+    justify-content: center; /* Horizontalno centriranje */
+    align-items: center;    /* Vertikalno centriranje */
+    min-height: 100vh;      /* Zauzima cijelu visinu viewporta */
+    background-color: #e9ecef; /* Svijetlo siva pozadina */
+    padding: 20px;          /* Mali padding oko kontejnera */
+    box-sizing: border-box; /* Važno za responzivnost */
+}
+
+.authCard {
+    width: 100%;
+    max-width: 400px; /* Maksimalna širina kartice */
+    text-align: center;
+    /* card-base klasa (iz GlobalStyles.css) već daje:
+       background-color: #fff;
+       border-radius: 8px;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+       padding: 30px;
+       margin-bottom: 20px;
+    */
+    padding: 30px; /* Može se redefinisati ili nadopuniti padding iz card-base */
+}
+
+.authCard h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #212529;
+}
+
+.authCard p {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 25px;
+}
+
+/* Forme i input polja sada koriste globalne klase iz GlobalStyles.css:
+   .form-group, input[type="email"], input[type="password"]
+   Nema potrebe da ih ovdje ponovo definišete, osim ako ne želite specifične override-e. */
+
+.forgotPassword {
+    text-align: right;
+    margin-top: -10px; /* Pomakni malo gore da se poravna s inputom */
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.forgotPassword a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgotPassword a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Dugme za prijavu koristi globalnu klasu .button-primary */
+.authLink {
+    margin-top: 25px;
+    font-size: 15px;
+    color: #495057;
+}
+
+.authLink a {
+    color: #28a745; /* Zelena boja za link na registraciju */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.authLink a:hover {
+    color: #218838;
+    text-decoration: underline;
+}
+
+/* Responsive prilagodbe */
+@media (max-width: 600px) {
+    .authCard {
+        padding: 25px; /* Manji padding na manjim ekranima */
+        margin: 10px; /* Mali margin ako je potrebno da ne dodiruje ivice */
+    }
+
+    .authCard h2 {
+        font-size: 24px;
+    }
+}

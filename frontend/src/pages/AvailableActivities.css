@@ -1,0 +1,189 @@
+.available-activities-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.search-bar input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.activity-categories {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.category-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+}
+
+.category-button.active {
+  background-color: #e0f2f7; /* Light blue */
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.activity-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.activity-card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-icon {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #007bff; /* Example icon color */
+}
+
+.activity-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+}
+
+.activity-category {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.activity-description {
+  font-size: 0.95em;
+  color: #444;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.activity-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto; /* Pushes buttons to the bottom */
+}
+
+.apply-now-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.learn-more-button {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.recently-applied-activities, .upcoming-volunteer-schedule {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.recently-applied-activities h2, .upcoming-volunteer-schedule h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.recently-applied-activities table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recently-applied-activities th, .recently-applied-activities td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.recently-applied-activities th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.upcoming-volunteer-schedule .schedule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.upcoming-volunteer-schedule .schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-details h4 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.schedule-details p {
+  margin: 5px 0 0;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.schedule-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-left: 10px;
+}

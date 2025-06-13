@@ -1,0 +1,33 @@
+/* Dashboard.module.css */
+
+.dashboardContainer {
+    padding: 20px;
+    /* Pozadina i font su definisani u GlobalStyles.css */
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.chartPlaceholder {
+    min-height: 200px;
+    border: 1px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    color: #888;
+}
+
+/* Responsive prilagodbe */
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr; /* Jedna kolona na manjim ekranima */
+    }
+}

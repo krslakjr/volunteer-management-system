@@ -1,0 +1,47 @@
+/* EngagementStatisticsCard.module.css */
+
+.statsCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.statsCard h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+.statsCard .statsValue {
+    font-size: 36px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.statsCard .statsSubtitle {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.statsCard .viewDetailsButton {
+    background-color: #28a745; /* Zelena boja */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.statsCard .viewDetailsButton:hover {
+    background-color: #218838;
+}

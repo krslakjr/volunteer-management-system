@@ -1,0 +1,77 @@
+/* TeamCreationForm.module.css */
+
+.teamCreationSection {
+    background-color: #f8f9fa; /* Pozadina za cijelu sekciju */
+    padding: 20px;
+}
+
+.teamDetailsCard,
+.teamBenefitsCard,
+.teamMembersSection,
+.teamSettingsSection {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.selectedTeamMembers {
+    margin-top: 15px;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fcfcfc;
+}
+
+.memberTag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    margin: 5px;
+    font-size: 14px;
+}
+
+.memberTag button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.teamSettingsSection .settingItem {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.teamSettingsSection .settingItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.teamSettingsSection .settingItem label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.teamSettingsSection .settingItem p {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.teamActions {
+    display: flex;
+    justify-content: flex-end; /* Dugmad desno */
+    gap: 10px;
+    margin-top: 30px;
+}

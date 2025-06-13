@@ -1,0 +1,56 @@
+/* SettingsAndTeams.module.css */
+
+.settingsTeamsContainer {
+    padding: 20px;
+    /* Opći font i pozadina su vjerovatno u GlobalStyles.css */
+}
+
+/* Sekcija za Role Management Details (uključujući tabele dozvola) */
+/* Stilovi za .roleManagementDetailsSection, .roleDetailCard,
+   .permissionSummaryCard, .permissionsTable, .permissionActions
+   su već definisani u RoleManagementDetails.module.css,
+   ali možete ih redefinisati ovdje ako želite specifične stilove
+   za ovu stranicu. */
+
+/* Sekcija za Interest Categories */
+.interestCategories {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    /* Ostali stilovi za dugmad kategorija su već u InterestCategories.module.css */
+}
+/* Stilovi za .categoryButton su definisani u InterestCategories.module.css */
+
+
+/* Sekcija za Recently Viewed */
+.recentlyViewedSection {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px; /* Razmak nakon ove sekcije */
+    min-height: 150px; /* Samo placeholder visina */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+}
+
+.recentlyViewedSection h2 {
+    margin-top: 0;
+    color: #212529;
+}
+
+/* Sekcija za Team Creation */
+/* Stilovi za .teamCreationSection su već definisani u TeamCreationForm.module.css */
+/* Ako je TeamCreationForm.js samostalna stranica, onda ne bi bilo potrebe
+   da se .teamCreationSection stilizuje ovdje. Ako je TeamCreationForm
+   komponenta unutar SettingsAndTeams, onda su stilovi iz
+   TeamCreationForm.module.css primjenjivi direktno. */
+
+/* Responsive prilagodbe - ako su specifične za ovu stranicu */
+@media (max-width: 768px) {
+    /* Nema specifičnih stilova za SettingsAndTeams.js za sada,
+       ali dodajte ih ovdje ako je potrebno */
+}

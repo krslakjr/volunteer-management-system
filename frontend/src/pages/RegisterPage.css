@@ -1,0 +1,72 @@
+/* src/pages/RegisterPage.module.css */
+
+.authPageContainer {
+    display: flex;
+    justify-content: center; /* Horizontalno centriranje */
+    align-items: center;    /* Vertikalno centriranje */
+    min-height: 100vh;      /* Zauzima cijelu visinu viewporta */
+    background-color: #e9ecef; /* Svijetlo siva pozadina */
+    padding: 20px;          /* Mali padding oko kontejnera */
+    box-sizing: border-box; /* Važno za responzivnost */
+}
+
+.authCard {
+    width: 100%;
+    max-width: 450px; /* Malo šira kartica za registraciju zbog više polja */
+    text-align: center;
+    /* card-base klasa (iz GlobalStyles.css) već daje:
+       background-color: #fff;
+       border-radius: 8px;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+       padding: 30px;
+       margin-bottom: 20px;
+    */
+    padding: 30px;
+}
+
+.authCard h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #212529;
+}
+
+.authCard p {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 25px;
+}
+
+/* Forme i input polja sada koriste globalne klase iz GlobalStyles.css:
+   .form-group, input[type="text"], input[type="email"], input[type="password"]
+   Nema potrebe da ih ovdje ponovo definišete. */
+
+/* Dugme za registraciju koristi globalnu klasu .button-success */
+.authLink {
+    margin-top: 25px;
+    font-size: 15px;
+    color: #495057;
+}
+
+.authLink a {
+    color: #007bff; /* Plava boja za link na login */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.authLink a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Responsive prilagodbe */
+@media (max-width: 600px) {
+    .authCard {
+        padding: 25px;
+        margin: 10px;
+    }
+
+    .authCard h2 {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,368 @@
+/* src/styles/GlobalStyles.css */
+
+/* Osnovni stilovi za cijelu stranicu */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif; /* Koristite font koji želite, npr. 'Roboto', sans-serif; */
+    background-color: #f8f9fa; /* Svijetlo siva pozadina */
+    color: #333; /* Tamno siva boja teksta */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Bolje renderovanje fontova na macOS-u */
+    -moz-osx-font-smoothing: grayscale; /* Bolje renderovanje fontova na macOS-u */
+}
+
+/* Stilovi za naslove */
+h1, h2, h3, h4, h5, h6 {
+    color: #212529; /* Tamnija boja za naslove */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.5em; /* Npr. 40px */
+}
+
+h2 {
+    font-size: 2em; /* Npr. 32px */
+}
+
+h3 {
+    font-size: 1.75em; /* Npr. 28px */
+}
+
+h4 {
+    font-size: 1.5em; /* Npr. 24px */
+}
+
+p {
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+/* Opći stilovi za linkove */
+a {
+    color: #007bff; /* Plava boja linka */
+    text-decoration: none; /* Bez podvlačenja */
+    transition: color 0.3s ease; /* Glatki prijelaz boje */
+}
+
+a:hover {
+    color: #0056b3; /* Tamnija plava pri prelasku mišem */
+    text-decoration: underline; /* Podvuci pri prelasku mišem */
+}
+
+/* Osnovni stilovi za dugmad */
+.button-primary {
+    background-color: #007bff; /* Plava boja */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Razmak između dugmadi */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px); /* Mali pomak pri prelasku mišem */
+}
+
+.button-secondary {
+    background-color: #6c757d; /* Siva boja */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.button-success {
+    background-color: #28a745; /* Zelena boja */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-success:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.button-danger { /* Dodatno dugme za opasne akcije (npr. brisanje) */
+    background-color: #dc3545; /* Crvena boja */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+
+/* Opći stilovi za forme i input polja */
+.form-group {
+    margin-bottom: 20px; /* Veći razmak između grupa formi */
+    text-align: left; /* Tekst poravnat lijevo unutar grupe */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Razmak između labela i inputa */
+    font-weight: bold;
+    color: #495057;
+    font-size: 15px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"], /* Dodao za brojevne inpute */
+.form-group textarea,
+.form-group select {
+    width: 100%; /* Zauzima cijelu širinu kontejnera */
+    padding: 12px 15px; /* Veći padding za lakše klikanje i unos */
+    border: 1px solid #ced4da; /* Suptilna granica */
+    border-radius: 6px; /* Blago zaobljene ivice */
+    font-size: 16px;
+    box-sizing: border-box; /* Ključno za responzivnost: padding i border su uključeni u širinu */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Glatki prijelaz za fokus */
+    -webkit-appearance: none; /* Resetovanje defaultnog stila za select/checkbox */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form-group textarea {
+    min-height: 100px; /* Minimalna visina za textarea */
+    resize: vertical; /* Dozvoljava samo vertikalnu promjenu veličine */
+}
+
+.form-group select {
+    /* Dodatni stilovi za select ako je potrebno, npr. prilagođena strelica */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C197.4L146.2%2C56.6L5.4%2C197.4h281.6z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.7em top 50%, 0 0;
+    background-size: 0.65em auto, 100%;
+}
+
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #007bff; /* Plava ivica pri fokusu */
+    outline: none; /* Ukloni defaultni outline */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blaga plava sjena */
+}
+
+/* Stil za toggle switch (za checkboxe poput "Allow members to invite") */
+.toggle-switch-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Razmak ispod switcha */
+}
+
+.toggle-switch-container label {
+    margin-bottom: 0; /* Ukloni marginu s labela unutar flex kontejnera */
+    margin-left: 10px; /* Razmak između switcha i labela */
+    font-weight: normal; /* Manje bold, jer je dio linije */
+    color: #495057;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    -webkit-appearance: none; /* Ukloni defaultni izgled */
+    appearance: none;
+    background-color: #ccc;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    vertical-align: middle; /* Poravnaj s tekstom */
+    flex-shrink: 0; /* Spriječi skupljanje na malim ekranima */
+}
+
+.toggle-switch:checked {
+    background-color: #28a745; /* Zelena kad je uključeno */
+}
+
+.toggle-switch::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.toggle-switch:checked::before {
+    transform: translateX(20px);
+}
+
+
+/* Stilovi za poruke (greške, uspjeh) */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Opći stilovi za kontejnere stranica/glavne divove */
+.app-main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Osigurava da kontejner zauzima cijelu visinu viewporta */
+}
+
+.content-area {
+    flex-grow: 1; /* Omogućava da ovaj dio zauzme sav preostali prostor */
+    padding: 20px; /* Osnovni padding za sav sadržaj stranica */
+    box-sizing: border-box; /* Važno za responzivnost */
+}
+
+/* Stil za osnovne "card" elemente */
+.card-base {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Jača sjena za isticanje kartice */
+    padding: 25px; /* Defaultni padding za kartice, komponente mogu override-ati */
+}
+
+/* Opšti stilovi za tabele */
+.table-base {
+    width: 100%;
+    border-collapse: collapse; /* Uklanja duple linije između ćelija */
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden; /* Osigurava da se border-radius primjeni na tabelu */
+}
+
+.table-base th,
+.table-base td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6; /* Svijetla linija između redova */
+}
+
+.table-base th {
+    background-color: #f2f2f2; /* Pozadina zaglavlja tabele */
+    font-weight: bold;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.table-base tbody tr:last-child td {
+    border-bottom: none; /* Nema donje linije za zadnji red */
+}
+
+.table-base tbody tr:hover {
+    background-color: #e9f2ff; /* Svijetlo plava pozadina pri prelasku mišem */
+}
+
+
+/* Responsive prilagodbe za cijelu aplikaciju (generalne) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.75em;
+    }
+    h3 {
+        font-size: 1.5em;
+    }
+
+    .content-area {
+        padding: 15px; /* Smanjite padding na manjim ekranima */
+    }
+
+    .button-primary,
+    .button-secondary,
+    .button-success,
+    .button-danger {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    /* Tabele na manjim ekranima */
+    .table-base {
+        display: block;
+        overflow-x: auto; /* Omogućava horizontalno skrolanje tabele */
+        white-space: nowrap; /* Sprečava prelamanje teksta */
+        -webkit-overflow-scrolling: touch; /* Bolje skrolanje na iOS-u */
+    }
+
+    .table-base th,
+    .table-base td {
+        min-width: 120px; /* Minimalna širina kolone za čitljivost */
+    }
+}
+
+@media (max-width: 480px) {
+    .content-area {
+        padding: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .card-base {
+        padding: 15px; /* Još manji padding za kartice na najmanjim ekranima */
+    }
+}

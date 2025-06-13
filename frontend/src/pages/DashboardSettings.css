@@ -1,0 +1,61 @@
+/* DashboardSettings.module.css */
+
+.dashboardSettingsContainer {
+    padding: 20px;
+    /* Opći font i pozadina su vjerovatno u GlobalStyles.css */
+}
+
+/* Sekcija za Top Volunteers */
+.dashboardSettingsContainer h2 {
+    margin-top: 40px; /* Dodajte malo prostora iznad naslova sekcija */
+    margin-bottom: 20px;
+    color: #212529;
+}
+
+/* Stilovi za .topVolunteersList i .viewAllVolunteersButton su već definisani
+   u TopVolunteersList.module.css, ali možete ih redefinisati ovdje
+   ako želite specifične stilove za ovu stranicu. */
+
+/* Sekcija za Social Platform Integrations */
+.socialPlatformsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+/* Stilovi za .socialPlatformCard su definisani u SocialPlatformCard.module.css */
+
+/* Sekcija za Role Management Overview */
+.roleManagementSection {
+    margin-top: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 40px; /* Razmak nakon ove sekcije */
+}
+
+.roleManagementSection p {
+    font-size: 15px;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.roleManagementActions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Stilovi za .roleTableContainer, .roleTabs, .roleTable
+   su već definisani u RoleManagementOverview.module.css,
+   ali možete ih redefinisati ovdje ako želite specifične stilove
+   za ovu stranicu. */
+
+
+/* Responsive prilagodbe */
+@media (max-width: 768px) {
+    .socialPlatformsGrid {
+        grid-template-columns: 1fr; /* Jedna kolona na manjim ekranima */
+    }
+}

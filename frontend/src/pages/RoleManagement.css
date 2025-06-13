@@ -1,0 +1,221 @@
+.role-management-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.page-description {
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.role-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.add-new-role-button, .build-add-permissions-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.build-add-permissions-button {
+  background-color: #e0f2f7;
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.role-tabs {
+  display: flex;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.role-tabs .tab {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.role-tabs .tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.role-list-section {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.role-list-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.role-list-section th, .role-list-section td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.role-list-section th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.role-list-section tbody tr {
+  cursor: pointer;
+}
+
+.role-list-section tbody tr:hover,
+.role-list-section tbody tr.selected-row {
+  background-color: #e6f7ff; /* Light blue for selected row */
+}
+
+.role-list-section .status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.role-list-section .status-badge.active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.role-list-section .action-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin-right: 5px;
+  color: #666;
+}
+
+.role-details-section {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.role-details-section h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.role-detail-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.role-detail-card {
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.role-detail-card .card-icon {
+  font-size: 2.5em;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.role-detail-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.role-detail-card p {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.role-detail-card span {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.role-detail-card .card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto; /* Push to bottom */
+}
+
+.edit-role-button, .view-users-button, .modify-permissions-button {
+  background-color: #e0f2f7;
+  color: #007bff;
+  padding: 10px 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.permission-matrix-section {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.permission-matrix-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.permission-matrix-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.permission-matrix-section th, .permission-matrix-section td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.permission-matrix-section th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}

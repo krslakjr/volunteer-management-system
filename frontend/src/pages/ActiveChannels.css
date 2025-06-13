@@ -1,0 +1,62 @@
+/* ActiveChannels.module.css */
+
+.activeChannelsSection {
+    margin-top: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.channelsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.channelCard {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.channelCard h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.channelCard p {
+    font-size: 14px;
+    color: #6c757d;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.channelCard .joinButton {
+    background-color: #6c757d; /* Siva boja */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    align-self: flex-start; /* Poravnaj dugme lijevo unutar kartice */
+}
+
+.channelCard .joinButton:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive prilagodbe */
+@media (max-width: 768px) {
+    .channelsGrid {
+        grid-template-columns: 1fr; /* Jedna kolona na manjim ekranima */
+    }
+}

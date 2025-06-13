@@ -1,0 +1,68 @@
+/* SocialPlatformCard.module.css */
+
+.socialPlatformsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.socialPlatformCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.socialPlatformCard h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+.socialPlatformCard p {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Omogućava da opis zauzme dostupan prostor */
+}
+
+.socialPlatformCard .actionButton {
+    background-color: #007bff; /* Plava boja */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.socialPlatformCard .actionButton:hover {
+    background-color: #0056b3;
+}
+
+.socialPlatformCard.addPlatform {
+    border: 2px dashed #ccc; /* Iscrtana ivica za "Add Platform" */
+    background-color: #f2f2f2;
+}
+
+.socialPlatformCard.addPlatform .actionButton {
+    background-color: #28a745; /* Zelena za "Learn More" na Add Platform */
+}
+
+.socialPlatformCard.addPlatform .actionButton:hover {
+    background-color: #218838;
+}
+
+/* Responsive prilagodbe */
+@media (max-width: 768px) {
+    .socialPlatformsGrid {
+        grid-template-columns: 1fr; /* Jedna kolona na manjim ekranima */
+    }
+}

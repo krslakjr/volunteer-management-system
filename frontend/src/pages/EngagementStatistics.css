@@ -1,0 +1,232 @@
+.engagement-statistics-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.engagement-tabs {
+  display: flex;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.engagement-tabs .tab {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.engagement-tabs .tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stat-icon {
+  font-size: 2.5em;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.stat-card h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #666;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-card span {
+  font-size: 0.9em;
+  color: #777;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.view-details-button {
+  background-color: #e0f2f7;
+  color: #007bff;
+  padding: 8px 15px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.volunteer-engagement-trends {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.volunteer-engagement-trends h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.chart-placeholder {
+  background-color: #f8f9fa;
+  border: 1px dashed #ddd;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-style: italic;
+  border-radius: 5px;
+}
+
+.recent-activity-completion {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.recent-activity-completion h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.recent-activity-completion table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.recent-activity-completion th, .recent-activity-completion td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.recent-activity-completion th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.status-badge.completed {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.action-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.view-all-activities-button, .view-all-volunteers-button {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0;
+  font-weight: 500;
+}
+
+.top-volunteers-section {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.top-volunteers-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.top-volunteers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.top-volunteer-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.top-volunteer-item:last-child {
+  border-bottom: none;
+}
+
+.volunteer-avatar-medium {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc; /* Placeholder */
+  margin-right: 15px;
+}
+
+.volunteer-details h3 {
+  margin: 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.volunteer-details p {
+  margin: 5px 0 0;
+  font-size: 0.9em;
+  color: #777;
+}
+
+.top-volunteer-item .action-icon {
+  margin-left: auto;
+  color: #ffc107; /* Star icon color */
+}

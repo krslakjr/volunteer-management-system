@@ -1,0 +1,232 @@
+.attendance-tracking-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.event-date-details {
+  color: #777;
+  font-size: 0.95em;
+  margin-bottom: 30px;
+}
+
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.attendance-header input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.mark-all-present-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.attendance-summary-tabs {
+  display: flex;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.attendance-summary-tabs .tab {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.attendance-summary-tabs .tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.attendance-list {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.attendance-list h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+.attendance-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-list th, .attendance-list td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.attendance-list th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.volunteer-info {
+  display: flex;
+  align-items: center;
+}
+
+.volunteer-avatar-small {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #ccc; /* Placeholder */
+  margin-right: 10px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.status-badge.present {
+  background-color: #d4edda; /* Light green */
+  color: #155724; /* Darker green */
+}
+
+.status-badge.absent {
+  background-color: #f8d7da; /* Light red */
+  color: #721c24; /* Darker red */
+}
+
+.action-toggle-button {
+  background-color: #e0f2f7;
+  color: #007bff;
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.attendance-list .load-more-button {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0;
+  font-weight: 500;
+}
+
+.attendance-statistics {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.attendance-statistics h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.3em;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  text-align: center;
+}
+
+.stat-card {
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.stat-card.present-card { background-color: #d4edda; }
+.stat-card.absent-card { background-color: #f8d7da; }
+
+
+.stat-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #007bff; /* Default color, can be overridden */
+}
+
+.stat-card.present-card .stat-icon { color: #28a745; }
+.stat-card.absent-card .stat-icon { color: #dc3545; }
+
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.stat-card p {
+  margin: 5px 0 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #007bff;
+}
+.stat-card.present-card p { color: #28a745; }
+.stat-card.absent-card p { color: #dc3545; }
+
+
+.attendance-actions-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.export-attendance-button, .send-reminders-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.export-attendance-button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}

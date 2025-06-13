@@ -1,0 +1,32 @@
+/* RecentActivityCompletion.module.css */
+
+.recentActivitiesTableContainer {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-x: auto; /* Omogućava scroll na malim ekranima */
+}
+
+.recentActivitiesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.recentActivitiesTable th,
+.recentActivitiesTable td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.recentActivitiesTable th {
+    background-color: #e9ecef;
+    font-weight: bold;
+    color: #495057;
+}
+
+.recentActivitiesTable tbody tr:hover {
+    background-color: #f2f2f2;
+}
