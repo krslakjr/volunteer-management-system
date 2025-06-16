@@ -1,10 +1,9 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.dto.JwtResponse;
-import com.example.userservice.dto.LoginRequest;
-import com.example.userservice.dto.RegisterRequest;
-import com.example.userservice.dto.MessageResponse; // Potreban za slanje prilagođenih poruka
+import com.example.userservice.dto.*;
 
+import com.example.userservice.event.UserCreatedEvent;
+import com.example.userservice.event.UserEventPublisher;
 import com.example.userservice.security.jwt.JwtUtils;
 import com.example.userservice.security.services.UserDetailsImpl;
 import com.example.userservice.service.UserService;
@@ -28,6 +27,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException; 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600) // CORS konfiguracija
@@ -43,6 +43,9 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    private UserEventPublisher userEventPublisher;
 
     /**
      * Endpoint za prijavu korisnika i izdavanje JWT tokena.
@@ -98,7 +101,18 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
-            userService.createUser(registerRequest);
+            UserDTO savedUser = userService.createUser(registerRequest);
+
+            UserCreatedEvent event = new UserCreatedEvent(
+                    savedUser.getUsername(),
+                    savedUser.getFirstName(),
+                    savedUser.getLastName(),
+                    savedUser.getEmail(),
+                    savedUser.getProfilePicture(),
+                    savedUser.getCreatedAt(),
+                    savedUser.getRoles()
+            );
+            userEventPublisher.send(event);
             return ResponseEntity.ok(new MessageResponse("Korisnik uspješno registrovan!"));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new MessageResponse("Greška: " + e.getMessage()));

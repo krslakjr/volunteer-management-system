@@ -1,5 +1,7 @@
 package com.example.feedbackservice.controller;
 
+import com.example.feedbackservice.event.FeedbackCreatedEvent;
+import com.example.feedbackservice.event.FeedbackEventPublisher;
 import com.example.feedbackservice.exception.InvalidPatchException;
 import com.example.feedbackservice.exception.ResourceNotFoundException;
 import com.example.feedbackservice.service.ActivityClientService;
@@ -24,15 +26,18 @@ public class FeedbackController {
 
     @Autowired
     private FeedbackService feedbackService;
+    private final FeedbackEventPublisher eventPublisher;
     private final UserClientService userClientService;
     private final ActivityClientService activityClientService;
 
     public FeedbackController(FeedbackService feedbackService,
                               UserClientService userClientService,
-                              ActivityClientService activityClientService) {
+                              ActivityClientService activityClientService,
+                              FeedbackEventPublisher eventPublisher) {
         this.feedbackService = feedbackService;
         this.userClientService = userClientService;
         this.activityClientService = activityClientService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Autowired
@@ -100,16 +105,22 @@ public ResponseEntity<Object> getFeedbackById(@PathVariable Long id) {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOrUpdateFeedback(@Valid @RequestBody Feedback feedback) {
+    public ResponseEntity<?> createOrUpdateFeedback(@Valid @RequestBody Feedback feedback,
+                                                    @RequestHeader("Authorization") String token) {
         try {
             Long userId = feedback.getVolunteer().getVolunteerId();
             Long activityId = feedback.getActivity().getActivityId();
-            if (!userClientService.isValidVolunteer(userId)) {
+            String jwt = token.replace("Bearer ", "");
+
+            if (!userClientService.isValidVolunteer(userId, jwt)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("User must exist and have role Volunteer");
             }
             activityClientService.doesActivityExist(activityId);
             Feedback savedFeedback = feedbackService.saveOrUpdateFeedback(feedback);
+            FeedbackCreatedEvent event = new FeedbackCreatedEvent(userId,
+                    activityId, feedback.getComment(), feedback.getRating(), jwt);
+            eventPublisher.publishFeedbackCreatedEvent(event);
             return new ResponseEntity<>(savedFeedback, HttpStatus.CREATED);
         } catch (ResponseStatusException ex) {
             return ResponseEntity.status(ex.getStatusCode())

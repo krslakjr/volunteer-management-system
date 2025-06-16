@@ -1,21 +1,23 @@
 package com.example.common.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    @NotBlank(message = "Username is required")
+    @Size(min = 3, max = 20)
+    private String username;
 
     @NotBlank(message = "First name is required")
     private String firstName;
@@ -24,42 +26,19 @@ public class UserDTO {
     private String lastName;
 
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
+    @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank(message = "Profile picture is required")
     private String profilePicture;
 
-    @NotBlank(message = "Role name is required")
-    private String roleName;
+    private Set<String> roles;
 
-    @NotEmpty(message = "Permissions cannot be empty")
-    private List<String> permissions;
+    private Set<String> userPermissions;
 
-    @NotNull(message = "Date of creation is required")
     private Date createdAt;
+    private Date updatedAt;
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
-
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getProfilePicture() { return profilePicture; }
-    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
-
-    public String getRoleName() { return roleName; }
-    public void setRoleName(String roleName) { this.roleName = roleName; }
-
-    public List<String> getPermissions() { return permissions; }
-    public void setPermissions(List<String> permissions) { this.permissions = permissions; }
-
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public Set<String> getRoles() {
+        return roles;
+    }
 }

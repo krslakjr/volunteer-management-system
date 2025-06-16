@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -104,6 +105,7 @@ public class UserService {
         return false;
     }
 
-  
-
+    public List<String> getAllAdminEmails() {
+        return userRepository.findAllAdminEmails();
+    }
 }

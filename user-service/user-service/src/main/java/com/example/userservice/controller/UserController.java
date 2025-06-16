@@ -39,6 +39,12 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/admins/emails")
+    public ResponseEntity<List<String>> getAdminEmails() {
+        List<String> emails = userService.getAllAdminEmails();
+        return ResponseEntity.ok(emails);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         Optional<UserDTO> updatedUser = userService.updateUser(id, userDTO);
