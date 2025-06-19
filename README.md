@@ -1,10 +1,10 @@
-# Volunteering Management Platform
+# Volunteering management platform
 
 ---
 
 ## Opis projekta
 
-**Volunteering Management Platform** je sveobuhvatna aplikacija dizajnirana za efikasno upravljanje volonterskim aktivnostima. Platforma pruža podršku kako organizatorima, omogućavajući im jednostavno kreiranje, upravljanje i praćenje aktivnosti, tako i volonterima, nudeći im intuitivan interfejs za pregledavanje, prijavljivanje i praćenje učešća u volonterskim akcijama.
+**Volunteering management platform** je sveobuhvatna aplikacija dizajnirana za efikasno upravljanje volonterskim aktivnostima. Platforma pruža podršku kako organizatorima, omogućavajući im jednostavno kreiranje, upravljanje i praćenje aktivnosti, tako i volonterima, nudeći im intuitivan interfejs za pregledavanje, prijavljivanje i praćenje učešća u volonterskim akcijama.
 
 Kroz aplikaciju, korisnici mogu kreirati profile, pregledavati dostupne aktivnosti, prijavljivati se za učešće, te pratiti svoj volonterski angažman. Organizatori imaju mogućnost praćenja prisustva volontera, automatskog generisanja potvrda o volontiranju, te uvida u statistike angažmana. Sistem notifikacija osigurava pravovremene obavijesti o novim događajima i promjenama, dok funkcije pretrage i filtriranja olakšavaju pronalazak relevantnih aktivnosti. Dodatne funkcionalnosti uključuju kreiranje timova, društvenu integraciju i interne komunikacijske kanale (chat/forum), podstičući zajedništvo i interakciju unutar volonterske zajednice.
 
