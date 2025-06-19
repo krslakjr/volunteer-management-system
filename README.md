@@ -49,11 +49,13 @@ To successfully run the project, follow the steps below. Make sure to launch the
 5.  **User service**
     ```bash
     cd user-service
+    cd user-service
     mvn spring-boot:run
     ```
 
 6.  **Participation service**
     ```bash
+    cd participation-service
     cd participation-service
     mvn spring-boot:run
     ```
@@ -61,11 +63,13 @@ To successfully run the project, follow the steps below. Make sure to launch the
 7.  **Activity management service**
     ```bash
     cd activity-management-service
+    cd activity-management-service
     mvn spring-boot:run
     ```
 
 8.  **Feedback service**
     ```bash
+    cd feedback-service
     cd feedback-service
     mvn spring-boot:run
     ```
@@ -73,6 +77,7 @@ To successfully run the project, follow the steps below. Make sure to launch the
 9.  **Notification communication service**
     ```bash
     cd notification-communication-service
+    cd notification-communicatoin-service
     mvn spring-boot:run
     ```
 
