@@ -2,15 +2,15 @@
 
 ---
 
-## Opis projekta
+## Project description
 
-**Volunteering management platform** je sveobuhvatna aplikacija dizajnirana za efikasno upravljanje volonterskim aktivnostima. Platforma pruža podršku kako organizatorima, omogućavajući im jednostavno kreiranje, upravljanje i praćenje aktivnosti, tako i volonterima, nudeći im intuitivan interfejs za pregledavanje, prijavljivanje i praćenje učešća u volonterskim akcijama.
+The **Volunteering management platform** is a comprehensive application designed for the efficient management of volunteer activities. The platform provides support to both organizers, enabling them to easily create, manage, and track activities, and volunteers, offering them an intuitive interface for Browse, signing up, and monitoring their participation in volunteer actions.
 
-Kroz aplikaciju, korisnici mogu kreirati profile, pregledavati dostupne aktivnosti, prijavljivati se za učešće, te pratiti svoj volonterski angažman. Organizatori imaju mogućnost praćenja prisustva volontera, automatskog generisanja potvrda o volontiranju, te uvida u statistike angažmana. Sistem notifikacija osigurava pravovremene obavijesti o novim događajima i promjenama, dok funkcije pretrage i filtriranja olakšavaju pronalazak relevantnih aktivnosti. Dodatne funkcionalnosti uključuju kreiranje timova, društvenu integraciju i interne komunikacijske kanale (chat/forum), podstičući zajedništvo i interakciju unutar volonterske zajednice.
+Through the application, users can create profiles, browse available activities, sign up for participation, and track their volunteer engagement. Organizers have the ability to monitor volunteer attendance, automatically generate volunteering certificates, and gain insights into engagement statistics. A notification system ensures timely alerts about new events and schedule changes, while search and filtering functions facilitate easy discovery of relevant activities. Additional functionalities include team creation, social integration, and internal communication channels (chat/forum), fostering community and interaction among volunteers.
 
 ---
 
-## Tim
+## Team
 
 * Osmanković Ilhana
 * Kršlak Anesa
@@ -18,66 +18,61 @@ Kroz aplikaciju, korisnici mogu kreirati profile, pregledavati dostupne aktivnos
 
 ---
 
-## Pokretanje projekta
+## Getting started
 
-Da biste uspješno pokrenuli projekat, slijedite korake navedene u nastavku. Obavezno pokrećite servise redom, kako je navedeno, kako biste izbjegli probleme sa zavisnostima.
+To successfully run the project, follow the steps below. Make sure to launch the services in the specified order to avoid dependency issues.
 
-1.  **Config Server**
+1.  **Config server**
     ```bash
     cd config-server
     mvn spring-boot:run
     ```
 
-2.  **API Gateway**
+2.  **API gateway**
     ```bash
     cd api-gateway
     mvn spring-boot:run
     ```
 
-3.  **System Events Service**
+3.  **System events service**
     ```bash
     cd system-events-service
     mvn spring-boot:run
     ```
 
-4.  **Eureka Server**
+4.  **Eureka server**
     ```bash
     cd eureka-server
     mvn spring-boot:run
     ```
 
-5.  **User Service**
+5.  **User service**
     ```bash
-    cd user-service
     cd user-service
     mvn spring-boot:run
     ```
 
-6.  **Participation Service**
+6.  **Participation service**
     ```bash
-    cd participation-service
     cd participation-service
     mvn spring-boot:run
     ```
 
-7.  **Activity Management Service**
+7.  **Activity management service**
     ```bash
-    cd activity-management-service
     cd activity-management-service
     mvn spring-boot:run
     ```
 
-8.  **Feedback Service**
+8.  **Feedback service**
     ```bash
-    cd feedback-service
     cd feedback-service
     mvn spring-boot:run
     ```
 
-9.  **Notification Communication Service**
+9.  **Notification communication service**
     ```bash
     cd notification-communication-service
-    cd notification-communicatoin-service
     mvn spring-boot:run
     ```
 
@@ -89,21 +84,23 @@ Da biste uspješno pokrenuli projekat, slijedite korake navedene u nastavku. Oba
 
 ---
 
-## Sigurnosno rješenje (Pregled)
+## Security solution (Overview)
 
-Sigurnost platforme implementirana je kroz robustan sistem baziran na **JWT (JSON Web Token) standardu**, koristeći **API Gateway** kao centralnu tačku za autentifikaciju.
+The platform's security is implemented through a robust system based on the **JWT (JSON Web Token) standard**, utilizing an **API gateway** as the central point for authentication.
 
-* **API Gateway** je primarna tačka za autentifikaciju svih eksternih zahtjeva. Nakon što klijent pošalje kredencijale, **User Service** ih validira i generiše **JWT Access Token** (kratkotrajan) i **Refresh Token** (dugotrajan). Svi budući zahtjevi sadrže Access Token.
-* Koristimo **JSON Web Token (JWT)** zbog njegove `stateless` prirode, što omogućava skalabilnost i efikasnost u distribuiranom sistemu. JWT sadrži potrebne `claims` (tvrdnje) o korisniku (npr. ID, uloge) i digitalno je potpisan za osiguranje integriteta.
-* **Role i permisije** su pohranjene u User Service-u i uključene u JWT payload. Za autorizaciju se koristi **hibridni pristup**:
-    * **Centralizovana autentifikacija** na API Gatewayu.
-    * **Decentralizovana autorizacija** na nivou mikroservisa, gdje svaki servis validira token i primjenjuje granularna pravila autorizacije (npr. koristeći `@PreAuthorize` anotacije u Spring Security-u).
-* **Autorizacija između mikroservisa** je ključna i realizuje se proslijeđivanjem korisničkog JWT-a (za zahtjeve "on behalf of" korisnika) ili korištenjem **Service-to-Service Tokena** za interne procese. Pojedinačni mikroservisi **nikada** nisu direktno izloženi javno.
-* **Invalidacija tokena** je riješena kombinacijom kratkotrajnih **Access Tokena**, dugotrajnih **Refresh Tokena** (koji su `stateful` i mogu se opozvati), te centralizovane **Blackliste** (crne liste) za trenutnu invalidaciju kompromitovanih ili odjavljenih Access Tokena.
-* **Pristup sa mobilnih uređaja** je podržan, koristeći isti RESTful API i JWT za sigurnu autentifikaciju i autorizaciju. Preporučuje se korištenje **OAuth 2.0 sa PKCE** za dodatnu sigurnost na mobilnim platformama.
+* The **API gateway** is the primary entry point for authenticating all external requests. After the client sends credentials, the **User service** validates them and generates a **JWT Access Token** (short-lived) and a **Refresh token** (long-lived). All subsequent requests will include the Access Token.
+* We use **JSON Web Token (JWT)** due to its `stateless` nature, which enables scalability and efficiency in a distributed system. JWT contains necessary `claims` (assertions) about the user (e.g., ID, roles) and is digitally signed to ensure integrity.
+* **Roles and permissions** are stored in the User Service and included in the JWT payload. For authorization, a **hybrid approach** is used:
+    * **Centralized authentication** at the API Gateway.
+    * **Decentralized authorization** at the microservice level, where each service validates the token and applies granular authorization rules (e.g., using `@PreAuthorize` annotations in Spring Security).
+* **Inter-microservice authorization** is crucial and is achieved by passing the user's JWT (for "on behalf of" user requests) or by using **Service-to-Service Tokens** for internal processes. Individual microservices are **never** directly exposed publicly.
+* **Token invalidation** is handled by a combination of short-lived **Access tokens**, long-lived **Refresh tokens** (which are `stateful` and can be revoked), and a centralized **Blacklist** for immediate invalidation of compromised or logged-out Access Tokens.
+* **Mobile device access** is supported, utilizing the same RESTful API and JWT for secure authentication and authorization. It's recommended to use **OAuth 2.0 with PKCE** for additional security on mobile platforms.
 
-## Demo aplikacije
+---
 
-Pogledajte video demonstraciju implementiranih funkcionalnosti i tehničkih mogućnosti aplikacije:
+## Application demo
+
+Watch a video demonstration of the implemented functionalities and technical capabilities of the application:
 
 [Demo Video](https://drive.google.com/drive/u/0/folders/1q53smDa_ThoNA1ieK_NSj_qN6Lgu_Ee5)
