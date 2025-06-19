@@ -18,13 +18,15 @@ Through the application, users can create profiles, browse available activities,
 
 ---
 
-## Key Functionalities
+## Key functionalities
 
 The application offers a range of functionalities designed for comprehensive volunteering management:
 
+* **User Registration:** Allows new users to create accounts on the platform.
+* **User Login:** Enables registered users to securely access their accounts.
 * **Creation and management of volunteer activities:** Organizers can add new volunteer activities with descriptions, dates, locations, and the number of volunteers required.
 * **Volunteer activity application:** Volunteers can browse available activities and sign up for participation.
-* **Notification aystem:** Notifying users about new activities, schedule changes, and reminders.
+* **Notification system:** Notifying users about new activities, schedule changes, and reminders.
 * **Attendance tracking:** Organizers can mark volunteer attendance at events.
 * **Rating and comment system:** Volunteers can rate activities and leave comments to improve future events.
 * **Statistics and reports:** Organizers can view volunteer engagement statistics (number of sign-ups, number of completed activities, etc.).
