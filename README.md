@@ -18,6 +18,32 @@ Through the application, users can create profiles, browse available activities,
 
 ---
 
+## Key Functionalities
+
+The application offers a range of functionalities designed for comprehensive volunteering management:
+
+* **Creation and management of volunteer activities:** Organizers can add new volunteer activities with descriptions, dates, locations, and the number of volunteers required.
+* **Volunteer activity application:** Volunteers can browse available activities and sign up for participation.
+* **Notification aystem:** Notifying users about new activities, schedule changes, and reminders.
+* **Attendance tracking:** Organizers can mark volunteer attendance at events.
+* **Rating and comment system:** Volunteers can rate activities and leave comments to improve future events.
+* **Statistics and reports:** Organizers can view volunteer engagement statistics (number of sign-ups, number of completed activities, etc.).
+* **Role and permission system:** Differentiating user roles (volunteer, organizer, administrator) with corresponding rights.
+* **Team creation:** Volunteers can form teams for collaborative volunteering.
+* **Recommendation system:** The application can recommend activities based on user interests.
+
+---
+
+## Technologies
+
+For the development of the platform, we used the following key technologies:
+
+* **Frontend:** React
+* **Backend:** Spring Boot
+* **Database:** PostgreSQL (with pgAdmin 4 for database management)
+
+---
+
 ## Getting started
 
 To successfully run the project, follow the steps below. Make sure to launch the services in the specified order to avoid dependency issues.
