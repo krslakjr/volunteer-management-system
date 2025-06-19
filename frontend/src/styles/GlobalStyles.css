@@ -48,13 +48,13 @@ a {
 }
 
 a:hover {
-    color: #0056b3; /* Tamnija plava pri prelasku mišem */
+    color: #5eb885; /* Tamnija plava pri prelasku mišem */
     text-decoration: underline; /* Podvuci pri prelasku mišem */
 }
 
 /* Osnovni stilovi za dugmad */
 .button-primary {
-    background-color: #007bff; /* Plava boja */
+    background-color: #72c696; /* Plava boja */
     color: white;
     padding: 10px 20px;
     border: none;
@@ -66,7 +66,7 @@ a:hover {
 }
 
 .button-primary:hover {
-    background-color: #0056b3;
+    background-color: #449467;
     transform: translateY(-1px); /* Mali pomak pri prelasku mišem */
 }
 
@@ -87,7 +87,7 @@ a:hover {
 }
 
 .button-success {
-    background-color: #28a745; /* Zelena boja */
+    background-color: #75cd9b; /* Zelena boja */
     color: white;
     padding: 10px 20px;
     border: none;
@@ -98,7 +98,7 @@ a:hover {
 }
 
 .button-success:hover {
-    background-color: #218838;
+    background-color: #449467;
     transform: translateY(-1px);
 }
 

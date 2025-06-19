@@ -36,7 +36,7 @@ h1 {
 }
 
 .mark-all-present-button {
-  background-color: #007bff;
+  background-color: #8DE0B7;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -107,7 +107,7 @@ h1 {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background-color: #ccc; /* Placeholder */
+  background-color: #ccc; 
   margin-right: 10px;
 }
 
@@ -119,20 +119,20 @@ h1 {
 }
 
 .status-badge.present {
-  background-color: #d4edda; /* Light green */
-  color: #155724; /* Darker green */
+  background-color: #d4edda; 
+  color: #155724; 
 }
 
 .status-badge.absent {
-  background-color: #f8d7da; /* Light red */
-  color: #721c24; /* Darker red */
+  background-color: #f8d7da; 
+  color: #721c24; 
 }
 
 .action-toggle-button {
   background-color: #e0f2f7;
   color: #007bff;
   padding: 8px 12px;
-  border: 1px solid #007bff;
+  border: 1px solid #8DE0B7;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
@@ -185,7 +185,7 @@ h1 {
 .stat-icon {
   font-size: 2em;
   margin-bottom: 10px;
-  color: #007bff; /* Default color, can be overridden */
+  color: #007bff; 
 }
 
 .stat-card.present-card .stat-icon { color: #28a745; }
@@ -216,7 +216,7 @@ h1 {
 }
 
 .export-attendance-button, .send-reminders-button {
-  background-color: #007bff;
+  background-color: #8DE0B7;
   color: white;
   padding: 10px 20px;
   border: none;

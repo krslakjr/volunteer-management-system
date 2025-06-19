@@ -1,6 +1,6 @@
 // src/components/RoleManagementOverview.js
 import React from 'react';
-import './RoleManagementOverview.css'; // Uvezite CSS modul
+import './RoleManagementOverview.css'; 
 
 const RoleManagementOverview = ({ roles }) => {
   return (
@@ -28,18 +28,16 @@ const RoleManagementOverview = ({ roles }) => {
               <td>{role.lastModified}</td>
               <td>{role.status}</td>
               <td>
-                <button className="action-icon">✏️</button> {/* Ikona za uređivanje */}
-                <button className="action-icon">🗑️</button> {/* Ikona za brisanje */}
-                <button className="action-icon">⚙️</button> {/* Ikona za postavke/detalje */}
+                <button className="action-icon">✏️</button> 
+                <button className="action-icon">🗑️</button> 
+                <button className="action-icon">⚙️</button> 
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Ovdje bi išli "Role Details" i "Permission Summary" kao na image_5dcf5d.png */}
       <div className="role-details-section">
-        {/* Placeholder za odabrane detalje role */}
       </div>
     </div>
   );

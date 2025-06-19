@@ -1,12 +1,11 @@
-// src/pages/DashboardSettings.js (ili dodati ove sekcije u Dashboard.js)
+// src/pages/DashboardSettings.js
 import React from 'react';
 import TopVolunteersList from '../components/TopVolunteersList';
 import SocialPlatformCard from '../components/SocialPlatformCard';
-import RoleManagementOverview from '../components/RoleManagementOverview'; // Za tabelarni pregled uloga
-import './DashboardSettings.css'; // Uvezite CSS modul
+import RoleManagementOverview from '../components/RoleManagementOverview';
+import './DashboardSettings.css';
 
 const DashboardSettings = () => {
-  // Primjer podataka za Top Volontere
   const topVolunteers = [
     { id: 1, name: 'Sarah Johnson', hours: '20 hours 756 records', avatar: '/path/to/avatar1.jpg' },
     { id: 2, name: 'Michael Chan', hours: '20 hours 756 records', avatar: '/path/to/avatar2.jpg' },
@@ -15,7 +14,6 @@ const DashboardSettings = () => {
     { id: 5, name: 'Celia Patel', hours: '20 hours 756 records', avatar: '/path/to/avatar5.jpg' },
   ];
 
-  // Primjer podataka za Role Management Overview (vidljivo na image_5dcf22.png)
   const roles = [
     { name: 'Administrator', users: 3, lastModified: 'Yesterday', status: 'Active' },
     { name: 'Organizer', users: 12, lastModified: '3 days ago', status: 'Active' },
@@ -53,7 +51,7 @@ const DashboardSettings = () => {
           description="Connect additional social media platforms across the platform."
           actionText="Learn More"
           actionLink="/settings/integrations/add"
-          isAddPlatform={true} // Poseban prop za stilizovanje
+          isAddPlatform={true} 
         />
       </div>
 

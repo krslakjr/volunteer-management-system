@@ -33,7 +33,7 @@ h1 {
 
 .engagement-tabs .tab.active {
   color: #007bff;
-  border-bottom-color: #007bff;
+  border-bottom-color: #8DE0B7;
 }
 
 .statistics-grid {
@@ -80,9 +80,9 @@ h1 {
 
 .view-details-button {
   background-color: #e0f2f7;
-  color: #007bff;
+  color: #8DE0B7;
   padding: 8px 15px;
-  border: 1px solid #007bff;
+  border: 1px solid #8DE0B7;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
@@ -228,5 +228,5 @@ h1 {
 
 .top-volunteer-item .action-icon {
   margin-left: auto;
-  color: #ffc107; /* Star icon color */
+  color: #ffc107; 
 }

@@ -1,7 +1,6 @@
 // src/components/TopVolunteersList.js
 import React from 'react';
-// Pretpostavimo da imate ikonu zvjezdice ili je vučete iz biblioteke ikona
-import './TopVolunteersList.css'; // Uvezite CSS modul za stilizaciju
+import './TopVolunteersList.css';
 
 const TopVolunteersList = ({ volunteers }) => {
   return (
@@ -13,7 +12,7 @@ const TopVolunteersList = ({ volunteers }) => {
             <div className="volunteer-name">{volunteer.name}</div>
             <div className="volunteer-hours">{volunteer.hours}</div>
           </div>
-          <span className="star-icon">⭐</span> {/* Primjer zvjezdice */}
+          <span className="star-icon">⭐</span>
         </div>
       ))}
     </div>

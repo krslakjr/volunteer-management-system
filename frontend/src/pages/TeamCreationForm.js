@@ -1,7 +1,7 @@
 // src/components/TeamCreationForm.js
 import React, { useState } from 'react';
-import ActiveChannels from './ActiveChannels'; // Pretpostavka da ActiveChannels dolazi iz iste komponente kao TeamCreationForm
-import './TeamCreationForm.css'; // Uvezite CSS modul za stilizaciju
+import ActiveChannels from './ActiveChannels'; 
+import './TeamCreationForm.css';
 
 const TeamCreationForm = () => {
   // Stanja za Team Details
@@ -9,23 +9,19 @@ const TeamCreationForm = () => {
   const [teamDescription, setTeamDescription] = useState('');
   const [teamCategory, setTeamCategory] = useState('');
 
-  // Stanja za Team Members
   const [searchMembers, setSearchMembers] = useState('');
-  // U stvarnoj aplikaciji, ovo bi bio niz objekata volontera
   const [selectedMembers, setSelectedMembers] = useState([
     { id: 'v1', name: 'John Doe' },
     { id: 'v2', name: 'Jane Smith' }
-  ]); // Primjer inicijalnih članova
+  ]);
 
-  // Stanja za Team Settings
   const [allowMemberInvite, setAllowMemberInvite] = useState(false);
   const [allowOrganizerInvite, setAllowOrganizerInvite] = useState(false);
-  const [teamVisibility, setTeamVisibility] = useState('Public'); // npr. Public, Private, Hidden
-  const [teamNotifications, setTeamNotifications] = useState([]); // niz odabranih opcija (e.g., ['email', 'sms'])
+  const [teamVisibility, setTeamVisibility] = useState('Public'); 
+  const [teamNotifications, setTeamNotifications] = useState([]); 
 
   const handleCreateTeam = (e) => {
-    e.preventDefault(); // Spriječi defaultno ponašanje forme
-    // Ovdje biste implementirali logiku za slanje podataka na backend
+    e.preventDefault(); 
     console.log('Kreiranje tima:', {
       teamName,
       teamDescription,
@@ -37,7 +33,6 @@ const TeamCreationForm = () => {
       teamNotifications,
     });
     alert('Tim je kreiran (provjerite konzolu za podatke)!');
-    // Nakon uspješnog kreiranja, možda preusmjeriti korisnika ili resetovati formu
   };
 
   const handleRemoveMember = (memberId) => {
@@ -46,7 +41,6 @@ const TeamCreationForm = () => {
 
   const handleSearchMembers = (e) => {
     setSearchMembers(e.target.value);
-    // U stvarnosti, ovdje biste pokrenuli API poziv za pretragu volontera
     console.log("Pretraga volontera:", e.target.value);
   };
 
@@ -60,7 +54,6 @@ const TeamCreationForm = () => {
       <h1>Team Creation</h1>
 
       <form onSubmit={handleCreateTeam}>
-        {/* Team Details Section */}
         <div className="team-details-card">
           <h3>Team Details</h3>
           <p>Create a new volunteer team by filling out the information below.</p>
@@ -100,18 +93,15 @@ const TeamCreationForm = () => {
               <option value="Healthcare">Healthcare</option>
               <option value="Animal Welfare">Animal Welfare</option>
               <option value="Senior Care">Senior Care</option>
-              {/* Dodajte ostale kategorije po potrebi */}
             </select>
           </div>
         </div>
 
-        {/* Team Benefits Card - Ovo je više informativni panel, bez forme elemenata */}
         <div className="team-benefits-card">
           <h3>Team Benefits</h3>
           <p>Teams allow volunteers to collaborate on activities, build relationships, and track collective impact.</p>
         </div>
 
-        {/* Team Members Section */}
         <div className="team-members-section">
           <h2>Team Members</h2>
           <div className="form-group">
@@ -123,8 +113,6 @@ const TeamCreationForm = () => {
               onChange={handleSearchMembers}
               placeholder="Search by name or skills"
             />
-            {/* Ovdje bi se dodavala logika za prikaz rezultata pretrage
-                i dugme za dodavanje volontera u selectedMembers listu */}
           </div>
           <div className="selected-team-members">
             <h3>Selected Team Members ({selectedMembers.length})</h3>
@@ -145,7 +133,6 @@ const TeamCreationForm = () => {
           </div>
         </div>
 
-        {/* Team Settings Section */}
         <div className="team-settings-section">
           <h2>Team Settings</h2>
           <div className="setting-item">
@@ -188,7 +175,7 @@ const TeamCreationForm = () => {
             <p>Send updates to all team members.</p>
             <select
               id="teamNotifications"
-              multiple // Omogućava višestruki odabir
+              multiple 
               value={teamNotifications}
               onChange={handleNotificationChange}
             >
@@ -199,18 +186,14 @@ const TeamCreationForm = () => {
           </div>
         </div>
 
-        {/* Team Actions */}
         <div className="team-actions">
           <button type="submit" className="button-primary">Create Team</button>
           <button type="button" className="button-secondary" onClick={() => console.log('Cancel creation')}>Cancel</button>
         </div>
       </form>
 
-      {/* Active Channels Section - Ovo može biti i zasebna komponenta u TeamCreationForm.js
-          ako je direktno povezana sa procesom kreiranja tima,
-          ili zasebna komponenta ako je dio nekog drugog layouta.
-          Na osnovu slike, čini se da je na istoj stranici. */}
-      <ActiveChannels /> {/* Pretpostavka da ActiveChannels komponenta postoji */}
+    
+      <ActiveChannels /> 
 
     </div>
   );

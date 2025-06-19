@@ -1,0 +1,201 @@
+/* src/pages/EventsPage.css */
+
+.events-page-container {
+    padding-top: 30px; 
+}
+
+.events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px; 
+    padding-bottom: 15px; 
+    border-bottom: 1px solid #e0e0e0; 
+}
+
+.page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5em; 
+    font-weight: 700;
+    color: #34495e; 
+    margin: 0;
+}
+
+
+.create-event-button {
+    background-color: #A7F0C7;
+    color: #2c3e50; 
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px; 
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    white-space: nowrap; 
+}
+
+.create-event-button:hover {
+    background-color: #8DE0B7; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+.events-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #ffffff;
+    border-radius: 10px; 
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
+}
+
+.events-table th,
+.events-table td {
+    padding: 18px 25px; 
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0; 
+    color: #555;
+    font-size: 0.95em;
+}
+
+.events-table th {
+    background-color: #F0FFF9; 
+    color: #34495e; 
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9em;
+}
+
+.events-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.events-table tbody tr:hover {
+    background-color: #F8FFFF; 
+    cursor: default;
+}
+
+.table-action-button {
+    background-color: #e9ecef; 
+    color: #495057;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-right: 8px; 
+}
+
+.table-action-button:last-child {
+    margin-right: 0;
+}
+
+.table-action-button:hover {
+    background-color: #dee2e6; 
+    transform: translateY(-1px);
+}
+
+
+.table-action-button.manage-button {
+    background-color: #A7F0C7; 
+    color: #2c3e50;
+}
+
+.table-action-button.manage-button:hover {
+    background-color: #8DE0B7; 
+}
+
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px; 
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #fff;
+    text-align: center;
+}
+
+.status-completed {
+    background-color: #28a745; 
+    color: #fff;
+}
+
+.status-upcoming {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.status-in-progress {
+    background-color: #ffc107; 
+    color: #333;
+}
+
+.status-cancelled {
+    background-color: #dc3545; 
+    color: #fff;
+}
+
+.no-events-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1em;
+    color: #888;
+}
+
+@media (max-width: 900px) {
+    .events-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .page-title {
+        font-size: 2em;
+    }
+    .create-event-button {
+        width: 100%; 
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+    .events-table th,
+    .events-table td {
+        padding: 12px 15px; 
+        font-size: 0.9em;
+    }
+    .table-action-button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-title {
+        font-size: 1.8em;
+    }
+    .events-table th:nth-child(3),
+    .events-table td:nth-child(3) {
+        display: none;
+    }
+    .events-table th,
+    .events-table td {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .events-table th:nth-child(2), 
+    .events-table td:nth-child(2) {
+        display: none;
+    }
+    .table-action-button {
+        margin-right: 5px;
+    }
+}

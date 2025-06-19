@@ -30,7 +30,7 @@
 
 .card-icon {
   font-size: 2.5em;
-  color: #007bff;
+  color: #7fd0a7;
   margin-bottom: 15px;
 }
 
@@ -44,24 +44,21 @@
   color: #666;
   font-size: 0.9em;
   margin-bottom: 20px;
-  flex-grow: 1; /* Allows it to push buttons down */
+  flex-grow: 1; 
 }
 
 .profile-card button {
   background-color: #e0f2f7;
-  color: #007bff;
+  color: #74c19a;
   padding: 10px 20px;
-  border: 1px solid #007bff;
+  border: 1px solid #7ecea6;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
-  margin-top: 10px; /* Space between text and button */
+  margin-top: 10px; 
 }
 
-/* Specific button colors */
-.edit-profile-button { /* Already styled by general button */ }
 .manage-skills-button { margin-right: 10px; }
-.add-interests-button { }
 .view-certificate-button { background-color: #28a745; color: white; border-color: #28a745; }
 
 
@@ -93,7 +90,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #ccc; /* Placeholder for user image */
+  background-color: #ccc;
   margin-right: 15px;
 }
 
@@ -110,7 +107,7 @@
 }
 
 .profile-detail .edit-icon {
-  margin-left: auto; /* Pushes it to the right */
+  margin-left: auto; 
   background: none;
   border: none;
   cursor: pointer;
@@ -119,7 +116,7 @@
 }
 
 .contact-info {
-  margin-left: 75px; /* Align with text next to avatar */
+  margin-left: 75px; 
   margin-bottom: 10px;
   color: #444;
 }
@@ -137,7 +134,6 @@
   color: #333;
 }
 
-/* Toggle Switch Styling */
 .switch {
   position: relative;
   display: inline-block;
@@ -189,7 +185,6 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 25px;
 }
@@ -203,7 +198,7 @@ input:checked + .slider:before {
   color: #777;
   margin-top: -5px;
   margin-bottom: 20px;
-  padding-left: 5px; /* Small indent */
+  padding-left: 5px; 
 }
 
 .activity-history-section .tabs {
@@ -260,12 +255,12 @@ input:checked + .slider:before {
 }
 
 .view-all-activities-button {
-  background-color: #007bff;
+  background-color: #91d5ae;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  display: block; /* Make it block to center if needed */
-  margin: 20px auto 0; /* Center it */
+  display: block; 
+  margin: 20px auto 0; 
 }

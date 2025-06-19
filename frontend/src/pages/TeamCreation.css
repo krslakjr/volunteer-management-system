@@ -173,7 +173,7 @@ h1 {
 }
 
 .setting-toggle select {
-  width: auto; /* Override full width for select */
+  width: auto;
   padding: 8px 12px;
 }
 
@@ -181,10 +181,9 @@ h1 {
   font-size: 0.9em;
   color: #777;
   margin-top: 5px;
-  padding-left: 5px; /* Small indent */
+  padding-left: 5px; 
 }
 
-/* Toggle Switch Styling (re-used from UserProfile) */
 .switch {
   position: relative;
   display: inline-block;

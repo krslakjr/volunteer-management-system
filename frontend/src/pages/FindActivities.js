@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FindActivities.css'; // Create this CSS file
+import './FindActivities.css'; 
 
 function FindActivities() {
   const [searchResults] = useState([
@@ -24,7 +24,6 @@ function FindActivities() {
 
   const handleSearchActivities = () => {
     console.log('Searching with criteria:', searchCriteria);
-    // In a real app, send this to an API and update searchResults
   };
 
   const handleClearFilters = () => {
@@ -70,7 +69,6 @@ function FindActivities() {
               <option value="Environmental">Environmental</option>
               <option value="Community Service">Community Service</option>
               <option value="Elderly Care">Elderly Care</option>
-              {/* Add more categories */}
             </select>
           </div>
           <div className="form-group">
@@ -103,7 +101,7 @@ function FindActivities() {
               <th>Category</th>
               <th>Location</th>
               <th>Date</th>
-              <th></th> {/* For actions/favorites */}
+              <th></th> 
             </tr>
           </thead>
           <tbody>

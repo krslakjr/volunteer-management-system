@@ -1,9 +1,8 @@
 // src/pages/RegisterPage.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './RegisterPage.css'; // Uvezite CSS modul
-import '../styles/GlobalStyles.css'; // Uvezite globalne stilove za opće klase
-
+import './RegisterPage.css'; 
+import '../styles/GlobalStyles.css'; 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -36,13 +35,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className={styles.authPageContainer}> {/* Koristi opći kontejner za auth stranice */}
-      <div className={`${styles.authCard} card-base`}> {/* Dodaj globalnu klasu card-base */}
+    <div className="authPageContainer"> 
+      <div className={`authCard card-base`}> 
         <h2>Register</h2>
         <p>Create your new Volunteer Hub account.</p>
 
-        {error && <div className="error-message">{error}</div>} {/* Koristi globalnu klasu */}
-        {successMessage && <div className="success-message">{successMessage}</div>} {/* Koristi globalnu klasu */}
+        {error && <div className="error-message">{error}</div>} 
+        {successMessage && <div className="success-message">{successMessage}</div>} 
 
         <form onSubmit={handleRegister}>
           <div className="form-group">
@@ -100,9 +99,9 @@ const RegisterPage = () => {
               required
             />
           </div>
-          <button type="submit" className="button-success">Register</button> {/* Koristi globalnu klasu */}
+          <button type="submit" className="button-primary">Register</button> 
         </form>
-        <p className={styles.authLink}>
+        <p className="authLink"> 
           Already have an account? <Link to="/login">Log in here</Link>
         </p>
       </div>

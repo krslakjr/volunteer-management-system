@@ -16,7 +16,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-top: 20px;
-    overflow-x: auto; /* Za responzivnost tabele */
+    overflow-x: auto;
 }
 
 .roleTabs {
@@ -71,7 +71,7 @@
     font-size: 18px;
     cursor: pointer;
     margin-right: 8px;
-    color: #007bff; /* Ikone u plavoj boji */
+    color: #007bff;
 }
 
 .roleTable td .actionIcon:hover {

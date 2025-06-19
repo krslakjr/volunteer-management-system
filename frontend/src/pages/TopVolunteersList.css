@@ -2,7 +2,7 @@
 
 .topVolunteersList {
     display: flex;
-    flex-wrap: wrap; /* Omogućava prelamanje redova */
+    flex-wrap: wrap; 
     gap: 15px;
     margin-bottom: 20px;
 }
@@ -14,9 +14,9 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     padding: 10px 15px;
-    flex: 1 1 calc(33% - 20px); /* 3 stavke po redu sa razmakom */
-    min-width: 250px; /* Minimalna širina kartice */
-    box-sizing: border-box; /* Važno za flexbox i padding */
+    flex: 1 1 calc(33% - 20px); 
+    min-width: 250px;
+    box-sizing: border-box; 
 }
 
 .volunteerAvatar {
@@ -43,12 +43,12 @@
 
 .starIcon {
     font-size: 20px;
-    color: gold; /* Zlatna boja za zvjezdicu */
+    color: gold;
     margin-left: 10px;
 }
 
 .viewAllVolunteersButton {
-    background-color: #17a2b8; /* Tirkizna boja */
+    background-color: #17a2b8; 
     color: white;
     padding: 10px 20px;
     border: none;
@@ -62,9 +62,8 @@
     background-color: #138496;
 }
 
-/* Responsive prilagodbe */
 @media (max-width: 768px) {
     .volunteerItem {
-        flex: 1 1 100%; /* Jedna stavka po redu na manjim ekranima */
+        flex: 1 1 100%; 
     }
 }

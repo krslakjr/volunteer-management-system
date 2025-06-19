@@ -1,7 +1,7 @@
 // src/components/RoleManagementDetails.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './RoleManagementDetails.css'; // Uvezite CSS modul
+import './RoleManagementDetails.css'; 
 
 const RoleManagementDetails = ({ role }) => {
   return (
@@ -23,7 +23,7 @@ const RoleManagementDetails = ({ role }) => {
       <table className="permissions-table">
         <thead>
           <tr>
-            <th></th> {/* Prazan header za modul */}
+            <th></th> 
             <th>View Only</th>
             <th>Create/Edit</th>
             <th>View Self</th>

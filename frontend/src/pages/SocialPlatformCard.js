@@ -1,7 +1,7 @@
 // src/components/SocialPlatformCard.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './SocialPlatformCard.css'; // Import CSS module for styling
+import './SocialPlatformCard.css';
 
 const SocialPlatformCard = ({ platform, description, actionText, actionLink, isAddPlatform }) => {
   return (

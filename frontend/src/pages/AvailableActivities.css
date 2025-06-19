@@ -28,7 +28,7 @@ h1 {
 }
 
 .filter-button {
-  background-color: #007bff;
+  background-color: #8DE0B7;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -54,7 +54,7 @@ h1 {
 }
 
 .category-button.active {
-  background-color: #e0f2f7; /* Light blue */
+  background-color: #e0f2f7; 
   border-color: #007bff;
   color: #007bff;
 }
@@ -79,7 +79,7 @@ h1 {
 .activity-icon {
   font-size: 2em;
   margin-bottom: 15px;
-  color: #007bff; /* Example icon color */
+  color: #007bff;
 }
 
 .activity-card h3 {
@@ -104,11 +104,10 @@ h1 {
 .activity-actions {
   display: flex;
   gap: 10px;
-  margin-top: auto; /* Pushes buttons to the bottom */
-}
+  margin-top: auto; }
 
 .apply-now-button {
-  background-color: #007bff;
+  background-color: #8DE0B7;
   color: white;
   padding: 10px 15px;
   border: none;

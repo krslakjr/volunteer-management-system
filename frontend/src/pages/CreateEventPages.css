@@ -1,0 +1,74 @@
+/* src/pages/CreateEventPage.css */
+
+.create-event-container {
+    padding: 30px;
+    max-width: 700px; /* Ograniči širinu forme */
+    margin: 40px auto; /* Centriraj formu sa marginama */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.create-event-container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #34495e; /* Tamnija boja za labele */
+    font-size: 1.1em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="datetime-local"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Suptilna unutrašnja sjena */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="datetime-local"]:focus,
+.form-group textarea:focus {
+    border-color: #3498db; /* Plava boja pri fokusu */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Plava sjena pri fokusu */
+    outline: none; /* Ukloni defaultni outline */
+}
+
+.form-group textarea {
+    resize: vertical; /* Omogućava korisniku da vertikalno mijenja veličinu textaree */
+    min-height: 120px; /* Minimalna visina za textareu */
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745; /* Zelena boja za dugme */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #218838; /* Tamnija zelena pri hoveru */
+}

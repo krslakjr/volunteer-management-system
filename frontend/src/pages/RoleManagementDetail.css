@@ -42,7 +42,7 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow-x: auto; /* Za responzivnost tabele */
+    overflow-x: auto; 
 }
 
 .permissionsTable th,
@@ -65,7 +65,7 @@
 }
 
 .permissionsTable input[type="radio"] {
-    transform: scale(1.2); /* Veći radio button */
+    transform: scale(1.2);
     cursor: pointer;
 }
 

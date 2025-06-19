@@ -1,27 +1,33 @@
-/* src/pages/RegisterPage.module.css */
+/* src/pages/RegisterPage.css */
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
 
 .authPageContainer {
     display: flex;
-    justify-content: center; /* Horizontalno centriranje */
-    align-items: center;    /* Vertikalno centriranje */
-    min-height: 100vh;      /* Zauzima cijelu visinu viewporta */
-    background-color: #e9ecef; /* Svijetlo siva pozadina */
-    padding: 20px;          /* Mali padding oko kontejnera */
-    box-sizing: border-box; /* Važno za responzivnost */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #e9ecef;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .authCard {
     width: 100%;
-    max-width: 450px; /* Malo šira kartica za registraciju zbog više polja */
+    max-width: 450px; 
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     text-align: center;
-    /* card-base klasa (iz GlobalStyles.css) već daje:
-       background-color: #fff;
-       border-radius: 8px;
-       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-       padding: 30px;
-       margin-bottom: 20px;
-    */
     padding: 30px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .authCard h2 {
@@ -36,11 +42,76 @@
     margin-bottom: 25px;
 }
 
-/* Forme i input polja sada koriste globalne klase iz GlobalStyles.css:
-   .form-group, input[type="text"], input[type="email"], input[type="password"]
-   Nema potrebe da ih ovdje ponovo definišete. */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
 
-/* Dugme za registraciju koristi globalnu klasu .button-success */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: #fdfdfd;
+    color: #333;
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #dc3545;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.button-primary { 
+    background-color: #A7F0C7; 
+    color: #212529; 
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.button-primary:hover {
+    background-color: #8ADCA7;
+    transform: translateY(-1px);
+}
+
+.button-primary:active {
+    background-color: #7BC591;
+    transform: translateY(0);
+}
+
+
 .authLink {
     margin-top: 25px;
     font-size: 15px;
@@ -48,7 +119,7 @@
 }
 
 .authLink a {
-    color: #007bff; /* Plava boja za link na login */
+    color: #007bff;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
@@ -59,13 +130,13 @@
     text-decoration: underline;
 }
 
-/* Responsive prilagodbe */
 @media (max-width: 600px) {
+    .authPageContainer {
+        padding: 15px;
+    }
     .authCard {
         padding: 25px;
-        margin: 10px;
     }
-
     .authCard h2 {
         font-size: 24px;
     }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './RoleManagement.css'; // Create this CSS file
+import './RoleManagement.css'; 
 
 function RoleManagement() {
   const [roles, setRoles] = useState([
@@ -8,7 +8,7 @@ function RoleManagement() {
     { id: 3, name: 'Volunteer', users: 150, lastModified: '1 year ago', status: 'Active' },
   ]);
 
-  const [selectedRole, setSelectedRole] = useState(roles[0]); // Default to Administrator
+  const [selectedRole, setSelectedRole] = useState(roles[0]); 
 
   const permissions = [
     { feature: 'Dashboard', Administrator: 'Full Access', Organizer: 'View Only', Volunteer: 'View Only' },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './TeamCreation.css'; // Create this CSS file
+import './TeamCreation.css'; 
 
 function TeamCreation() {
   const [teamDetails, setTeamDetails] = useState({
@@ -13,14 +13,13 @@ function TeamCreation() {
     { id: 2, name: 'Michael Chen', role: 'First Aid', activities: 8, status: 'Available' },
     { id: 3, name: 'Aisha Patel', role: 'Community Outreach', activities: 12, status: 'Available' },
     { id: 4, name: 'David Rodriguez', role: 'Translation', activities: 6, status: 'Available' },
-    // Add more volunteers
   ]);
 
   const [selectedTeamMembers, setSelectedTeamMembers] = useState([]);
 
   const [teamSettings, setTeamSettings] = useState({
     allowMembersToInvite: false,
-    teamVisibility: 'public', // 'public' or 'private'
+    teamVisibility: 'public', 
     teamNotifications: false,
   });
 
@@ -53,8 +52,6 @@ function TeamCreation() {
       teamSettings,
     });
     alert('Team created (check console)');
-    // In a real app, send this data to a backend API
-    // Reset form
     setTeamDetails({ teamName: '', teamDescription: '', teamCategory: '' });
     setSelectedTeamMembers([]);
     setTeamSettings({ allowMembersToInvite: false, teamVisibility: 'public', teamNotifications: false });
@@ -96,7 +93,6 @@ function TeamCreation() {
               <option value="Environmental">Environmental</option>
               <option value="Community Service">Community Service</option>
               <option value="Healthcare">Healthcare</option>
-              {/* Add more categories */}
             </select>
           </div>
         </div>
@@ -111,12 +107,12 @@ function TeamCreation() {
             <table>
               <thead>
                 <tr>
-                  <th></th> {/* Checkbox column */}
+                  <th></th> 
                   <th>Name</th>
                   <th>Role</th>
                   <th>Activities</th>
                   <th>Status</th>
-                  <th></th> {/* For actions/info */}
+                  <th></th> 
                 </tr>
               </thead>
               <tbody>

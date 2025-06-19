@@ -1,32 +1,104 @@
-/* RecentActivityCompletion.module.css */
+/* src/components/RecentActivityCompletion.css */
 
-.recentActivitiesTableContainer {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    overflow-x: auto; /* Omogućava scroll na malim ekranima */
+.recent-activity-table-container {
+    background-color: #ffffff; 
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
+    overflow: hidden; 
+    border: 1px solid #e0e0e0;
+    margin-top: 20px; 
 }
 
-.recentActivitiesTable {
+.recent-activity-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    font-family: 'Open Sans', sans-serif;
 }
 
-.recentActivitiesTable th,
-.recentActivitiesTable td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #dee2e6;
+.recent-activity-table th,
+.recent-activity-table td {
+    padding: 18px 25px; 
     text-align: left;
+    border-bottom: 1px solid #f0f0f0; 
+    font-size: 0.95em;
 }
 
-.recentActivitiesTable th {
-    background-color: #e9ecef;
-    font-weight: bold;
-    color: #495057;
+.recent-activity-table th {
+    background-color: #A7F0C7; 
+    color: #2c3e50; 
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9em;
 }
 
-.recentActivitiesTable tbody tr:hover {
-    background-color: #f2f2f2;
+.recent-activity-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.recent-activity-table tbody tr:hover {
+    background-color: #F0FFF9; 
+    cursor: default; 
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #fff; 
+    text-align: center;
+}
+
+.status-completed {
+    background-color: #28a745; 
+    color: #fff;
+}
+
+.status-upcoming {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.status-in-progress {
+    background-color: #ffc107; 
+    color: #333;
+}
+
+.status-cancelled {
+    background-color: #dc3545; 
+    color: #fff;
+}
+
+.no-activities-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1em;
+    color: #888;
+}
+
+@media (max-width: 768px) {
+    .recent-activity-table th,
+    .recent-activity-table td {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 480px) {
+    .recent-activity-table th,
+    .recent-activity-table td {
+        padding: 10px 12px;
+        font-size: 0.85em;
+    }
+    .recent-activity-table th:nth-child(3),
+    .recent-activity-table td:nth-child(3) {
+        display: none;
+    }
 }

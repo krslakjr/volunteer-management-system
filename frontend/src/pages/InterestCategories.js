@@ -1,6 +1,6 @@
 // src/components/InterestCategories.js
 import React from 'react';
-import './InterestCategories.css'; // Uvezite CSS modul
+import './InterestCategories.css';
 const InterestCategories = () => {
   const categories = ['Environmental', 'Education', 'Animal Welfare', 'Community', 'Health'];
 

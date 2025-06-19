@@ -1,69 +1,120 @@
 .header {
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 10px 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    position: sticky; 
+    top: 0;
+    width: 100%;
 }
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 1.2em;
-  color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #A7F0C7;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  margin-right: 20px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #555;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #007bff; /* Example hover color */
+.logo:hover {
+    color: #8DE0B7;
 }
 
 .header-actions {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    flex-shrink: 0;
 }
 
-.help-button, .create-event-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px;
-  text-decoration: none; /* For Link */
+.nav-action-button {
+    background-color: #A7F0C7;
+    color: #2c3e50;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
 }
 
-.help-button {
-  background-color: #e9ecef;
-  color: #333;
+.nav-action-button:hover {
+    background-color: #8DE0B7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
 }
+
+.login-button {
+    background-color: transparent;
+    border: 1px solid #A7F0C7;
+    color: #A7F0C7;
+    box-shadow: none;
+}
+
+.login-button:hover {
+    background-color: #A7F0C7;
+    color: #2c3e50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
 
 .user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #ccc; /* Placeholder for avatar */
-  margin-left: 15px;
+    width: 38px;
+    height: 38px;
+    background-color: #A7F0C7;
+    border-radius: 50%;
+    border: 2px solid #2c3e50;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .header {
+        padding: 15px 20px;
+    }
+    .navbar {
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+    .logo {
+        flex-basis: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .header-actions {
+        flex-basis: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        gap: 10px;
+    }
+    .nav-action-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-action-button {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+    }
 }
